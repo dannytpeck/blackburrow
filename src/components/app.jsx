@@ -5,6 +5,7 @@ const base = new Airtable({ apiKey: 'keyCxnlep0bgotSrX' }).base('appN1J6yscNwlzb
 
 import Header from './header';
 
+/* globals $ */
 function App() {
   const [calendar, setCalendar] = React.useState({});
 
@@ -25,6 +26,11 @@ function App() {
         console.error(err);
         return;
       }
+    });
+
+    // Enable all tooltips
+    $(function() {
+      $('[data-toggle="tooltip"]').tooltip();
     });
 
   }, []); // Pass empty array to only run once on mount
@@ -79,7 +85,47 @@ function App() {
   return (
     <div className="app">
       <Header />
-      <button type="button" className="btn btn-primary" onClick={submitToAirtable}>Submit</button>
+
+      <section className="border" id="home">
+        <h3 className="mb-5">Welcome</h3>
+
+        <p>Please complete this form to submit a custom platform tile request.</p>
+        <p>The standard tile creation process Service Level Agreement is two (2) weeks or ten (10) business days.</p>
+
+        <div className="form-group mt-5">
+          <label htmlFor="primaryAccountManager">Primary Account Manager</label>
+          <select className="form-control" id="primaryAccountManager">
+            <option>Aaron D.</option>
+            <option>Alison D.</option>
+            <option>Ardith F.</option>
+            <option>Cara C.</option>
+            <option>Erin H.</option>
+            <option>Jack U.</option>
+            <option>James W.</option>
+            <option>Jeremy K.</option>
+            <option>Jill R.</option>
+            <option>Katie D.</option>
+          </select>
+        </div>
+
+        <p className="d-inline-block">Lorem Enim laudantium laboris but eaque?</p>
+        <img className="tooltip-icon" src="images/tooltip.svg" data-toggle="tooltip" data-original-title="Default tooltip" />
+        <div className="form-check">
+          <input className="form-check-input" type="radio" name="newOrRecycledRadios" id="netNew" value="Net New" />
+          <label className="form-check-label" htmlFor="netNew">Net New</label>
+        </div>
+        <div className="form-check">
+          <input className="form-check-input" type="radio" name="newOrRecycledRadios" id="recycled" value="Recycled" />
+          <label className="form-check-label" htmlFor="recycled">Recycled</label>
+        </div>
+
+      </section>
+
+      <footer id="footer">
+        <a href="#">Back to Calendar</a>
+        <button type="button" className="btn btn-primary ml-5">Next</button>
+      </footer>
+
     </div>
   );
 }

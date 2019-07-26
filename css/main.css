@@ -1,8 +1,32 @@
 body {
-  color: #554E49;
+  color: #1D1D1D;
 }
 
 #header {
   text-align: center;
+  margin: 2em 0 5em;
+}
+
+#header .logo {
+  width: 175px;
+}
+
+#header h1 {
+  font-weight: 300;
+  color: #7B7B7B;
+}
+
+#home {
+  padding: 3em 3em 5em;
+}
+
+#footer {
+  text-align: center;
   margin: 2em 0;
+}
+
+.tooltip-icon {
+  width: 1em;
+  margin-left: .5em;
+  margin-bottom: .25em;
 }
