@@ -2,6 +2,10 @@ body {
   color: #1D1D1D;
 }
 
+label {
+  font-weight: bold;
+}
+
 #header {
   text-align: center;
   margin: 2em 0 5em;
@@ -25,8 +29,16 @@ body {
   margin: 2em 0;
 }
 
+.form-check-label {
+  font-weight: initial;
+}
+
 .tooltip-icon {
   width: 1em;
   margin-left: .5em;
   margin-bottom: .25em;
+}
+
+.form-text {
+  text-align: right;
 }
