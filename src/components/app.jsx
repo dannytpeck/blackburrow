@@ -7,11 +7,17 @@ import Header from './header';
 import Home from './home';
 import NetNew from './net_new';
 import ChallengeContent from './challenge_content';
+import AdditionalDetails from './additional_details';
 
 /* globals $ */
 function App() {
   const [calendar, setCalendar] = React.useState({});
   const [step, setStep] = React.useState('Home');
+
+  const [challengeTitle, setChallengeTitle] = React.useState('Lorem Ipsum Dolor sit Amet');
+  const [activityText, setActivityText] = React.useState('do the activity in the description');
+  const [shortDescription, setShortDescription] = React.useState('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum gravida at dui at auctor. Mauris pulvinar posuere exe, at fermentum dui volutpat ut. Carabitur nec iaculis lectus.');
+  const [longDescription, setLongDescription] = React.useState('Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi sagittis odio in semper accumsan. Sed blandit dolor sapien, at porta ipsum aliquet non.');
 
   const calendarHash = window.location.hash.slice(2);
 
@@ -86,6 +92,12 @@ function App() {
       case 'NetNew':
         setStep('Home');
         break;
+      case 'ChallengeContent':
+        setStep('NetNew');
+        break;
+      case 'AdditionalDetails':
+        setStep('ChallengeContent');
+        break;
     }
   }
 
@@ -97,6 +109,9 @@ function App() {
       case 'NetNew':
         setStep('ChallengeContent');
         break;
+      case 'ChallengeContent':
+        setStep('AdditionalDetails');
+        break;
     }
   }
 
@@ -107,7 +122,9 @@ function App() {
       case 'NetNew':
         return <NetNew />;
       case 'ChallengeContent':
-        return <ChallengeContent />;
+        return <ChallengeContent challengeTitle={challengeTitle} activityText={activityText} shortDescription={shortDescription} longDescription={longDescription} />;
+      case 'AdditionalDetails':
+        return <AdditionalDetails challengeTitle={challengeTitle} activityText={activityText} shortDescription={shortDescription} longDescription={longDescription} />;
       default:
         throw new Error(`Cannot render step: ${step}`);
     }
