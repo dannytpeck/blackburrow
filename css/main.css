@@ -42,3 +42,21 @@ label {
 .form-text {
   text-align: right;
 }
+
+#tilePreview .content-wrapper {
+  padding: 1em 2em 3em;
+}
+
+.preview-header {
+  padding: 1em 2em;
+}
+
+.preview-header h3 {
+  font-weight: 400;
+  margin-bottom: 0;
+}
+
+.choose-image .form-group {
+  display: inline-block;
+  vertical-align: top;
+}
