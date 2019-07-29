@@ -6,6 +6,7 @@ const base = new Airtable({ apiKey: 'keyCxnlep0bgotSrX' }).base('appN1J6yscNwlzb
 import Header from './header';
 import Home from './home';
 import NetNew from './net_new';
+import Historical from './historical';
 import ChallengeContent from './challenge_content';
 import AdditionalDetails from './additional_details';
 import ConfirmChallengeDetails from './confirm_challenge_details';
@@ -19,6 +20,9 @@ function App() {
   const [activityText, setActivityText] = React.useState('do the activity in the description');
   const [shortDescription, setShortDescription] = React.useState('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum gravida at dui at auctor. Mauris pulvinar posuere exe, at fermentum dui volutpat ut. Carabitur nec iaculis lectus.');
   const [longDescription, setLongDescription] = React.useState('Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi sagittis odio in semper accumsan. Sed blandit dolor sapien, at porta ipsum aliquet non.');
+
+  const [historicalEdits, setHistoricalEdits] = React.useState('No');
+  const [limeadeChallenges, setLimeadeChallenges] = React.useState([]);
 
   const calendarHash = window.location.hash.slice(2);
 
@@ -93,14 +97,25 @@ function App() {
       case 'NetNew':
         setStep('Home');
         break;
+      case 'Historical':
+        setStep('Home');
+        break;
       case 'ChallengeContent':
-        setStep('NetNew');
+         if (limeadeChallenges.length > 0) {
+           setStep('Historical');
+         } else {
+           setStep('NetNew');
+         }
         break;
       case 'AdditionalDetails':
         setStep('ChallengeContent');
         break;
       case 'ConfirmChallengeDetails':
-        setStep('AdditionalDetails');
+        if (limeadeChallenges.length > 0) {
+          setStep('Historical');
+        } else {
+          setStep('AdditionalDetails');
+        }
         break;
     }
   }
@@ -108,10 +123,17 @@ function App() {
   function nextStep() {
     switch (step) {
       case 'Home':
-        setStep('NetNew');
+        setStep('Historical');
         break;
       case 'NetNew':
         setStep('ChallengeContent');
+        break;
+      case 'Historical':
+        if (historicalEdits === 'Yes') {
+          setStep('ChallengeContent');
+        } else {
+          setStep('ConfirmChallengeDetails');
+        }
         break;
       case 'ChallengeContent':
         setStep('AdditionalDetails');
@@ -128,6 +150,17 @@ function App() {
         return <Home />;
       case 'NetNew':
         return <NetNew />;
+      case 'Historical':
+        return <Historical
+          calendar={calendar}
+          challengeTitle={challengeTitle}
+          activityText={activityText}
+          shortDescription={shortDescription}
+          longDescription={longDescription}
+          limeadeChallenges={limeadeChallenges}
+          setLimeadeChallenges={setLimeadeChallenges}
+          setHistoricalEdits={setHistoricalEdits}
+        />;
       case 'ChallengeContent':
         return <ChallengeContent challengeTitle={challengeTitle} activityText={activityText} shortDescription={shortDescription} longDescription={longDescription} />;
       case 'AdditionalDetails':
@@ -138,7 +171,7 @@ function App() {
         throw new Error(`Cannot render step: ${step}`);
     }
   }
-
+  
   return (
     <div className="app">
       <Header />

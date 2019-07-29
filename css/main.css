@@ -66,3 +66,8 @@ label {
   padding-left: 1em;
   list-style-image: url('../images/file.svg');
 }
+
+#spinner {
+  display: none;
+  width: 2em;
+}
