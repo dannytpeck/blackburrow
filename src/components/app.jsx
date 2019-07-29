@@ -8,6 +8,7 @@ import Home from './home';
 import NetNew from './net_new';
 import ChallengeContent from './challenge_content';
 import AdditionalDetails from './additional_details';
+import ConfirmChallengeDetails from './confirm_challenge_details';
 
 /* globals $ */
 function App() {
@@ -98,6 +99,9 @@ function App() {
       case 'AdditionalDetails':
         setStep('ChallengeContent');
         break;
+      case 'ConfirmChallengeDetails':
+        setStep('AdditionalDetails');
+        break;
     }
   }
 
@@ -112,6 +116,9 @@ function App() {
       case 'ChallengeContent':
         setStep('AdditionalDetails');
         break;
+      case 'AdditionalDetails':
+        setStep('ConfirmChallengeDetails');
+        break;
     }
   }
 
@@ -125,6 +132,8 @@ function App() {
         return <ChallengeContent challengeTitle={challengeTitle} activityText={activityText} shortDescription={shortDescription} longDescription={longDescription} />;
       case 'AdditionalDetails':
         return <AdditionalDetails challengeTitle={challengeTitle} activityText={activityText} shortDescription={shortDescription} longDescription={longDescription} />;
+      case 'ConfirmChallengeDetails':
+        return <ConfirmChallengeDetails challengeTitle={challengeTitle} activityText={activityText} shortDescription={shortDescription} longDescription={longDescription} />;
       default:
         throw new Error(`Cannot render step: ${step}`);
     }
@@ -142,8 +151,11 @@ function App() {
           <a href={`https://calendarbuilder.dev.adurolife.com/calendar-builder/#/${calendarHash}`}>Back to Calendar</a> :
           <button type="button" className="btn btn-outline-primary" onClick={previousStep}>Back</button>
         }
-
-        <button type="button" className="btn btn-primary ml-5" onClick={nextStep}>Next</button>
+        {
+          step === 'ConfirmChallengeDetails' ?
+          <button type="button" className="btn btn-primary ml-5" onClick={submitToAirtable}>Submit</button> :
+          <button type="button" className="btn btn-primary ml-5" onClick={nextStep}>Next</button>
+        }
       </footer>
 
     </div>

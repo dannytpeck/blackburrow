@@ -60,3 +60,9 @@ label {
   display: inline-block;
   vertical-align: top;
 }
+
+#confirmChallengeDetails ul {
+  color: #7b7b7b;
+  padding-left: 1em;
+  list-style-image: url('../images/file.svg');
+}
