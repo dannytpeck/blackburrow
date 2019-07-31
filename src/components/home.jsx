@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 /* globals $ */
-function Home() {
+function Home({ setNewOrHistorical }) {
 
   // Make airtable calls when app starts
   useEffect(() => {
@@ -12,6 +12,10 @@ function Home() {
     });
 
   }, []); // Pass empty array to only run once on mount
+
+  function handleChange(e) {
+    setNewOrHistorical(e.target.value);
+  }
 
   return (
     <section className="border" id="home">
@@ -39,11 +43,11 @@ function Home() {
       <label>Lorem Enim laudantium laboris but eaque?</label>
       <img className="tooltip-icon" src="images/tooltip.svg" data-toggle="tooltip" data-original-title="Default tooltip" />
       <div className="form-check">
-        <input className="form-check-input" type="radio" name="netNewOrHistoricalRadios" id="netNew" value="Net New" />
+        <input className="form-check-input" type="radio" name="netNewOrHistoricalRadios" id="netNew" value="NetNew" onChange={handleChange} />
         <label className="form-check-label" htmlFor="netNew">Net New</label>
       </div>
       <div className="form-check">
-        <input className="form-check-input" type="radio" name="netNewOrHistoricalRadios" id="historical" value="Historical" />
+        <input className="form-check-input" type="radio" name="netNewOrHistoricalRadios" id="historical" value="Historical" onChange={handleChange} />
         <label className="form-check-label" htmlFor="historical">Historical</label>
       </div>
 

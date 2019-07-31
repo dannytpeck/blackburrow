@@ -15,6 +15,7 @@ import ConfirmChallengeDetails from './confirm_challenge_details';
 function App() {
   const [calendar, setCalendar] = React.useState({});
   const [step, setStep] = React.useState('Home');
+  const [newOrHistorical, setNewOrHistorical] = React.useState(null);
 
   const [challengeTitle, setChallengeTitle] = React.useState('Lorem Ipsum Dolor sit Amet');
   const [activityText, setActivityText] = React.useState('do the activity in the description');
@@ -123,7 +124,7 @@ function App() {
   function nextStep() {
     switch (step) {
       case 'Home':
-        setStep('Historical');
+        newOrHistorical ? setStep(newOrHistorical) : '';
         break;
       case 'NetNew':
         setStep('ChallengeContent');
@@ -147,7 +148,7 @@ function App() {
   function renderStep() {
     switch (step) {
       case 'Home':
-        return <Home />;
+        return <Home setNewOrHistorical={setNewOrHistorical} />;
       case 'NetNew':
         return <NetNew />;
       case 'Historical':
@@ -171,7 +172,7 @@ function App() {
         throw new Error(`Cannot render step: ${step}`);
     }
   }
-  
+
   return (
     <div className="app">
       <Header />
