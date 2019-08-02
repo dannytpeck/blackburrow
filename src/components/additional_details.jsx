@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 /* globals $ */
 function AdditionalDetails({ challengeTitle, activityText, shortDescription, longDescription }) {
+  const [targetingDetailsOpacity, setTargetingDetailsOpacity] = useState(0);
 
   // Make airtable calls when app starts
   useEffect(() => {
@@ -12,6 +13,17 @@ function AdditionalDetails({ challengeTitle, activityText, shortDescription, lon
     });
 
   }, []); // Pass empty array to only run once on mount
+
+  function handleChange(e) {
+    switch (e.target.value) {
+      case 'Entire Population':
+        setTargetingDetailsOpacity(0);
+        break;
+      case 'Specific Demographic':
+        setTargetingDetailsOpacity(1);
+        break;
+    }
+  }
 
   return (
     <section id="additionalDetails" className="row">
@@ -38,9 +50,12 @@ function AdditionalDetails({ challengeTitle, activityText, shortDescription, lon
         <div className="form-group">
           <label className="mb-0">Make this challenge a "Featured Activity"?</label>
           <small className="form-text text-muted text-left">Featured Activities are displayed in the rotating Featured Activity Banner at the top of the home page. Recommended limit of 4 at a time.</small>
-          <div className="form-check mt-2">
+          <div id="featuredActivityCheck" className="form-check mt-2">
             <input className="form-check-input" type="checkbox" id="featuredActivityYes" />
-            <label className="form-check-label" htmlFor="featuredActivityYes">Yes</label>
+            <label className="form-check-label" htmlFor="featuredActivityYes">
+              <span className="mr-2 align-middle"></span>
+              <span className="align-middle">Yes</span>
+            </label>
           </div>
         </div>
 
@@ -48,16 +63,16 @@ function AdditionalDetails({ challengeTitle, activityText, shortDescription, lon
           <label>Targeting</label>
           <img className="tooltip-icon" src="images/tooltip.svg" data-toggle="tooltip" data-original-title="Default tooltip" />
           <div className="form-check">
-            <input className="form-check-input" type="radio" name="targetingRadios" id="entirePopulation" value="Entire Population" />
+            <input className="form-check-input" type="radio" name="targetingRadios" id="entirePopulation" value="Entire Population" onChange={handleChange} defaultChecked />
             <label className="form-check-label" htmlFor="entirePopulation">Entire Population</label>
           </div>
           <div className="form-check">
-            <input className="form-check-input" type="radio" name="targetingRadios" id="specificDemographic" value="Specific Demographic" />
+            <input className="form-check-input" type="radio" name="targetingRadios" id="specificDemographic" value="Specific Demographic" onChange={handleChange} />
             <label className="form-check-label" htmlFor="specificDemographic">Specific Demographic</label>
           </div>
         </div>
 
-        <div className="form-group mt-5" htmlFor="targetingDetails">
+        <div className="form-group mt-5" htmlFor="targetingDetails" style={{ opacity: targetingDetailsOpacity }}>
           <label className="mb-0">Who..can see this..should this tile be visible to?</label>
           <small className="form-text text-muted text-left">Lorem...Please be as specific as possible...</small>
           <textarea className="form-control mt-4" id="targetingDetails" rows="3"></textarea>

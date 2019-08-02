@@ -17,7 +17,7 @@ function App() {
   const [step, setStep] = React.useState('Home');
 
   // Home
-  const [newOrHistorical, setNewOrHistorical] = React.useState(null);
+  const [newOrHistorical, setNewOrHistorical] = React.useState('NetNew');
 
   // NetNew
   const [tileType, setTileType] = React.useState('One-Time Self-Report Challenge');

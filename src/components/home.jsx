@@ -43,7 +43,7 @@ function Home({ setNewOrHistorical }) {
       <label>Lorem Enim laudantium laboris but eaque?</label>
       <img className="tooltip-icon" src="images/tooltip.svg" data-toggle="tooltip" data-original-title="Default tooltip" />
       <div className="form-check">
-        <input className="form-check-input" type="radio" name="netNewOrHistoricalRadios" id="netNew" value="NetNew" onChange={handleChange} />
+        <input className="form-check-input" type="radio" name="netNewOrHistoricalRadios" id="netNew" value="NetNew" onChange={handleChange} defaultChecked />
         <label className="form-check-label" htmlFor="netNew">Net New</label>
       </div>
       <div className="form-check">

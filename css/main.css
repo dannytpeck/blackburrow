@@ -71,3 +71,25 @@ label {
   display: none;
   width: 2em;
 }
+
+#featuredActivityCheck {
+  padding-left: 0;
+}
+
+#featuredActivityYes {
+  opacity: 0;
+}
+
+#featuredActivityYes + label > span:first-child {
+  background: url('../images/star-inactive.svg') no-repeat;
+  display: inline-block;
+  height: 24px;
+  width: 24px;
+}
+
+#featuredActivityYes:checked + label > span:first-child {
+  background: url('../images/star.png') no-repeat;
+  display: inline-block;
+  height: 24px;
+  width: 24px;
+}
