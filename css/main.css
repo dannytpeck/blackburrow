@@ -67,8 +67,8 @@ label {
 
 #confirmChallengeDetails ul {
   color: #7b7b7b;
-  padding-left: 1em;
-  list-style-image: url('../images/file.svg');
+  padding-left: 2em;
+  list-style-image: url('../images/document-text.svg');
 }
 
 #spinner {

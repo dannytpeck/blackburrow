@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 
 import TrumbowygBox from './trumbowyg_box';
+import TilePreview from './tile_preview';
 
 /* globals $ */
 function ChallengeContent({
@@ -72,25 +73,7 @@ function ChallengeContent({
 
       </div>
       <div className="col-6">
-
-        <div className="border" id="tilePreview">
-          <header className="preview-header">
-            <h3>Challenge Preview</h3>
-          </header>
-          <div className="image-wrapper">
-            <img src="http://via.placeholder.com/540x270" />
-          </div>
-          <div className="content-wrapper">
-            <h3>{challengeTitle}</h3>
-            <p>To complete this, <strong>{activityText}</strong></p>
-            <hr />
-            <h5>About this activity</h5>
-            <p>{shortDescription}</p>
-            <h5>More information</h5>
-            <p dangerouslySetInnerHTML={{ __html: longDescription }}></p>
-          </div>
-        </div>
-
+        <TilePreview challengeTitle={challengeTitle} activityText={activityText} shortDescription={shortDescription} longDescription={longDescription} />
       </div>
     </section>
   );
