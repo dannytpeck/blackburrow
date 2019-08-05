@@ -1,8 +1,95 @@
 body {
-  color: #554E49;
+  color: #1D1D1D;
+}
+
+label {
+  font-weight: bold;
 }
 
 #header {
   text-align: center;
+  margin: 2em 0 5em;
+}
+
+#header .logo {
+  width: 175px;
+}
+
+#header h1 {
+  font-weight: 300;
+  color: #7B7B7B;
+}
+
+#home {
+  padding: 3em 3em 5em;
+}
+
+#footer {
+  text-align: center;
   margin: 2em 0;
+}
+
+.form-check-label {
+  font-weight: initial;
+}
+
+.tooltip-icon {
+  width: 1em;
+  margin-left: .5em;
+  margin-bottom: .25em;
+}
+
+.form-text {
+  text-align: right;
+}
+
+#tilePreview .content-wrapper {
+  padding: 1em 2em 3em;
+}
+
+.preview-header {
+  padding: 1em 2em;
+}
+
+.preview-header h3 {
+  font-weight: 400;
+  margin-bottom: 0;
+}
+
+.choose-image .form-group {
+  display: inline-block;
+  vertical-align: top;
+}
+
+#confirmChallengeDetails ul {
+  color: #7b7b7b;
+  padding-left: 1em;
+  list-style-image: url('../images/file.svg');
+}
+
+#spinner {
+  display: none;
+  width: 2em;
+}
+
+#featuredActivityCheck {
+  padding-left: 0;
+}
+
+#featuredActivityYes {
+  opacity: 0;
+}
+
+#featuredActivityYes + label > span:first-child {
+  background: url('../images/star-inactive.svg') no-repeat;
+  display: inline-block;
+  height: 24px;
+  width: 24px;
+}
+
+#featuredActivityYes:checked + label > span:first-child {
+  background: url('../images/star.png') no-repeat;
+  display: inline-block;
+  height: 24px;
+  width: 24px;
 }
