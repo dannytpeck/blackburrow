@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 /* global $ */
-function TrumbowygBox({ placeholder }) {
+function TrumbowygBox({ setLongDescription }) {
 
   // Make airtable calls when app starts
   useEffect(() => {
@@ -22,13 +22,16 @@ function TrumbowygBox({ placeholder }) {
           ['horizontalRule'],
           ['removeformat']
         ]
+      })
+      .on('tbwchange', (e) => {
+        setLongDescription(e.target.innerHTML);
       });
     });
 
   }, []); // Pass empty array to only run once on mount
 
 	return (
-		<div className="editor" placeholder={placeholder}></div>
+		<div className="editor" placeholder="Lorem ipsum dolor sit amet, consectetuer adipiscing elit..."></div>
 	);
 
 }

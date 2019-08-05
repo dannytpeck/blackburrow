@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import TilePreview from './tile_preview';
+
 /* globals $ */
 function AdditionalDetails({ challengeTitle, activityText, shortDescription, longDescription }) {
   const [targetingDetailsOpacity, setTargetingDetailsOpacity] = useState(0);
@@ -88,25 +90,7 @@ function AdditionalDetails({ challengeTitle, activityText, shortDescription, lon
 
       </div>
       <div className="col-6">
-
-        <div className="border" id="tilePreview">
-          <header className="preview-header">
-            <h3>Challenge Preview</h3>
-          </header>
-          <div className="image-wrapper">
-            <img src="http://via.placeholder.com/540x270" />
-          </div>
-          <div className="content-wrapper">
-            <h3>{challengeTitle}</h3>
-            <p>To complete this, <strong>{activityText}</strong></p>
-            <hr />
-            <h5>About this activity</h5>
-            <p>{shortDescription}</p>
-            <h5>More information</h5>
-            <p>{longDescription}</p>
-          </div>
-        </div>
-
+        <TilePreview challengeTitle={challengeTitle} activityText={activityText} shortDescription={shortDescription} longDescription={longDescription} />
       </div>
     </section>
   );

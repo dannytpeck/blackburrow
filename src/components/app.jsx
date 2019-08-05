@@ -21,8 +21,8 @@ function App() {
 
   // NetNew
   const [tileType, setTileType] = React.useState('One-Time Self-Report Challenge');
-  const [startDate, setStateDate] = React.useState(null);
-  const [endDate, setEndDate] = React.useState(null);
+  const [startDate, setStateDate] = React.useState('');
+  const [endDate, setEndDate] = React.useState('');
   const [pointValue, setPointValue] = React.useState(0);
 
   // Historical
@@ -30,10 +30,10 @@ function App() {
   const [historicalEdits, setHistoricalEdits] = React.useState(null);
 
   // ChallengeContent
-  const [challengeTitle, setChallengeTitle] = React.useState('Lorem Ipsum Dolor sit Amet');
-  const [activityText, setActivityText] = React.useState('do the activity in the description');
-  const [shortDescription, setShortDescription] = React.useState('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum gravida at dui at auctor. Mauris pulvinar posuere exe, at fermentum dui volutpat ut. Carabitur nec iaculis lectus.');
-  const [longDescription, setLongDescription] = React.useState('Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi sagittis odio in semper accumsan. Sed blandit dolor sapien, at porta ipsum aliquet non.');
+  const [challengeTitle, setChallengeTitle] = React.useState('');
+  const [activityText, setActivityText] = React.useState('');
+  const [shortDescription, setShortDescription] = React.useState('');
+  const [longDescription, setLongDescription] = React.useState('');
 
   // AdditionalDetails
   const [featuredActivity, setFeaturedActivity] = React.useState(false);
@@ -173,7 +173,16 @@ function App() {
       case 'Home':
         return <Home setNewOrHistorical={setNewOrHistorical} />;
       case 'NetNew':
-        return <NetNew />;
+        return <NetNew
+          tileType={tileType}
+          setTileType={setTileType}
+          startDate={startDate}
+          setStateDate={setStateDate}
+          endDate={endDate}
+          setEndDate={setEndDate}
+          pointValue={pointValue}
+          setPointValue={setPointValue}
+        />;
       case 'Historical':
         return <Historical
           calendar={calendar}
@@ -186,7 +195,16 @@ function App() {
           setHistoricalEdits={setHistoricalEdits}
         />;
       case 'ChallengeContent':
-        return <ChallengeContent challengeTitle={challengeTitle} activityText={activityText} shortDescription={shortDescription} longDescription={longDescription} />;
+        return <ChallengeContent
+          challengeTitle={challengeTitle}
+          setChallengeTitle={setChallengeTitle}
+          activityText={activityText}
+          setActivityText={setActivityText}
+          shortDescription={shortDescription}
+          setShortDescription={setShortDescription}
+          longDescription={longDescription}
+          setLongDescription={setLongDescription}
+        />;
       case 'AdditionalDetails':
         return <AdditionalDetails challengeTitle={challengeTitle} activityText={activityText} shortDescription={shortDescription} longDescription={longDescription} />;
       case 'ConfirmChallengeDetails':
