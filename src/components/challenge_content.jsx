@@ -3,7 +3,16 @@ import React, { useEffect } from 'react';
 import TrumbowygBox from './trumbowyg_box';
 
 /* globals $ */
-function ChallengeContent({ challengeTitle, activityText, shortDescription, longDescription }) {
+function ChallengeContent({
+  challengeTitle,
+  setChallengeTitle,
+  activityText,
+  setActivityText,
+  shortDescription,
+  setShortDescription,
+  longDescription,
+  setLongDescription
+}) {
 
   // Make airtable calls when app starts
   useEffect(() => {
@@ -15,6 +24,18 @@ function ChallengeContent({ challengeTitle, activityText, shortDescription, long
 
   }, []); // Pass empty array to only run once on mount
 
+  function handleChallengeTitleChange(e) {
+    setChallengeTitle(e.target.value);
+  }
+
+  function handleActivityTextChange(e) {
+    setActivityText(e.target.value);
+  }
+
+  function handleShortDescriptionChange(e) {
+    setShortDescription(e.target.value);
+  }
+
   return (
     <section id="challengeContent" className="row">
       <div className="col-6">
@@ -23,20 +44,20 @@ function ChallengeContent({ challengeTitle, activityText, shortDescription, long
 
         <div className="form-group">
           <label htmlFor="challengeTitle">Challenge Title</label>
-          <input type="text" className="form-control" id="challengeTitle" placeholder="Lorem Ipsum Dolor sit Amet" />
+          <input type="text" className="form-control" id="challengeTitle" placeholder="Lorem Ipsum Dolor sit Amet" value={challengeTitle} onChange={handleChallengeTitleChange} />
           <small className="form-text text-muted">0/100 Characters</small>
         </div>
 
         <div className="form-group">
           <label htmlFor="activityText">Activity Text</label>
-          <input type="text" className="form-control" id="activityText" placeholder="do the activity in the description" />
-          <small className="form-text text-muted">0/100 Characters</small>
+          <input type="text" className="form-control" id="activityText" placeholder="do the activity in the description" value={activityText} onChange={handleActivityTextChange} />
+          <small className="form-text text-muted">0/50 Characters</small>
         </div>
 
         <div className="form-group">
           <label htmlFor="shortDescription">Short Description</label>
           <p>A concise statement describing what the participant must do to earn points. Recommendation is no more than one or two sentences.</p>
-          <textarea className="form-control" id="shortDescription" rows="5" placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum gravida at dui at auctor. Mauris pulvinar posuere exe, at fermentum dui volutpat ut. Carabitur nec iaculis lectus."></textarea>
+          <textarea className="form-control" id="shortDescription" rows="5" placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit..." value={shortDescription} onChange={handleShortDescriptionChange}></textarea>
           <small className="form-text text-muted">0/600 Characters</small>
         </div>
 
@@ -44,7 +65,7 @@ function ChallengeContent({ challengeTitle, activityText, shortDescription, long
           <label htmlFor="longDescription">Long Description</label>
           <p>Expand on the details and guidelines of the challenge, why this challenge is important, and what pertinent information a participant will need in order to complete the challenge.</p>
 
-          <TrumbowygBox placeholder="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi sagittis odio in semper accumsan. Sed blandit dolor sapien, at porta ipsum aliquet non." />
+          <TrumbowygBox setLongDescription={setLongDescription} />
 
           <small className="form-text text-muted">0/2000 Characters</small>
         </div>
@@ -66,7 +87,7 @@ function ChallengeContent({ challengeTitle, activityText, shortDescription, long
             <h5>About this activity</h5>
             <p>{shortDescription}</p>
             <h5>More information</h5>
-            <p>{longDescription}</p>
+            <p dangerouslySetInnerHTML={{ __html: longDescription }}></p>
           </div>
         </div>
 

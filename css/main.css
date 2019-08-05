@@ -56,6 +56,10 @@ label {
   margin-bottom: 0;
 }
 
+.image-wrapper img {
+  width: 100%;
+}
+
 .choose-image .form-group {
   display: inline-block;
   vertical-align: top;

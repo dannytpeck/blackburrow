@@ -30,10 +30,10 @@ function App() {
   const [historicalEdits, setHistoricalEdits] = React.useState(null);
 
   // ChallengeContent
-  const [challengeTitle, setChallengeTitle] = React.useState('Lorem Ipsum Dolor sit Amet');
-  const [activityText, setActivityText] = React.useState('do the activity in the description');
-  const [shortDescription, setShortDescription] = React.useState('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum gravida at dui at auctor. Mauris pulvinar posuere exe, at fermentum dui volutpat ut. Carabitur nec iaculis lectus.');
-  const [longDescription, setLongDescription] = React.useState('Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi sagittis odio in semper accumsan. Sed blandit dolor sapien, at porta ipsum aliquet non.');
+  const [challengeTitle, setChallengeTitle] = React.useState('');
+  const [activityText, setActivityText] = React.useState('');
+  const [shortDescription, setShortDescription] = React.useState('');
+  const [longDescription, setLongDescription] = React.useState('');
 
   // AdditionalDetails
   const [featuredActivity, setFeaturedActivity] = React.useState(false);
@@ -203,7 +203,7 @@ function App() {
           shortDescription={shortDescription}
           setShortDescription={setShortDescription}
           longDescription={longDescription}
-          setLongDescription={setLongDescription}          
+          setLongDescription={setLongDescription}
         />;
       case 'AdditionalDetails':
         return <AdditionalDetails challengeTitle={challengeTitle} activityText={activityText} shortDescription={shortDescription} longDescription={longDescription} />;
