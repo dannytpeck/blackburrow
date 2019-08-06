@@ -52,8 +52,10 @@ function ConfirmChallengeDetails({
           </div>
         </div>
 
-        <label>Points:</label>
-        <p>{pointValue}</p>
+        <div style={{ display: tileType === 'Informational Tile' ? 'none' : 'block' }}>
+          <label>Points:</label>
+          <p>{pointValue}</p>
+        </div>
 
         <label>Featured Activity:</label>
         <p>{featuredActivity ? 'Yes' : 'No'}</p>
