@@ -171,11 +171,13 @@ function App() {
 
   function renderStep() {
     switch (step) {
+
       case 'Home':
         return <Home
           setAccountManager={setAccountManager}
           setNewOrHistorical={setNewOrHistorical}
         />;
+
       case 'NetNew':
         return <NetNew
           tileType={tileType}
@@ -187,6 +189,7 @@ function App() {
           pointValue={pointValue}
           setPointValue={setPointValue}
         />;
+
       case 'Historical':
         return <Historical
           calendar={calendar}
@@ -198,6 +201,7 @@ function App() {
           setLimeadeChallenges={setLimeadeChallenges}
           setHistoricalEdits={setHistoricalEdits}
         />;
+
       case 'ChallengeContent':
         return <ChallengeContent
           challengeTitle={challengeTitle}
@@ -209,13 +213,21 @@ function App() {
           longDescription={longDescription}
           setLongDescription={setLongDescription}
         />;
+
       case 'AdditionalDetails':
         return <AdditionalDetails
+          featuredActivity={featuredActivity}
+          setFeaturedActivity={setFeaturedActivity}
+          targeting={targeting}
+          setTargeting={setTargeting}
+          specificDemographicText={specificDemographicText}
+          setSpecificDemographicText={setSpecificDemographicText}
           challengeTitle={challengeTitle}
           activityText={activityText}
           shortDescription={shortDescription}
           longDescription={longDescription}
         />;
+
       case 'ConfirmChallengeDetails':
         return <ConfirmChallengeDetails
           accountManager={accountManager}
@@ -230,6 +242,7 @@ function App() {
           shortDescription={shortDescription}
           longDescription={longDescription}
         />;
+
       default:
         throw new Error(`Cannot render step: ${step}`);
     }
