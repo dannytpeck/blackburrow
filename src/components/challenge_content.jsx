@@ -5,6 +5,7 @@ import TilePreview from './tile_preview';
 
 /* globals $ */
 function ChallengeContent({
+  imageUrl,
   challengeTitle,
   setChallengeTitle,
   activityText,
@@ -73,7 +74,7 @@ function ChallengeContent({
 
       </div>
       <div className="col-6">
-        <TilePreview challengeTitle={challengeTitle} activityText={activityText} shortDescription={shortDescription} longDescription={longDescription} />
+        <TilePreview imageUrl={imageUrl} challengeTitle={challengeTitle} activityText={activityText} shortDescription={shortDescription} longDescription={longDescription} />
       </div>
     </section>
   );

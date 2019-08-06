@@ -31,6 +31,7 @@ function App() {
   const [historicalEdits, setHistoricalEdits] = React.useState(null);
 
   // ChallengeContent
+  const [imageUrl, setImageUrl] = React.useState('http://via.placeholder.com/540x270');
   const [challengeTitle, setChallengeTitle] = React.useState('');
   const [activityText, setActivityText] = React.useState('');
   const [shortDescription, setShortDescription] = React.useState('');
@@ -148,17 +149,12 @@ function App() {
   function nextStep() {
     switch (step) {
       case 'Home':
-        if (newOrHistorical === 'Historical') {
-          if (!calendar) {
-            alert('Check your url, a calendar hash is required');
-            throw new Error('Check your url, a calendar hash is required');
-          } else {
-            setStep('Historical');
-          }
+        if (!calendar) {
+          alert('Check your url, a calendar hash is required');
+          throw new Error('Check your url, a calendar hash is required');
         } else {
-          setStep('NetNew');
+          setStep(newOrHistorical);
         }
-        newOrHistorical ? setStep(newOrHistorical) : '';
         break;
       case 'NetNew':
         setStep('ChallengeContent');
@@ -203,17 +199,30 @@ function App() {
       case 'Historical':
         return <Historical
           calendar={calendar}
-          challengeTitle={challengeTitle}
-          activityText={activityText}
-          shortDescription={shortDescription}
-          longDescription={longDescription}
           limeadeChallenges={limeadeChallenges}
           setLimeadeChallenges={setLimeadeChallenges}
+          startDate={startDate}
+          setStateDate={setStateDate}
+          endDate={endDate}
+          setEndDate={setEndDate}
+          pointValue={pointValue}
+          setPointValue={setPointValue}
           setHistoricalEdits={setHistoricalEdits}
+          imageUrl={imageUrl}
+          setImageUrl={setImageUrl}
+          challengeTitle={challengeTitle}
+          setChallengeTitle={setChallengeTitle}
+          activityText={activityText}
+          setActivityText={setActivityText}
+          shortDescription={shortDescription}
+          setShortDescription={setShortDescription}
+          longDescription={longDescription}
+          setLongDescription={setLongDescription}
         />;
 
       case 'ChallengeContent':
         return <ChallengeContent
+          imageUrl={imageUrl}
           challengeTitle={challengeTitle}
           setChallengeTitle={setChallengeTitle}
           activityText={activityText}
@@ -232,6 +241,7 @@ function App() {
           setTargeting={setTargeting}
           specificDemographicText={specificDemographicText}
           setSpecificDemographicText={setSpecificDemographicText}
+          imageUrl={imageUrl}
           challengeTitle={challengeTitle}
           activityText={activityText}
           shortDescription={shortDescription}
@@ -247,6 +257,7 @@ function App() {
           pointValue={pointValue}
           featuredActivity={featuredActivity}
           targeting={targeting}
+          imageUrl={imageUrl}
           challengeTitle={challengeTitle}
           activityText={activityText}
           shortDescription={shortDescription}

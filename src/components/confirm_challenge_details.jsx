@@ -11,6 +11,7 @@ function ConfirmChallengeDetails({
   pointValue,
   featuredActivity,
   targeting,
+  imageUrl,
   challengeTitle,
   activityText,
   shortDescription,
@@ -77,7 +78,7 @@ function ConfirmChallengeDetails({
 
       </div>
       <div className="col-6">
-        <TilePreview challengeTitle={challengeTitle} activityText={activityText} shortDescription={shortDescription} longDescription={longDescription} />
+        <TilePreview imageUrl={imageUrl} challengeTitle={challengeTitle} activityText={activityText} shortDescription={shortDescription} longDescription={longDescription} />
       </div>
     </section>
   );

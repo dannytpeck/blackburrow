@@ -3,16 +3,31 @@ import React, { useEffect } from 'react';
 import Airtable from 'airtable';
 const base = new Airtable({ apiKey: 'keyCxnlep0bgotSrX' }).base('appHXXoVD1tn9QATh');
 
+import ChallengeSelect from './challenge_select';
+import TilePreview from './tile_preview';
+
 /* globals $ */
 function Historical({
   calendar,
-  challengeTitle,
-  activityText,
-  shortDescription,
-  longDescription,
   limeadeChallenges,
   setLimeadeChallenges,
-  setHistoricalEdits
+  startDate,
+  setStateDate,
+  endDate,
+  setEndDate,
+  pointValue,
+  setPointValue,
+  setHistoricalEdits,
+  imageUrl,
+  setImageUrl,
+  challengeTitle,
+  setChallengeTitle,
+  activityText,
+  setActivityText,
+  shortDescription,
+  setShortDescription,
+  longDescription,
+  setLongDescription
 }) {
 
   // Make airtable calls when app starts
@@ -55,6 +70,17 @@ function Historical({
 
   }, []); // Pass empty array to only run once on mount
 
+  function setChallenge(challenge) {
+    console.log(challenge);
+
+    setImageUrl(challenge.ChallengeLogoURL);
+    setChallengeTitle(challenge.Name);
+    setActivityText(challenge.ActivityType);
+    setShortDescription(challenge.ShortDescription);
+    setLongDescription(challenge.AboutChallenge);
+
+  }
+
   function handleChange(e) {
     setHistoricalEdits(e.target.value);
   }
@@ -65,11 +91,7 @@ function Historical({
 
         <h3 className="mb-5">Challenge Content</h3>
 
-        <div className="form-group">
-          <label htmlFor="searchPreviousChallenge">Search Previous Challenge</label>
-          <img id="spinner" src="images/spinner.svg" />
-          <input type="text" className="form-control" id="searchPreviousChallenge" placeholder="Lorem Ipspum Dolor sit Amet" />
-        </div>
+        <ChallengeSelect challenges={limeadeChallenges} setChallenge={setChallenge} />
 
         <div className="form-row mt-5">
 
@@ -117,25 +139,7 @@ function Historical({
       </div>
 
       <div className="col-6">
-
-        <div className="border" id="tilePreview">
-          <header className="preview-header">
-            <h3>Challenge Preview</h3>
-          </header>
-          <div className="image-wrapper">
-            <img src="http://via.placeholder.com/540x270" />
-          </div>
-          <div className="content-wrapper">
-            <h3>{challengeTitle}</h3>
-            <p>To complete this, <strong>{activityText}</strong></p>
-            <hr />
-            <h5>About this activity</h5>
-            <p>{shortDescription}</p>
-            <h5>More information</h5>
-            <p>{longDescription}</p>
-          </div>
-        </div>
-
+        <TilePreview imageUrl={imageUrl} challengeTitle={challengeTitle} activityText={activityText} shortDescription={shortDescription} longDescription={longDescription} />
       </div>
     </section>
   );

@@ -10,6 +10,7 @@ function AdditionalDetails({
   setTargeting,
   specificDemographicText,
   setSpecificDemographicText,
+  imageUrl,
   challengeTitle,
   activityText,
   shortDescription,
@@ -101,7 +102,7 @@ function AdditionalDetails({
 
       </div>
       <div className="col-6">
-        <TilePreview challengeTitle={challengeTitle} activityText={activityText} shortDescription={shortDescription} longDescription={longDescription} />
+        <TilePreview imageUrl={imageUrl} challengeTitle={challengeTitle} activityText={activityText} shortDescription={shortDescription} longDescription={longDescription} />
       </div>
     </section>
   );
