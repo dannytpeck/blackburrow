@@ -3,7 +3,19 @@ import React, { useEffect } from 'react';
 import TilePreview from './tile_preview';
 
 /* globals $ */
-function ConfirmChallengeDetails({ challengeTitle, activityText, shortDescription, longDescription }) {
+function ConfirmChallengeDetails({
+  accountManager,
+  tileType,
+  startDate,
+  endDate,
+  pointValue,
+  featuredActivity,
+  targeting,
+  challengeTitle,
+  activityText,
+  shortDescription,
+  longDescription
+}) {
 
   // Make airtable calls when app starts
   useEffect(() => {
@@ -22,31 +34,31 @@ function ConfirmChallengeDetails({ challengeTitle, activityText, shortDescriptio
         <h3 className="mb-5">Confirm Challenge Details</h3>
 
         <label>Primary Account Manager:</label>
-        <p>Aaron D.</p>
+        <p>{accountManager}</p>
 
         <label>Tile Type:</label>
-        <p>One-Time Self-Report</p>
+        <p>{tileType}</p>
 
         <div className="row">
           <div className="col">
             <label>Start Date:</label>
-            <p>01/10/2020</p>
+            <p>{startDate}</p>
           </div>
 
           <div className="col">
             <label>End Date:</label>
-            <p>01/25/2020</p>
+            <p>{endDate}</p>
           </div>
         </div>
 
         <label>Points:</label>
-        <p>100</p>
+        <p>{pointValue}</p>
 
         <label>Featured Activity:</label>
-        <p>No</p>
+        <p>{featuredActivity ? 'Yes' : 'No'}</p>
 
         <label>Targeting:</label>
-        <p>Entire Population</p>
+        <p>{targeting}</p>
 
         <label>Additional Resources:</label>
         <ul>

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 /* globals $ */
-function Home({ setNewOrHistorical }) {
+function Home({ setAccountManager, setNewOrHistorical }) {
 
   // Make airtable calls when app starts
   useEffect(() => {
@@ -13,7 +13,11 @@ function Home({ setNewOrHistorical }) {
 
   }, []); // Pass empty array to only run once on mount
 
-  function handleChange(e) {
+  function handleAccountManagerChange(e) {
+    setAccountManager(e.target.value);
+  }
+
+  function handleNewOrHistoricalChange(e) {
     setNewOrHistorical(e.target.value);
   }
 
@@ -26,7 +30,8 @@ function Home({ setNewOrHistorical }) {
 
       <div className="form-group mt-5">
         <label htmlFor="primaryAccountManager">Primary Account Manager</label>
-        <select className="form-control" id="primaryAccountManager">
+        <select className="form-control" id="primaryAccountManager" onChange={handleAccountManagerChange}>
+          <option>Select an Account Manager</option>
           <option>Aaron D.</option>
           <option>Alison D.</option>
           <option>Ardith F.</option>
@@ -43,11 +48,11 @@ function Home({ setNewOrHistorical }) {
       <label>Lorem Enim laudantium laboris but eaque?</label>
       <img className="tooltip-icon" src="images/tooltip.svg" data-toggle="tooltip" data-original-title="Default tooltip" />
       <div className="form-check">
-        <input className="form-check-input" type="radio" name="netNewOrHistoricalRadios" id="netNew" value="NetNew" onChange={handleChange} defaultChecked />
+        <input className="form-check-input" type="radio" name="netNewOrHistoricalRadios" id="netNew" value="NetNew" onChange={handleNewOrHistoricalChange} defaultChecked />
         <label className="form-check-label" htmlFor="netNew">Net New</label>
       </div>
       <div className="form-check">
-        <input className="form-check-input" type="radio" name="netNewOrHistoricalRadios" id="historical" value="Historical" onChange={handleChange} />
+        <input className="form-check-input" type="radio" name="netNewOrHistoricalRadios" id="historical" value="Historical" onChange={handleNewOrHistoricalChange} />
         <label className="form-check-label" htmlFor="historical">Historical</label>
       </div>
 

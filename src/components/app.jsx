@@ -17,6 +17,7 @@ function App() {
   const [step, setStep] = React.useState('Home');
 
   // Home
+  const [accountManager, setAccountManager] = React.useState('');
   const [newOrHistorical, setNewOrHistorical] = React.useState('NetNew');
 
   // NetNew
@@ -171,7 +172,10 @@ function App() {
   function renderStep() {
     switch (step) {
       case 'Home':
-        return <Home setNewOrHistorical={setNewOrHistorical} />;
+        return <Home
+          setAccountManager={setAccountManager}
+          setNewOrHistorical={setNewOrHistorical}
+        />;
       case 'NetNew':
         return <NetNew
           tileType={tileType}
@@ -206,9 +210,26 @@ function App() {
           setLongDescription={setLongDescription}
         />;
       case 'AdditionalDetails':
-        return <AdditionalDetails challengeTitle={challengeTitle} activityText={activityText} shortDescription={shortDescription} longDescription={longDescription} />;
+        return <AdditionalDetails
+          challengeTitle={challengeTitle}
+          activityText={activityText}
+          shortDescription={shortDescription}
+          longDescription={longDescription}
+        />;
       case 'ConfirmChallengeDetails':
-        return <ConfirmChallengeDetails challengeTitle={challengeTitle} activityText={activityText} shortDescription={shortDescription} longDescription={longDescription} />;
+        return <ConfirmChallengeDetails
+          accountManager={accountManager}
+          tileType={tileType}
+          startDate={startDate}
+          endDate={endDate}
+          pointValue={pointValue}
+          featuredActivity={featuredActivity}
+          targeting={targeting}
+          challengeTitle={challengeTitle}
+          activityText={activityText}
+          shortDescription={shortDescription}
+          longDescription={longDescription}
+        />;
       default:
         throw new Error(`Cannot render step: ${step}`);
     }
