@@ -13,7 +13,7 @@ import ConfirmChallengeDetails from './confirm_challenge_details';
 
 /* globals $ */
 function App() {
-  const [calendar, setCalendar] = React.useState({});
+  const [calendar, setCalendar] = React.useState(null);
   const [step, setStep] = React.useState('Home');
 
   // Home
@@ -148,6 +148,16 @@ function App() {
   function nextStep() {
     switch (step) {
       case 'Home':
+        if (newOrHistorical === 'Historical') {
+          if (!calendar) {
+            alert('Check your url, a calendar hash is required');
+            throw new Error('Check your url, a calendar hash is required');
+          } else {
+            setStep('Historical');
+          }
+        } else {
+          setStep('NetNew');
+        }
         newOrHistorical ? setStep(newOrHistorical) : '';
         break;
       case 'NetNew':
