@@ -10,6 +10,7 @@ import Historical from './historical';
 import ChallengeContent from './challenge_content';
 import AdditionalDetails from './additional_details';
 import ConfirmChallengeDetails from './confirm_challenge_details';
+import StepConfiguration from './step_configuration';
 
 /* globals $ */
 function App() {
@@ -143,6 +144,9 @@ function App() {
           setStep('AdditionalDetails');
         }
         break;
+      case 'StepConfiguration':
+        setStep('ChallengeContent');
+        break;
     }
   }
 
@@ -167,10 +171,22 @@ function App() {
         }
         break;
       case 'ChallengeContent':
-        setStep('AdditionalDetails');
+        switch (tileType) {
+          case 'One-Time Self-Report Challenge':
+          case 'Verified Challenge':
+          case 'Informational Tile':
+            setStep('AdditionalDetails');
+            break;
+          case 'Steps Challenge':
+            setStep('StepConfiguration');
+            break;
+        }
         break;
       case 'AdditionalDetails':
         setStep('ConfirmChallengeDetails');
+        break;
+      case 'StepConfiguration':
+        setStep('AdditionalDetails');
         break;
     }
   }
@@ -257,6 +273,15 @@ function App() {
           pointValue={pointValue}
           featuredActivity={featuredActivity}
           targeting={targeting}
+          imageUrl={imageUrl}
+          challengeTitle={challengeTitle}
+          activityText={activityText}
+          shortDescription={shortDescription}
+          longDescription={longDescription}
+        />;
+
+      case 'StepConfiguration':
+        return <StepConfiguration
           imageUrl={imageUrl}
           challengeTitle={challengeTitle}
           activityText={activityText}
