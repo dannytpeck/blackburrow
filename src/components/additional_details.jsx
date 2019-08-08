@@ -11,6 +11,7 @@ function AdditionalDetails({
   specificDemographicText,
   setSpecificDemographicText,
   imageUrl,
+  setImageUrl,
   challengeTitle,
   activityText,
   shortDescription,
@@ -39,6 +40,29 @@ function AdditionalDetails({
     setSpecificDemographicText(e.target.value);
   }
 
+  function handleImageChange(e) {
+
+    console.log(e.target.files);
+    const imageFile = e.target.files[0];
+
+    const formData = new FormData();
+    formData.append('image', imageFile);
+
+    fetch('https://api.imgur.com/3/image', {
+      method: 'POST',
+      headers: {
+        Authorization: 'Client-ID a27c82776f2c9f3',
+      },
+      body: formData
+    }).then(response => {
+      return response.json();
+    }).then(json => {
+      console.log(json);
+      setImageUrl(json.data.link);
+    });
+
+  }
+
   return (
     <section id="additionalDetails" className="row">
       <div className="col-6">
@@ -55,7 +79,7 @@ function AdditionalDetails({
             <span className="mx-4 align-top">OR</span>
 
             <div className="form-group">
-              <input type="file" className="form-control-file" id="uploadImage" />
+              <input type="file" className="form-control-file" id="uploadImage" onChange={handleImageChange} />
               <small className="form-text text-muted text-left">Image dimensions must be 1000x2000 pixels<br/>Accepted file formats jpg or png</small>
             </div>
           </div>

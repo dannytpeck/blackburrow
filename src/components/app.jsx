@@ -258,6 +258,7 @@ function App() {
           specificDemographicText={specificDemographicText}
           setSpecificDemographicText={setSpecificDemographicText}
           imageUrl={imageUrl}
+          setImageUrl={setImageUrl}
           challengeTitle={challengeTitle}
           activityText={activityText}
           shortDescription={shortDescription}

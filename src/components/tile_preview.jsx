@@ -19,7 +19,7 @@ function TilePreview({
       </div>
       <div className="content-wrapper">
         <h3>{challengeTitle}</h3>
-        <p>To complete this, <strong>{activityText}</strong></p>
+        <p>To complete this, <strong>{activityText}</strong>.</p>
         <hr />
         <h5>About this activity</h5>
         <p>{shortDescription}</p>
