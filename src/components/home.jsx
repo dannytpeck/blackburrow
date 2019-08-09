@@ -2,9 +2,12 @@ import React, { useEffect } from 'react';
 
 /* globals $ */
 function Home({ setAccountManager, setNewOrHistorical }) {
+  // TODO: Add state to hold account manager list from airtable
 
   // Make airtable calls when app starts
   useEffect(() => {
+
+    // TODO: Add airtable call that pulls in a list of account managers
 
     // Enable all tooltips on the page
     $(function() {
