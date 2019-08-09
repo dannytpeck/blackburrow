@@ -67,7 +67,7 @@ function ChallengeContent({
           <label htmlFor="longDescription">Long Description</label>
           <p>Expand on the details and guidelines of the challenge, why this challenge is important, and what pertinent information a participant will need in order to complete the challenge.</p>
 
-          <TrumbowygBox setLongDescription={setLongDescription} />
+          <TrumbowygBox longDescription={longDescription} setLongDescription={setLongDescription} />
 
           <small className="form-text text-muted">0/2000 Characters</small>
         </div>
