@@ -4,6 +4,7 @@ import Airtable from 'airtable';
 const base = new Airtable({ apiKey: 'keyCxnlep0bgotSrX' }).base('appN1J6yscNwlzbzq');
 
 import Header from './header';
+import Footer from './footer';
 import Home from './home';
 import NetNew from './net_new';
 import Historical from './historical';
@@ -128,11 +129,11 @@ function App() {
         setStep('Home');
         break;
       case 'ChallengeContent':
-         if (limeadeChallenges.length > 0) {
-           setStep('Historical');
-         } else {
-           setStep('NetNew');
-         }
+        if (limeadeChallenges.length > 0) {
+          setStep('Historical');
+        } else {
+          setStep('NetNew');
+        }
         break;
       case 'AdditionalDetails':
         setStep('ChallengeContent');
@@ -301,19 +302,7 @@ function App() {
 
       {renderStep()}
 
-      <footer id="footer">
-        {
-          step === 'Home' ?
-          <a href={`https://calendarbuilder.dev.adurolife.com/calendar-builder/#/${calendarHash}`}>Back to Calendar</a> :
-          <button type="button" className="btn btn-outline-primary" onClick={previousStep}>Back</button>
-        }
-        {
-          step === 'ConfirmChallengeDetails' ?
-          <button type="button" className="btn btn-primary ml-5" onClick={submitToAirtable}>Submit</button> :
-          <button type="button" className="btn btn-primary ml-5" onClick={nextStep}>Next</button>
-        }
-      </footer>
-
+      <Footer step={step} previousStep={previousStep} nextStep={nextStep} submitToAirtable={submitToAirtable} />
     </div>
   );
 }
