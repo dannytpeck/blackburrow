@@ -287,6 +287,7 @@ function App() {
           imageUrl={imageUrl}
           challengeTitle={challengeTitle}
           activityText={activityText}
+          endDate={endDate}
           shortDescription={shortDescription}
           longDescription={longDescription}
         />;
