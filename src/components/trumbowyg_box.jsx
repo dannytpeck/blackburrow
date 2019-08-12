@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 /* global $ */
-function TrumbowygBox({ setLongDescription }) {
+function TrumbowygBox({ longDescription, setLongDescription }) {
 
   // Make airtable calls when app starts
   useEffect(() => {
@@ -27,6 +27,8 @@ function TrumbowygBox({ setLongDescription }) {
         setLongDescription(e.target.innerHTML);
       });
     });
+
+    $('.editor').html(longDescription);
 
   }, []); // Pass empty array to only run once on mount
 

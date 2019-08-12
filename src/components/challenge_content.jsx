@@ -5,6 +5,7 @@ import TilePreview from './tile_preview';
 
 /* globals $ */
 function ChallengeContent({
+  imageUrl,
   challengeTitle,
   setChallengeTitle,
   activityText,
@@ -46,34 +47,34 @@ function ChallengeContent({
         <div className="form-group">
           <label htmlFor="challengeTitle">Challenge Title</label>
           <input type="text" className="form-control" id="challengeTitle" placeholder="Lorem Ipsum Dolor sit Amet" value={challengeTitle} onChange={handleChallengeTitleChange} />
-          <small className="form-text text-muted">0/100 Characters</small>
+          <small className="form-text text-muted">{challengeTitle.length}/100 Characters</small>
         </div>
 
         <div className="form-group">
           <label htmlFor="activityText">Activity Text</label>
           <input type="text" className="form-control" id="activityText" placeholder="do the activity in the description" value={activityText} onChange={handleActivityTextChange} />
-          <small className="form-text text-muted">0/50 Characters</small>
+          <small className="form-text text-muted">{activityText.length}/50 Characters</small>
         </div>
 
         <div className="form-group">
           <label htmlFor="shortDescription">Short Description</label>
           <p>A concise statement describing what the participant must do to earn points. Recommendation is no more than one or two sentences.</p>
           <textarea className="form-control" id="shortDescription" rows="5" placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit..." value={shortDescription} onChange={handleShortDescriptionChange}></textarea>
-          <small className="form-text text-muted">0/600 Characters</small>
+          <small className="form-text text-muted">{shortDescription.length}/600 Characters</small>
         </div>
 
         <div className="form-group">
           <label htmlFor="longDescription">Long Description</label>
           <p>Expand on the details and guidelines of the challenge, why this challenge is important, and what pertinent information a participant will need in order to complete the challenge.</p>
 
-          <TrumbowygBox setLongDescription={setLongDescription} />
+          <TrumbowygBox longDescription={longDescription} setLongDescription={setLongDescription} />
 
-          <small className="form-text text-muted">0/2000 Characters</small>
+          <small className="form-text text-muted">{longDescription.length}/2000 Characters</small>
         </div>
 
       </div>
       <div className="col-6">
-        <TilePreview challengeTitle={challengeTitle} activityText={activityText} shortDescription={shortDescription} longDescription={longDescription} />
+        <TilePreview imageUrl={imageUrl} challengeTitle={challengeTitle} activityText={activityText} shortDescription={shortDescription} longDescription={longDescription} />
       </div>
     </section>
   );

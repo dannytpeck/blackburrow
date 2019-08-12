@@ -2,6 +2,7 @@ import React from 'react';
 
 /* global $ */
 function TilePreview({
+  imageUrl,
   challengeTitle,
   activityText,
   shortDescription,
@@ -14,11 +15,11 @@ function TilePreview({
         <h3>Challenge Preview</h3>
       </header>
       <div className="image-wrapper">
-        <img src="http://via.placeholder.com/540x270" />
+        <img src={imageUrl} />
       </div>
       <div className="content-wrapper">
         <h3>{challengeTitle}</h3>
-        <p>To complete this, <strong>{activityText}</strong></p>
+        <p>To complete this, <strong>{activityText}</strong>.</p>
         <hr />
         <h5>About this activity</h5>
         <p>{shortDescription}</p>

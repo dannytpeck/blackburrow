@@ -77,7 +77,7 @@ function NetNew({
 
         </div>
 
-        <div className="form-row mt-5">
+        <div className="form-row mt-5" style={{ opacity: tileType === 'Informational Tile' ? '0' : '1' }}>
           <div className="col-6">
             <div className="form-group">
               <label htmlFor="pointValue">Point Value</label>
