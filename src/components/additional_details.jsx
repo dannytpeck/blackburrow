@@ -73,12 +73,6 @@ function AdditionalDetails({
           <label>Tile Image</label>
           <div className="choose-image">
             <div className="form-group">
-              <button type="button" className="btn btn-outline-primary">Browse our Library</button>
-            </div>
-
-            <span className="mx-4 align-top">OR</span>
-
-            <div className="form-group">
               <input type="file" className="form-control-file" id="uploadImage" onChange={handleImageChange} />
               <small className="form-text text-muted text-left">Image dimensions must be 1000x2000 pixels<br/>Accepted file formats jpg or png</small>
             </div>
