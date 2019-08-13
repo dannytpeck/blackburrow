@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import moment from 'moment';
 
 import TilePreview from './tile_preview';
 
@@ -43,12 +44,12 @@ function ConfirmChallengeDetails({
         <div className="row">
           <div className="col">
             <label>Start Date:</label>
-            <p>{startDate}</p>
+            <p>{moment(startDate).format('L')}</p>
           </div>
 
           <div className="col">
             <label>End Date:</label>
-            <p>{endDate}</p>
+            <p>{moment(endDate).format('L')}</p>
           </div>
         </div>
 

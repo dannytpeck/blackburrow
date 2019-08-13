@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import moment from 'moment';
 
 import TilePreview from './tile_preview';
 
@@ -7,6 +8,7 @@ function StepConfiguration({
   imageUrl,
   challengeTitle,
   activityText,
+  endDate,
   shortDescription,
   longDescription,
 }) {
@@ -54,7 +56,7 @@ function StepConfiguration({
             <div className="form-group">
               <select className="form-control">
                 <option>Select</option>
-                <option>By [End Date]</option>
+                <option>By {moment(endDate).format('L')}</option>
                 <option>Each Week</option>
               </select>
             </div>
