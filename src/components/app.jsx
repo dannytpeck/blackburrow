@@ -12,6 +12,7 @@ import ChallengeContent from './challenge_content';
 import AdditionalDetails from './additional_details';
 import ConfirmChallengeDetails from './confirm_challenge_details';
 import StepConfiguration from './step_configuration';
+import ConfirmSubmitModal from './confirm_submit_modal';
 
 /* globals $ */
 function App() {
@@ -67,11 +68,10 @@ function App() {
 
   function submitToAirtable() {
     const acknowledgementChecked = $('#acknowledgement').prop('checked');
-
+    $('#confirmSubmitModal').modal();
     if (acknowledgementChecked) {
 
       const phase = 'Phase 1';
-
       base('Challenges').create({
         'Title': challengeTitle,
         'Calendar': calendar.fields['hash'],
@@ -101,7 +101,7 @@ function App() {
           return;
         }
 
-        alert('Challenge added successfully!');
+        $('#confirmSubmitModal .modal-body').html('<p>Challenge added successfully!</p>');
 
         // Update "updated" field in calendar with the current date
         base('Calendars').update(calendar.id, {
@@ -116,7 +116,7 @@ function App() {
       });
 
     } else {
-      alert('You must check the acknowledgement to submit your request.');
+      $('#confirmSubmitModal .modal-body').html('<p>You must check the acknowledgement to submit your request.</p>');
     }
   }
 
@@ -300,10 +300,9 @@ function App() {
   return (
     <div className="app">
       <Header />
-
       {renderStep()}
-
       <Footer step={step} previousStep={previousStep} nextStep={nextStep} submitToAirtable={submitToAirtable} />
+      <ConfirmSubmitModal />
     </div>
   );
 }
