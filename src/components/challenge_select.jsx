@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 
 function ChallengeSelect({ challenges, setChallenge }) {
   const [open, setOpen] = React.useState(false);
@@ -23,7 +24,7 @@ function ChallengeSelect({ challenges, setChallenge }) {
   function renderChallenge(challenge) {
     return (
       <span className="dropdown-item" key={challenge.ChallengeId} onClick={() => selectChallenge(challenge)}>
-        {challenge.Name}
+        {challenge.Name} <span className="text-black-50">({moment(challenge.StartDate).format('L')} - {moment(challenge.EndDate).format('L')})</span>
       </span>
     );
   }
