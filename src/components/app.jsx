@@ -66,10 +66,42 @@ function App() {
 
   }, []); // Pass empty array to only run once on mount
 
+  function submitToWrike() {
+    const today = moment().format('YYYY-MM-DD');
+    const dueDate = moment().add(7, 'days').format('YYYY-MM-DD');
+    const responsibleAm = 'KUAEFOGT'; // Meredith
+
+    const data = {
+      title: `Custom Challenge - ${calendar.fields['client']} - ${challengeTitle}`,
+      description: `A new custom challenge has been created in Blackburrow... ${challengeTitle} [Insert Amy's View Link Here]`,
+      dates: {
+        start: today,
+        due: dueDate
+      },
+      responsibles: [responsibleAm]
+    };
+
+    $.ajax({
+      type: 'POST',
+      url: 'https://www.wrike.com/api/v4/folders/IEAAX5JZI4CCJNWS/tasks',
+      data: JSON.stringify(data),
+      dataType: 'json',
+      contentType: 'application/json',
+      headers: {
+        Authorization: 'Bearer eyJ0dCI6InAiLCJhbGciOiJIUzI1NiIsInR2IjoiMSJ9.eyJkIjoie1wiYVwiOjc4MzY3MyxcImlcIjo2NDQ1NjI3LFwiY1wiOjQ2MTI5ODEsXCJ1XCI6NjM4OTA3MSxcInJcIjpcIlVTXCIsXCJzXCI6W1wiV1wiLFwiRlwiLFwiSVwiLFwiVVwiLFwiS1wiLFwiQ1wiLFwiQVwiLFwiTFwiXSxcInpcIjpbXSxcInRcIjowfSIsImlhdCI6MTU2NTEyMDE5Nn0.ZhznMJNLBBCqq43v4W0T_OFW-OJpBiXCLM6-7aJtiWU'
+      }
+    })
+    .done(data => {
+      console.log(data);
+    });
+  }
+
   function submitToAirtable() {
     const acknowledgementChecked = $('#acknowledgement').prop('checked');
     $('#confirmSubmitModal').modal();
     if (acknowledgementChecked) {
+
+      submitToWrike();
 
       const phase = 'Phase 1';
       base('Challenges').create({
