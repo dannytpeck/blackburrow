@@ -92,7 +92,8 @@ function App() {
       }
     })
     .done(data => {
-      console.log(data);
+      const url = data[0].permalink;
+      $('#confirmSubmitModal .modal-body').append(`<p>Wrike task created successfully: ${url}</p>`);
     });
   }
 

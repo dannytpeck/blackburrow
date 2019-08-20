@@ -11,9 +11,7 @@ function ConfirmSubmitModal() {
               <span>&times;</span>
             </button>
           </div>
-          <div className="modal-body">
-            ...
-          </div>
+          <div className="modal-body"></div>
           <div className="modal-footer">
             <button type="button" className="btn btn-primary" data-dismiss="modal">Okay</button>
           </div>
