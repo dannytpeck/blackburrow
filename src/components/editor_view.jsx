@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import moment from 'moment';
+import Airtable from 'airtable';
+const base = new Airtable({ apiKey: 'keyCxnlep0bgotSrX' }).base('appN1J6yscNwlzbzq');
 
 import TrumbowygBox from './trumbowyg_box';
 import TilePreview from './tile_preview';
@@ -31,6 +33,26 @@ function EditorView({
 
   // Make airtable calls when app starts
   useEffect(() => {
+    const recordId = window.location.hash.slice(22);
+
+    base('Calendars').find(recordId, function(err, record) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+
+      console.log('Retrieved', record);
+      setTileType(record.fields['Reward Occurrence'] + ' ' + record.fields['Verified']);
+      setStateDate(record.fields['Start date']);
+      setEndDate(record.fields['End date']);
+      setPointValue(record.fields['Points']);
+      setImageUrl(record.fields['Header Image']);
+      setChallengeTitle(record.fields['Title'] ? record.fields['Title'] : '');
+      setActivityText(record.fields['Activity Goal Text'] ? record.fields['Activity Goal Text'] : '');
+      setShortDescription(record.fields['Instructions'] ? record.fields['Instructions'] : '');
+      setLongDescription(record.fields['More Information Html'] ? record.fields['More Information Html'] : '');
+
+    });
 
     // Enable all tooltips on the page
     $(function() {

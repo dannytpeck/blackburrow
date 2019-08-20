@@ -18,8 +18,7 @@ import EditorView from './editor_view';
 /* globals $ */
 function App() {
   const [calendar, setCalendar] = React.useState(null);
-  // const [step, setStep] = React.useState('Home');
-  const [step, setStep] = React.useState('EditorView');
+  const [step, setStep] = React.useState('Home');
 
   // Home
   const [accountManager, setAccountManager] = React.useState('');
@@ -47,10 +46,16 @@ function App() {
   const [targeting, setTargeting] = React.useState('Entire Population');
   const [specificDemographicText, setSpecificDemographicText] = React.useState('');
 
-  const calendarHash = window.location.hash.slice(2);
+  const calendarHash = window.location.hash.slice(2, 16);
 
   // Make airtable calls when app starts
   React.useEffect(() => {
+    const editing = window.location.hash.includes('edit');
+
+    if (editing) {
+      setStep('EditorView');
+    }
+
     base('Calendars').select({
       filterByFormula: `{hash}='${calendarHash}'`
     }).eachPage((records, fetchNextPage) => {
@@ -68,14 +73,16 @@ function App() {
 
   }, []); // Pass empty array to only run once on mount
 
-  function submitToWrike() {
+  function submitToWrike(record) {
+    console.log(record);
     const today = moment().format('YYYY-MM-DD');
     const dueDate = moment().add(7, 'days').format('YYYY-MM-DD');
     const responsibleAm = 'KUAEFOGT'; // Meredith
+    const editorUrl = `https://calendarbuilder.dev.adurolife.com/blackburrow/#/${calendarHash}/edit/${record.id}`;
 
     const data = {
       title: `Custom Challenge - ${calendar.fields['client']} - ${challengeTitle}`,
-      description: `A new custom challenge has been created in Blackburrow... ${challengeTitle} [Insert Amy's View Link Here]`,
+      description: `A new custom challenge has been created in Blackburrow... View it here: <a href="${editorUrl}">${editorUrl}</a>`,
       dates: {
         start: today,
         due: dueDate
@@ -94,8 +101,8 @@ function App() {
       }
     })
     .done(data => {
-      const url = data[0].permalink;
-      $('#confirmSubmitModal .modal-body').append(`<p>Wrike task created successfully: ${url}</p>`);
+      const url = data.data[0].permalink;
+      $('#confirmSubmitModal .modal-body').append(`<p>Wrike task created successfully: <a href="${url}">${url}</a></p>`);
     });
   }
 
@@ -103,8 +110,6 @@ function App() {
     const acknowledgementChecked = $('#acknowledgement').prop('checked');
     $('#confirmSubmitModal').modal();
     if (acknowledgementChecked) {
-
-      submitToWrike();
 
       const phase = 'Phase 1';
       base('Challenges').create({
@@ -137,6 +142,9 @@ function App() {
         }
 
         $('#confirmSubmitModal .modal-body').html('<p>Challenge added successfully!</p>');
+
+        // Submit to wrike using record details
+        submitToWrike(record);
 
         // Update "updated" field in calendar with the current date
         base('Calendars').update(calendar.id, {
