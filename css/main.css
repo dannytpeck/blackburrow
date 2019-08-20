@@ -97,3 +97,13 @@ label {
   height: 24px;
   width: 24px;
 }
+
+label[for="subgroupIdNumber"] {
+  display: inline-block;
+}
+
+#subgroupIdNumber {
+  display: inline-block;
+  width: 60px;
+  margin-left: 1em;
+}

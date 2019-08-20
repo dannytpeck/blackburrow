@@ -13,11 +13,13 @@ import AdditionalDetails from './additional_details';
 import ConfirmChallengeDetails from './confirm_challenge_details';
 import StepConfiguration from './step_configuration';
 import ConfirmSubmitModal from './confirm_submit_modal';
+import EditorView from './editor_view';
 
 /* globals $ */
 function App() {
   const [calendar, setCalendar] = React.useState(null);
-  const [step, setStep] = React.useState('Home');
+  // const [step, setStep] = React.useState('Home');
+  const [step, setStep] = React.useState('EditorView');
 
   // Home
   const [accountManager, setAccountManager] = React.useState('');
@@ -323,6 +325,31 @@ function App() {
           endDate={endDate}
           shortDescription={shortDescription}
           longDescription={longDescription}
+        />;
+
+      case 'EditorView':
+        return <EditorView
+          tileType={tileType}
+          setTileType={setTileType}
+          startDate={startDate}
+          setStateDate={setStateDate}
+          endDate={endDate}
+          setEndDate={setEndDate}
+          pointValue={pointValue}
+          setPointValue={setPointValue}
+          featuredActivity={featuredActivity}
+          targeting={targeting}
+          specificDemographicText={specificDemographicText}
+          imageUrl={imageUrl}
+          setImageUrl={setImageUrl}
+          challengeTitle={challengeTitle}
+          setChallengeTitle={setChallengeTitle}
+          activityText={activityText}
+          setActivityText={setActivityText}
+          shortDescription={shortDescription}
+          setShortDescription={setShortDescription}
+          longDescription={longDescription}
+          setLongDescription={setLongDescription}
         />;
 
       default:
