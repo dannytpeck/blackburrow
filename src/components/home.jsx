@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 /* globals $ */
-function Home({ setAccountManager, setNewOrHistorical }) {
+function Home({ accountManager, setAccountManager, newOrHistorical, setNewOrHistorical }) {
   // TODO: Add state to hold account manager list from airtable
 
   // Make airtable calls when app starts
@@ -33,7 +33,7 @@ function Home({ setAccountManager, setNewOrHistorical }) {
 
       <div className="form-group mt-5">
         <label htmlFor="primaryAccountManager">Primary Account Manager</label>
-        <select className="form-control" id="primaryAccountManager" onChange={handleAccountManagerChange}>
+        <select className="form-control" id="primaryAccountManager" value={accountManager} onChange={handleAccountManagerChange}>
           <option>Select an Account Manager</option>
           <option>Aaron D.</option>
           <option>Alison D.</option>
@@ -51,11 +51,11 @@ function Home({ setAccountManager, setNewOrHistorical }) {
       <label>Lorem Enim laudantium laboris but eaque?</label>
       <img className="tooltip-icon" src="images/tooltip.svg" data-toggle="tooltip" data-original-title="Default tooltip" />
       <div className="form-check">
-        <input className="form-check-input" type="radio" name="netNewOrHistoricalRadios" id="netNew" value="NetNew" onChange={handleNewOrHistoricalChange} defaultChecked />
+        <input className="form-check-input" type="radio" name="netNewOrHistoricalRadios" id="netNew" value="NetNew" onChange={handleNewOrHistoricalChange} checked={newOrHistorical === 'NetNew'} />
         <label className="form-check-label" htmlFor="netNew">Net New</label>
       </div>
       <div className="form-check">
-        <input className="form-check-input" type="radio" name="netNewOrHistoricalRadios" id="historical" value="Historical" onChange={handleNewOrHistoricalChange} />
+        <input className="form-check-input" type="radio" name="netNewOrHistoricalRadios" id="historical" value="Historical" onChange={handleNewOrHistoricalChange} checked={newOrHistorical === 'Historical'} />
         <label className="form-check-label" htmlFor="historical">Historical</label>
       </div>
 

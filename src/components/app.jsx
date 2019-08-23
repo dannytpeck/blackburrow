@@ -228,7 +228,8 @@ function App() {
       case 'Home':
         if (!calendar) {
           alert('Check your url, a calendar hash is required');
-          throw new Error('Check your url, a calendar hash is required');
+        } if (!accountManager) {
+          alert('Select an Account Manager to Continue');
         } else {
           setStep(newOrHistorical);
         }
@@ -271,7 +272,9 @@ function App() {
 
       case 'Home':
         return <Home
+          accountManager={accountManager}
           setAccountManager={setAccountManager}
+          newOrHistorical={newOrHistorical}
           setNewOrHistorical={setNewOrHistorical}
         />;
 
