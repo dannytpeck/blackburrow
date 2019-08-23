@@ -28,7 +28,7 @@ function App() {
   const [tileType, setTileType] = React.useState('One-Time Self-Report Challenge');
   const [startDate, setStateDate] = React.useState('');
   const [endDate, setEndDate] = React.useState('');
-  const [pointValue, setPointValue] = React.useState(0);
+  const [pointValue, setPointValue] = React.useState('');
 
   // Historical
   const [limeadeChallenges, setLimeadeChallenges] = React.useState([]);
@@ -163,6 +163,35 @@ function App() {
     }
   }
 
+  // Basic validation (is a value present?)
+  // TODO: this is currently just for NetNew as a demo, add for all Steps and improve
+  function validatedFields() {
+    const $startDate = $('#startDate');
+    const $endDate = $('#endDate');
+    const $pointValue = $('#pointValue');
+
+    let allInputsAreValid = true;
+
+    function validate($element) {
+      if ($element.val()) {
+        $element.removeClass('is-invalid');
+      } else {
+        $element.addClass('is-invalid');
+        allInputsAreValid = false;
+      }
+    }
+
+    switch(step) {
+      case 'NetNew':
+        validate($startDate);
+        validate($endDate);
+        validate($pointValue);
+        break;
+    }
+
+    return allInputsAreValid;
+  }
+
   function previousStep() {
     switch (step) {
       case 'NetNew':
@@ -205,7 +234,9 @@ function App() {
         }
         break;
       case 'NetNew':
-        setStep('ChallengeContent');
+        if (validatedFields()) {
+          setStep('ChallengeContent');
+        }
         break;
       case 'Historical':
         if (historicalEdits === 'Yes') {
