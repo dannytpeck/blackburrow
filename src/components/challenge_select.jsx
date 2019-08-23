@@ -40,7 +40,7 @@ function ChallengeSelect({ challenges, setChallenge }) {
       <img id="spinner" src="images/spinner.svg" />
       <div className="dropdown">
         <div className="challenge-search input-group">
-          <input value={searchText} onChange={handleChange} type="text" className="form-control" placeholder="Lorem Ipsum Dolor sit Amet" />
+          <input id="searchPreviousChallenge" value={searchText} onChange={handleChange} type="text" className="form-control" placeholder="Lorem Ipsum Dolor sit Amet" />
           <span className="oi oi-magnifying-glass"></span>
         </div>
 

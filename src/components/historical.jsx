@@ -17,6 +17,7 @@ function Historical({
   setEndDate,
   pointValue,
   setPointValue,
+  historicalEdits,
   setHistoricalEdits,
   imageUrl,
   setImageUrl,
@@ -127,7 +128,7 @@ function Historical({
           <div className="col-6">
             <div className="form-group">
               <label htmlFor="editContentImage">Lorem...edit content image</label>
-              <select className="form-control" id="editContentImage" onChange={handleChange}>
+              <select className="form-control" id="editContentImage" onChange={handleChange} value={historicalEdits}>
                 <option>Select</option>
                 <option>Yes</option>
                 <option>No</option>

@@ -32,7 +32,7 @@ function App() {
 
   // Historical
   const [limeadeChallenges, setLimeadeChallenges] = React.useState([]);
-  const [historicalEdits, setHistoricalEdits] = React.useState(null);
+  const [historicalEdits, setHistoricalEdits] = React.useState('No');
 
   // ChallengeContent
   const [imageUrl, setImageUrl] = React.useState('http://via.placeholder.com/540x270');
@@ -169,6 +169,10 @@ function App() {
     const $startDate = $('#startDate');
     const $endDate = $('#endDate');
     const $pointValue = $('#pointValue');
+    const $searchPreviousChallenge = $('#searchPreviousChallenge');
+    const $challengeTitle = $('#challengeTitle');
+    const $activityText = $('#activityText');
+    const $shortDescription = $('#shortDescription');
 
     let allInputsAreValid = true;
 
@@ -186,6 +190,17 @@ function App() {
         validate($startDate);
         validate($endDate);
         validate($pointValue);
+        break;
+      case 'Historical':
+        validate($searchPreviousChallenge);
+        validate($startDate);
+        validate($endDate);
+        validate($pointValue);
+        break;
+      case 'ChallengeContent':
+        validate($challengeTitle);
+        validate($activityText);
+        validate($shortDescription);
         break;
     }
 
@@ -240,10 +255,12 @@ function App() {
         }
         break;
       case 'Historical':
-        if (historicalEdits === 'Yes') {
-          setStep('ChallengeContent');
-        } else if (historicalEdits === 'No') {
-          setStep('ConfirmChallengeDetails');
+        if (validatedFields()) {
+          if (historicalEdits === 'Yes') {
+            setStep('ChallengeContent');
+          } else if (historicalEdits === 'No') {
+            setStep('ConfirmChallengeDetails');
+          }
         }
         break;
       case 'ChallengeContent':
@@ -251,10 +268,14 @@ function App() {
           case 'One-Time Self-Report Challenge':
           case 'Verified Challenge':
           case 'Informational Tile':
-            setStep('AdditionalDetails');
+            if (validatedFields()) {
+              setStep('AdditionalDetails');
+            }
             break;
           case 'Steps Challenge':
-            setStep('StepConfiguration');
+            if (validatedFields()) {
+              setStep('StepConfiguration');
+            }
             break;
         }
         break;
@@ -301,6 +322,7 @@ function App() {
           setEndDate={setEndDate}
           pointValue={pointValue}
           setPointValue={setPointValue}
+          historicalEdits={historicalEdits}
           setHistoricalEdits={setHistoricalEdits}
           imageUrl={imageUrl}
           setImageUrl={setImageUrl}
