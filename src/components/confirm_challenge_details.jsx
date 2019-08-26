@@ -64,12 +64,14 @@ function ConfirmChallengeDetails({
         <label>Targeting:</label>
         <p>{targeting}</p>
 
+        {/* Hiding Additional Resources section for now
         <label>Additional Resources:</label>
         <ul>
           <li>corn-challenge-document 07-30-2019.pdf</li>
           <li>Lower Your Carbon Footprint.pdf</li>
           <li>https://example.com/eat-weight-veggies.pdf</li>
         </ul>
+        */}
 
         <div className="form-group mt-5">
           <label>Lorem Ipsum</label>

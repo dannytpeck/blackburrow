@@ -110,6 +110,7 @@ function AdditionalDetails({
           <textarea className="form-control mt-4" id="targetingDetails" rows="3" value={specificDemographicText} onChange={handleSpecificDemographicText}></textarea>
         </div>
 
+        {/* Hiding Additional Resources section for now
         <div className="form-group mt-5">
           <label className="mb-0">Additional Resources</label>
           <small className="form-text text-muted text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</small>
@@ -117,6 +118,7 @@ function AdditionalDetails({
             <button type="button" className="btn btn-outline-primary my-3">Add Resources</button>
           </div>
         </div>
+        */}
 
       </div>
       <div className="col-6">
