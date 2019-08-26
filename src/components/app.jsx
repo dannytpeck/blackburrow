@@ -76,7 +76,7 @@ function App() {
   function submitToWrike(record) {
     console.log(record);
     const today = moment().format('YYYY-MM-DD');
-    const dueDate = moment().add(7, 'days').format('YYYY-MM-DD');
+    const dueDate = moment().add(14, 'days').format('YYYY-MM-DD');
     const responsibleAm = 'KUAEFOGT'; // Meredith
     const editorUrl = `https://calendarbuilder.dev.adurolife.com/blackburrow/#/${calendarHash}/edit/${record.id}`;
 
@@ -102,7 +102,11 @@ function App() {
     })
     .done(data => {
       const url = data.data[0].permalink;
-      $('#confirmSubmitModal .modal-body').append(`<p>Wrike task created successfully: <a href="${url}">${url}</a></p>`);
+      $('#confirmSubmitModal .modal-body').append(`
+          <p>View your new challenge in <a href="https://calendarbuilder.dev.adurolife.com/staging/calendar-builder/#/${calendarHash}" target="_blank">Calendar Builder</a></p>
+          <p>Or <a href="https://calendarbuilder.dev.adurolife.com/blackburrow/#/${calendarHash}">create another custom challenge</a>.</p>
+          <p>Wrike task created successfully (keeping this here for testing for now): <a href="${url}" target="_blank">${url}</a></p>
+        `);
     });
   }
 
