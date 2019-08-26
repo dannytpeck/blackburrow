@@ -77,7 +77,9 @@ function App() {
     console.log(record);
     const today = moment().format('YYYY-MM-DD');
     const dueDate = moment().add(14, 'days').format('YYYY-MM-DD');
-    const responsibleAm = 'KUAEFOGT'; // Meredith
+    const responsibleAm = 'KUAB7PEE'; // Jill
+    const responsibleEditor = 'KUAEFOGT'; // Meredith
+    const responsibleAmy = 'KUAFS43Q'; // Amy
     const editorUrl = `https://calendarbuilder.dev.adurolife.com/blackburrow/#/${calendarHash}/edit/${record.id}`;
 
     const data = {
@@ -87,12 +89,12 @@ function App() {
         start: today,
         due: dueDate
       },
-      responsibles: [responsibleAm]
+      responsibles: [responsibleAm, responsibleEditor]
     };
 
     $.ajax({
       type: 'POST',
-      url: 'https://www.wrike.com/api/v4/folders/IEAAX5JZI4CCJNWS/tasks',
+      url: 'https://www.wrike.com/api/v4/folders/IEAAX5JZI4KS73DO/tasks',
       data: JSON.stringify(data),
       dataType: 'json',
       contentType: 'application/json',
