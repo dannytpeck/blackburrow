@@ -185,7 +185,7 @@ function App() {
       }
     }
 
-    switch(step) {
+    switch (step) {
       case 'NetNew':
         validate($startDate);
         validate($endDate);
