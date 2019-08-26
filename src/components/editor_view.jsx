@@ -185,11 +185,13 @@ function EditorView({
           <small className="form-text text-muted">{longDescription.length}/2000 Characters</small>
         </div>
 
+        {/* Hiding Additional Resources for now
         <label>Attachments:</label>
         <ul>
           <li>corn-challenge-document 07-30-2019.pdf</li>
           <li>Lower Your Carbon Footprint.pdf</li>
         </ul>
+        */}
 
       </div>
       <div className="col-6">
