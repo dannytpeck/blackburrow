@@ -80,11 +80,18 @@ function App() {
     const responsibleAm = 'KUAB7PEE'; // Jill
     const responsibleEditor = 'KUAEFOGT'; // Meredith
     const responsibleAmy = 'KUAFS43Q'; // Amy
+    const calendarUrl = `https://calendarbuilder.dev.adurolife.com/calendar-builder/#/${calendarHash}`;
     const editorUrl = `https://calendarbuilder.dev.adurolife.com/blackburrow/#/${calendarHash}/edit/${record.id}`;
+
+    const description = `
+      <p>A new custom challenge has been created in Blackburrow... View it here: <a href="${editorUrl}">${editorUrl}</a></p>
+      <p>View the client's <a href="${calendarUrl}">program Calendar</a>.</p>
+      <p>Download the image from <a href="${imageUrl}">${imageUrl}</a></p>
+    `;
 
     const data = {
       title: `Custom Challenge - ${calendar.fields['client']} - ${challengeTitle}`,
-      description: `A new custom challenge has been created in Blackburrow... View it here: <a href="${editorUrl}">${editorUrl}</a>`,
+      description: description,
       dates: {
         start: today,
         due: dueDate
@@ -104,11 +111,12 @@ function App() {
     })
     .done(data => {
       const url = data.data[0].permalink;
-      $('#confirmSubmitModal .modal-body').append(`
-          <p>View your new challenge in <a href="https://calendarbuilder.dev.adurolife.com/staging/calendar-builder/#/${calendarHash}" target="_blank">Calendar Builder</a></p>
-          <p>Or <a href="https://calendarbuilder.dev.adurolife.com/blackburrow/#/${calendarHash}">create another custom challenge</a>.</p>
-          <p>Wrike task created successfully (keeping this here for testing for now): <a href="${url}" target="_blank">${url}</a></p>
-        `);
+      const confirmationText = `
+        <p>View your new challenge in <a href="${calendarUrl}" target="_blank">Calendar Builder</a></p>
+        <p>Or <a href="https://calendarbuilder.dev.adurolife.com/blackburrow/#/${calendarHash}">create another custom challenge</a>.</p>
+        <p>Wrike task created successfully (keeping this here for testing for now): <a href="${url}" target="_blank">${url}</a></p>
+      `;
+      $('#confirmSubmitModal .modal-body').append(confirmationText);
     });
   }
 
