@@ -11,6 +11,12 @@ function StepConfiguration({
   endDate,
   shortDescription,
   longDescription,
+  individualOrTeam,
+  setIndividualOrTeam,
+  setTeamMin,
+  teamMin,
+  setTeamMax,
+  teamMax
 }) {
 
   // Make airtable calls when app starts
@@ -23,6 +29,18 @@ function StepConfiguration({
 
   }, []); // Pass empty array to only run once on mount
 
+  function handleIndividualOrTeamChange(e) {
+    setIndividualOrTeam(e.target.value);
+  }
+
+  function handleTeamMinChange(e) {
+    setTeamMin(e.target.value);
+  }
+
+  function handleTeamMaxChange(e) {
+    setTeamMax(e.target.value);
+  }
+
   return (
     <section id="stepConfiguration" className="row">
       <div className="col-6">
@@ -30,15 +48,13 @@ function StepConfiguration({
         <h3 className="mb-5">Challenge Configuration</h3>
 
         <label className="mb-0">Is this a Team Challenge?</label>
-        <small className="form-text text-muted text-left">Lorem Team challenges etc. etc.</small>
-        <small className="form-text text-muted text-left">Team sizes can be between 2 and 20 people.</small>
 
         <div className="form-check">
-          <input className="form-check-input" type="radio" name="individualOrTeamRadios" id="individualChallenge" defaultChecked />
+          <input className="form-check-input" type="radio" name="individualOrTeamRadios" id="individualChallenge" value="Individual" onChange={handleIndividualOrTeamChange} checked={individualOrTeam === 'Individual'} />
           <label className="form-check-label" htmlFor="individualChallenge">Individual Challenge</label>
         </div>
         <div className="form-check">
-          <input className="form-check-input" type="radio" name="individualOrTeamRadios" id="teamChallenge" />
+          <input className="form-check-input" type="radio" name="individualOrTeamRadios" id="teamChallenge" value="Team" onChange={handleIndividualOrTeamChange} checked={individualOrTeam === 'Team'} />
           <label className="form-check-label" htmlFor="teamChallenge">Team Challenge</label>
         </div>
 
@@ -56,9 +72,53 @@ function StepConfiguration({
             <div className="form-group">
               <select className="form-control">
                 <option>Select</option>
-                <option>By {moment(endDate).format('L')}</option>
+                <option>By End Date ({moment(endDate).format('L')})</option>
                 <option>Each Week</option>
               </select>
+            </div>
+          </div>
+        </div>
+
+        <div className="form-row mt-5" style={{ opacity: individualOrTeam === 'Team' ? '1' : '0' }}>
+          <div className="col-8">
+            <div className="form-group">
+              <label htmlFor="teamSize">Team Size</label>
+              <small className="form-text text-muted text-left">Team sizes can be between 2 and 20 people.</small>
+                <div className="row">
+                  <div className="col">
+                    <label htmlFor="teamMin">Team Minimum</label>
+                    <select className="form-control" id="teamMin" defaultValue='4' onChange={handleTeamMinChange}>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                    </select>
+                  </div>
+                  <div className="col">
+                    <label htmlFor="teamMax">Team Maximum</label>
+                    <select className="form-control" id="teamMax" defaultValue='12' onChange={handleTeamMaxChange}>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                      <option>6</option>
+                      <option>7</option>
+                      <option>8</option>
+                      <option>9</option>
+                      <option>10</option>
+                      <option>11</option>
+                      <option>12</option>
+                      <option>13</option>
+                      <option>14</option>
+                      <option>15</option>
+                      <option>16</option>
+                      <option>17</option>
+                      <option>18</option>
+                      <option>19</option>
+                      <option>20</option>
+                    </select>
+                  </div>
+                </div>
             </div>
           </div>
         </div>

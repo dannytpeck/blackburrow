@@ -26,7 +26,7 @@ function App() {
 
   // NetNew
   const [tileType, setTileType] = React.useState('One-Time Self-Report Challenge');
-  const [startDate, setStateDate] = React.useState('');
+  const [startDate, setStartDate] = React.useState('');
   const [endDate, setEndDate] = React.useState('');
   const [pointValue, setPointValue] = React.useState('');
 
@@ -41,6 +41,11 @@ function App() {
   const [shortDescription, setShortDescription] = React.useState('');
   const [longDescription, setLongDescription] = React.useState('');
 
+  // StepConfiguration
+  const [individualOrTeam, setIndividualOrTeam] = React.useState('Individual');
+  const [teamMin, setTeamMin] = React.useState();
+  const [teamMax, setTeamMax] = React.useState();
+
   // AdditionalDetails
   const [featuredActivity, setFeaturedActivity] = React.useState(false);
   const [targeting, setTargeting] = React.useState('Entire Population');
@@ -54,7 +59,11 @@ function App() {
 
     if (editing) {
       setStep('EditorView');
+    } else {
+      // cheating to debug
+      setStep('StepConfiguration');
     }
+
 
     base('Calendars').select({
       filterByFormula: `{hash}='${calendarHash}'`
@@ -353,7 +362,7 @@ function App() {
           tileType={tileType}
           setTileType={setTileType}
           startDate={startDate}
-          setStateDate={setStateDate}
+          setStartDate={setStartDate}
           endDate={endDate}
           setEndDate={setEndDate}
           pointValue={pointValue}
@@ -366,7 +375,7 @@ function App() {
           limeadeChallenges={limeadeChallenges}
           setLimeadeChallenges={setLimeadeChallenges}
           startDate={startDate}
-          setStateDate={setStateDate}
+          setStartDate={setStartDate}
           endDate={endDate}
           setEndDate={setEndDate}
           pointValue={pointValue}
@@ -438,6 +447,10 @@ function App() {
           endDate={endDate}
           shortDescription={shortDescription}
           longDescription={longDescription}
+          individualOrTeam={individualOrTeam}
+          setIndividualOrTeam={setIndividualOrTeam}
+          setTeamMin={setTeamMin}
+          setTeamMax={setTeamMax}
         />;
 
       case 'EditorView':
@@ -445,7 +458,7 @@ function App() {
           tileType={tileType}
           setTileType={setTileType}
           startDate={startDate}
-          setStateDate={setStateDate}
+          setStartDate={setStartDate}
           endDate={endDate}
           setEndDate={setEndDate}
           pointValue={pointValue}
