@@ -74,7 +74,7 @@ function ConfirmChallengeDetails({
         */}
 
         <div className="form-group mt-5">
-          <label>Lorem Ipsum</label>
+          <label>Acknowledgement</label>
           <div className="form-check">
             <input className="form-check-input" type="checkbox" id="acknowledgement" />
             <label className="form-check-label" htmlFor="acknowledgement">I acknowledge that my content will be reviewed by an ADURO Content Manager for basic spelling and grammatical errors prior to loading to my wellness platform.</label>
