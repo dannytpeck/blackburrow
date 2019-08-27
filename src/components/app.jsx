@@ -108,6 +108,29 @@ function App() {
 
   function submitToAirtable() {
     const acknowledgementChecked = $('#acknowledgement').prop('checked');
+    const isFeatured = featuredActivity ? 'yes' : 'no';
+    console.log('isFeatured = ' + isFeatured);
+    const isTargeted = (targeting === 'Specific Demographic') ? 'yes' : 'no';
+    console.log('isTargeted = ' + isTargeted);
+
+    let customTileType = '';
+    switch (newOrHistorical) {
+      case 'NetNew':
+        customTileType = 'Net New';
+        break;
+      case 'Historical':
+        switch (historicalEdits) {
+          case 'Yes':
+            customTileType = 'Revised';
+            break;
+          case 'No':
+            customTileType = 'Rerun';
+            break;
+        }
+        break;
+    }
+    console.log('customTileType = ' + customTileType);
+
     $('#confirmSubmitModal').modal();
     if (acknowledgementChecked) {
 
@@ -127,12 +150,24 @@ function App() {
         'Category': 'Health and Fitness',
         'Instructions': shortDescription,
         'More Information Html': longDescription,
+        'Featured Activity': isFeatured,
+        'Targeted Activity': isTargeted,
+        'Targeting Notes': specificDemographicText,
+        'Subgroup': null,
+        'Targeting Column 1': null,
+        'Targeting Value 1': '',
+        'Targeting Column 2': null,
+        'Targeting Value 2': '',
+        'Targeting Column 3': null,
+        'Targeting Value 3': '',
+        'Custom Tile Type': customTileType,
         'Activity Tracking Type': 'Event',
         'Activity Goal': '',
         'Activity Goal Text': activityText,
         'Device Enabled': 'No',
         'Device Units': '',
         'Header Image': imageUrl,
+        'Limeade Image Url': '',
         'Team Size Minimum': '',
         'Team Size Maximum': ''
       }, (err, record) => {
@@ -185,7 +220,7 @@ function App() {
       }
     }
 
-    switch(step) {
+    switch (step) {
       case 'NetNew':
         validate($startDate);
         validate($endDate);

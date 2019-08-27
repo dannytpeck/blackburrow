@@ -82,6 +82,14 @@ function Historical({
 
   }
 
+  function handleStartDateChange(e) {
+    setStateDate(e.target.value);
+  }
+
+  function handleEndDateChange(e) {
+    setEndDate(e.target.value);
+  }
+
   function handleChange(e) {
     setHistoricalEdits(e.target.value);
   }
@@ -100,7 +108,7 @@ function Historical({
             <div className="form-group">
               <label htmlFor="startDate">Start Date</label>
               <img className="tooltip-icon" src="images/tooltip.svg" data-toggle="tooltip" data-original-title="Default tooltip" />
-              <input type="date" className="form-control" id="startDate" />
+              <input type="date" className="form-control" id="startDate" value={startDate} onChange={handleStartDateChange} />
             </div>
           </div>
 
@@ -108,7 +116,7 @@ function Historical({
             <div className="form-group">
               <label htmlFor="endDate">End Date</label>
               <img className="tooltip-icon" src="images/tooltip.svg" data-toggle="tooltip" data-original-title="Default tooltip" />
-              <input type="date" className="form-control" id="endDate" />
+              <input type="date" className="form-control" id="endDate" value={endDate} onChange={handleEndDateChange} />
             </div>
           </div>
 
