@@ -77,7 +77,7 @@ function Historical({
     setImageUrl(challenge.ChallengeLogoURL);
     setChallengeTitle(challenge.Name);
     setActivityText(challenge.ActivityType);
-    setShortDescription(challenge.ShortDescription.replace(/<[^>]*>?/g, ''));
+    setShortDescription(challenge.ShortDescription.replace(/<[^>]*>?/ig, ''));
     setLongDescription(challenge.AboutChallenge);
 
   }
