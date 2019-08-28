@@ -73,13 +73,13 @@ function StepConfiguration({
               <select className="form-control">
                 <option>Select</option>
                 <option>By End Date ({moment(endDate).format('L')})</option>
-                <option>Each Week</option>
+                { individualOrTeam === 'Individual' ? <option>Each Week</option> : '' }
               </select>
             </div>
           </div>
         </div>
 
-        <div className="form-row mt-5" style={{ opacity: individualOrTeam === 'Team' ? '1' : '0' }}>
+        <div className="form-row mt-5" style={{ display: individualOrTeam === 'Team' ? 'block' : 'none' }}>
           <div className="col-8">
             <div className="form-group">
               <label htmlFor="teamSize">Team Size</label>
