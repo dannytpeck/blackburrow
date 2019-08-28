@@ -59,11 +59,7 @@ function App() {
 
     if (editing) {
       setStep('EditorView');
-    } else {
-      // cheating to debug
-      setStep('StepConfiguration');
     }
-
 
     base('Calendars').select({
       filterByFormula: `{hash}='${calendarHash}'`
@@ -427,6 +423,9 @@ function App() {
         return <ConfirmChallengeDetails
           accountManager={accountManager}
           tileType={tileType}
+          individualOrTeam={individualOrTeam}
+          teamMin={teamMin}
+          teamMax={teamMax}
           startDate={startDate}
           endDate={endDate}
           pointValue={pointValue}
