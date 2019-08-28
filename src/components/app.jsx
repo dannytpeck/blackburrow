@@ -161,10 +161,10 @@ function App() {
         'Phase': phase,
         'Start date': startDate,
         'End date': endDate,
-        'Verified': 'Self-Report',
+        'Verified': tileType === 'Verified' ? 'Verified' : 'Self-Report',
         'Points': pointValue,
         'Total Points': pointValue,
-        'Team Activity': 'no',
+        'Team Activity': individualOrTeam === 'Team' ? 'yes' : 'no',
         'Reward Occurrence': 'Once',
         'Category': 'Health and Fitness',
         'Instructions': shortDescription,
@@ -183,12 +183,12 @@ function App() {
         'Activity Tracking Type': 'Event',
         'Activity Goal': '',
         'Activity Goal Text': activityText,
-        'Device Enabled': 'No',
-        'Device Units': '',
+        'Device Enabled': tileType === 'Steps Challenge' ? 'yes' : 'no',
+        'Device Units': tileType === 'Steps Challenge' ? 'steps' : '',
         'Header Image': imageUrl,
         'Limeade Image Url': '',
-        'Team Size Minimum': '',
-        'Team Size Maximum': ''
+        'Team Size Minimum': teamMin,
+        'Team Size Maximum': teamMax
       }, (err, record) => {
         if (err) {
           console.error(err);
