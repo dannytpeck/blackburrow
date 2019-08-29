@@ -26,7 +26,7 @@ function App() {
 
   // NetNew
   const [tileType, setTileType] = React.useState('One-Time Self-Report Challenge');
-  const [startDate, setStateDate] = React.useState('');
+  const [startDate, setStartDate] = React.useState('');
   const [endDate, setEndDate] = React.useState('');
   const [pointValue, setPointValue] = React.useState('');
 
@@ -40,6 +40,11 @@ function App() {
   const [activityText, setActivityText] = React.useState('');
   const [shortDescription, setShortDescription] = React.useState('');
   const [longDescription, setLongDescription] = React.useState('');
+
+  // StepConfiguration
+  const [individualOrTeam, setIndividualOrTeam] = React.useState('Individual');
+  const [teamMin, setTeamMin] = React.useState();
+  const [teamMax, setTeamMax] = React.useState();
 
   // AdditionalDetails
   const [featuredActivity, setFeaturedActivity] = React.useState(false);
@@ -156,10 +161,10 @@ function App() {
         'Phase': phase,
         'Start date': startDate,
         'End date': endDate,
-        'Verified': 'Self-Report',
+        'Verified': tileType === 'Verified' ? 'Verified' : 'Self-Report',
         'Points': pointValue,
         'Total Points': pointValue,
-        'Team Activity': 'no',
+        'Team Activity': individualOrTeam === 'Team' ? 'yes' : 'no',
         'Reward Occurrence': 'Once',
         'Category': 'Health and Fitness',
         'Instructions': shortDescription,
@@ -178,12 +183,12 @@ function App() {
         'Activity Tracking Type': 'Event',
         'Activity Goal': '',
         'Activity Goal Text': activityText,
-        'Device Enabled': 'No',
-        'Device Units': '',
+        'Device Enabled': tileType === 'Steps Challenge' ? 'yes' : 'no',
+        'Device Units': tileType === 'Steps Challenge' ? 'steps' : '',
         'Header Image': imageUrl,
         'Limeade Image Url': '',
-        'Team Size Minimum': '',
-        'Team Size Maximum': ''
+        'Team Size Minimum': teamMin,
+        'Team Size Maximum': teamMax
       }, (err, record) => {
         if (err) {
           console.error(err);
@@ -353,7 +358,7 @@ function App() {
           tileType={tileType}
           setTileType={setTileType}
           startDate={startDate}
-          setStateDate={setStateDate}
+          setStartDate={setStartDate}
           endDate={endDate}
           setEndDate={setEndDate}
           pointValue={pointValue}
@@ -366,7 +371,7 @@ function App() {
           limeadeChallenges={limeadeChallenges}
           setLimeadeChallenges={setLimeadeChallenges}
           startDate={startDate}
-          setStateDate={setStateDate}
+          setStartDate={setStartDate}
           endDate={endDate}
           setEndDate={setEndDate}
           pointValue={pointValue}
@@ -418,6 +423,9 @@ function App() {
         return <ConfirmChallengeDetails
           accountManager={accountManager}
           tileType={tileType}
+          individualOrTeam={individualOrTeam}
+          teamMin={teamMin}
+          teamMax={teamMax}
           startDate={startDate}
           endDate={endDate}
           pointValue={pointValue}
@@ -438,6 +446,10 @@ function App() {
           endDate={endDate}
           shortDescription={shortDescription}
           longDescription={longDescription}
+          individualOrTeam={individualOrTeam}
+          setIndividualOrTeam={setIndividualOrTeam}
+          setTeamMin={setTeamMin}
+          setTeamMax={setTeamMax}
         />;
 
       case 'EditorView':
@@ -445,7 +457,7 @@ function App() {
           tileType={tileType}
           setTileType={setTileType}
           startDate={startDate}
-          setStateDate={setStateDate}
+          setStartDate={setStartDate}
           endDate={endDate}
           setEndDate={setEndDate}
           pointValue={pointValue}
