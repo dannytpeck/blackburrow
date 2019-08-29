@@ -12,7 +12,7 @@ function Historical({
   limeadeChallenges,
   setLimeadeChallenges,
   startDate,
-  setStateDate,
+  setStartDate,
   endDate,
   setEndDate,
   pointValue,
@@ -83,7 +83,7 @@ function Historical({
   }
 
   function handleStartDateChange(e) {
-    setStateDate(e.target.value);
+    setStartDate(e.target.value);
   }
 
   function handleEndDateChange(e) {
