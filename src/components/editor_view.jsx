@@ -11,7 +11,7 @@ function EditorView({
   tileType,
   setTileType,
   startDate,
-  setStateDate,
+  setStartDate,
   endDate,
   setEndDate,
   pointValue,
@@ -43,7 +43,7 @@ function EditorView({
 
       console.log('Retrieved', record);
       setTileType(record.fields['Reward Occurrence'] + ' ' + record.fields['Verified']);
-      setStateDate(record.fields['Start date']);
+      setStartDate(record.fields['Start date']);
       setEndDate(record.fields['End date']);
       setPointValue(record.fields['Points']);
       setImageUrl(record.fields['Header Image']);
