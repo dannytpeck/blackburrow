@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import Airtable from 'airtable';
+const baseAMs = new Airtable({ apiKey: 'keylwZtbvFbcT3sgw' }).base('appvtvj7itXI6NPDT');
 
 /* globals $ */
 function Home({ accountManager, setAccountManager, newOrHistorical, setNewOrHistorical }) {
@@ -24,6 +26,36 @@ function Home({ accountManager, setAccountManager, newOrHistorical, setNewOrHist
     setNewOrHistorical(e.target.value);
   }
 
+  // baseAMs('Account Managers').select({
+  //   filterByFormula: `{Name}='${accountManager}'`
+  // }).eachPage(function page(records, fetchNextPage) {
+
+  //   records.forEach(function(record) {
+  //     responsibleAm = record[0].fields['Wrike ID'];
+  //   });
+
+  //   fetchNextPage();
+
+  // }, function done(err) {
+  //   if (err) {
+  //     console.error(err); 
+  //     return;
+  //   }
+  // });
+
+  baseAMs('Account Managers').select({
+
+  }).eachPage((records, fetchNextPage) => {
+    // map over all returned records
+    
+    fetchNextPage();
+  }, (err) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+  });
+
   return (
     <section className="border" id="home">
       <h3 className="mb-5">Welcome</h3>
@@ -35,6 +67,7 @@ function Home({ accountManager, setAccountManager, newOrHistorical, setNewOrHist
         <label htmlFor="primaryAccountManager">Primary Account Manager</label>
         <select className="form-control" id="primaryAccountManager" value={accountManager} onChange={handleAccountManagerChange}>
           <option>Select an Account Manager</option>
+          {/* Create for each/map of how many AMs are in the airtable base, use the Name column */}
           <option>Aaron D.</option>
           <option>Alison D.</option>
           <option>Ardith F.</option>
