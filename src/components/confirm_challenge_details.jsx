@@ -7,6 +7,9 @@ import TilePreview from './tile_preview';
 function ConfirmChallengeDetails({
   accountManager,
   tileType,
+  individualOrTeam,
+  teamMin,
+  teamMax,
   startDate,
   endDate,
   pointValue,
@@ -40,6 +43,21 @@ function ConfirmChallengeDetails({
 
         <label>Tile Type:</label>
         <p>{tileType}</p>
+
+        {/* Show team size and steps if tileType=Steps Challenge */}
+        <div className="row" style={{ display: tileType === 'Steps Challenge' ? 'block' : 'none' }}>
+          <div className="col">
+            <label>Individual or Team:</label>
+            <p>{individualOrTeam}</p>
+          </div>
+        </div>
+
+        <div className="row" style={{ display: individualOrTeam === 'Team' ? 'block' : 'none' }}>
+          <div className="col">
+            <label>Team Size</label>
+            <p>{teamMin} - {teamMax} people</p>
+          </div>
+        </div>
 
         <div className="row">
           <div className="col">

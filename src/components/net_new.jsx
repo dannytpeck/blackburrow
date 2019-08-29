@@ -5,7 +5,7 @@ function NetNew({
   tileType,
   setTileType,
   startDate,
-  setStateDate,
+  setStartDate,
   endDate,
   setEndDate,
   pointValue,
@@ -27,7 +27,7 @@ function NetNew({
   }
 
   function handleStartDateChange(e) {
-    setStateDate(e.target.value);
+    setStartDate(e.target.value);
   }
 
   function handleEndDateChange(e) {
