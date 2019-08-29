@@ -21,7 +21,7 @@ label {
   color: #7B7B7B;
 }
 
-.client-name{
+.client-name {
   float: right;
   font: lighter 0.8em 'Open Sans', sans-serif;
   text-transform: uppercase;
@@ -113,4 +113,24 @@ label[for="subgroupIdNumber"] {
   display: inline-block;
   width: 60px;
   margin-left: 1em;
+}
+
+.text-list, li {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+/* Boostrap Classes */
+.tooltip-inner {
+  min-width: 25em;
+  height: auto;
+  text-align: left;
+  font-size: 0.9em;
+  background-color: #606060;
+}
+
+/* Legacy Classes */
+.brandingBckgrndColor {
+  background-color: #606060;
 }

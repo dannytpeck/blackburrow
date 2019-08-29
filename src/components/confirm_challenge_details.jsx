@@ -33,7 +33,7 @@ function ConfirmChallengeDetails({
     <section id="confirmChallengeDetails" className="row">
       <div className="col-6">
 
-        <h3 className="mb-5">Confirm Challenge Details</h3>
+        <h3 className="mb-5">Confirm Tile Details</h3>
 
         <label>Primary Account Manager:</label>
         <p>{accountManager}</p>
@@ -77,7 +77,7 @@ function ConfirmChallengeDetails({
           <label>Acknowledgement</label>
           <div className="form-check">
             <input className="form-check-input" type="checkbox" id="acknowledgement" />
-            <label className="form-check-label" htmlFor="acknowledgement">I acknowledge that my content will be reviewed by an ADURO Content Manager for basic spelling and grammatical errors prior to loading to my wellness platform.</label>
+            <label className="form-check-label" htmlFor="acknowledgement">I acknowledge that my content will be reviewed by an ADURO Content Manager for basic spelling and grammatical errors prior to loading to my platform.</label>
           </div>
         </div>
 

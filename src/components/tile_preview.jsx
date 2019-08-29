@@ -12,7 +12,7 @@ function TilePreview({
 	return (
     <div className="border" id="tilePreview">
       <header className="preview-header">
-        <h3>Challenge Preview</h3>
+        <h3>Preview</h3>
       </header>
       <div className="image-wrapper">
         <img src={imageUrl} />

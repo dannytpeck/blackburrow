@@ -74,13 +74,13 @@ function AdditionalDetails({
           <div className="choose-image">
             <div className="form-group">
               <input type="file" className="form-control-file" id="uploadImage" onChange={handleImageChange} />
-              <small className="form-text text-muted text-left">Image dimensions must be 1000x2000 pixels<br/>Accepted file formats jpg or png</small>
+              <small className="form-text text-muted text-left">Image dimensions must be 2000x1000 pixels<br/>Accepted file formats jpg or png</small>
             </div>
           </div>
         </div>
 
         <div className="form-group">
-          <label className="mb-0">Make this challenge a "Featured Activity"?</label>
+          <label className="mb-0">Make this tile a Featured Activity?</label>
           <small className="form-text text-muted text-left">Featured Activities are displayed in the rotating Featured Activity Banner at the top of the home page. Recommended limit of 4 at a time.</small>
           <div id="featuredActivityCheck" className="form-check mt-2">
             <input className="form-check-input" type="checkbox" id="featuredActivityYes" checked={featuredActivity} onChange={handleFeaturedActivityChange} />
@@ -92,7 +92,7 @@ function AdditionalDetails({
         </div>
 
         <div className="form-group mt-3">
-          <label>Targeting</label>
+          <label>Who should this tile be available to?</label>
           <img className="tooltip-icon" src="images/tooltip.svg" data-toggle="tooltip" data-original-title="Default tooltip" />
           <div className="form-check">
             <input className="form-check-input" type="radio" name="targetingRadios" id="entirePopulation" value="Entire Population" onChange={handleTargetingChange} checked={targeting === 'Entire Population'} />
@@ -105,8 +105,8 @@ function AdditionalDetails({
         </div>
 
         <div className="form-group mt-5" htmlFor="targetingDetails" style={{ opacity: targeting === 'Specific Demographic' ? '1' : '0' }}>
-          <label className="mb-0">Who..can see this..should this tile be visible to?</label>
-          <small className="form-text text-muted text-left">Lorem...Please be as specific as possible...</small>
+          <label className="mb-0">Define the targeted population</label>
+          <small className="form-text text-muted text-left">Please be as specific as possible.</small>
           <textarea className="form-control mt-4" id="targetingDetails" rows="3" value={specificDemographicText} onChange={handleSpecificDemographicText}></textarea>
         </div>
 

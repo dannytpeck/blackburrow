@@ -135,7 +135,8 @@ function Historical({
         <div className="form-row mt-5">
           <div className="col-6">
             <div className="form-group">
-              <label htmlFor="editContentImage">Lorem...edit content image</label>
+              <label htmlFor="editContentImage">Would you like to make any edits to the content of this tile?</label>
+              <small><p>Note: Rerun historical tiles without edits are always "free".  Revising a historical tile will require copyediting and may be counted toward your custom tile allotment.</p></small>
               <select className="form-control" id="editContentImage" onChange={handleChange} value={historicalEdits}>
                 <option>Select</option>
                 <option>Yes</option>

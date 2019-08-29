@@ -30,8 +30,8 @@ function StepConfiguration({
         <h3 className="mb-5">Challenge Configuration</h3>
 
         <label className="mb-0">Is this a Team Challenge?</label>
-        <small className="form-text text-muted text-left">Lorem Team challenges etc. etc.</small>
-        <small className="form-text text-muted text-left">Team sizes can be between 2 and 20 people.</small>
+        {/*<small className="form-text text-muted text-left">Lorem Team challenges etc. etc.</small>
+        <small className="form-text text-muted text-left">Team sizes can be between 2 and 20 people.</small> */}
 
         <div className="form-check">
           <input className="form-check-input" type="radio" name="individualOrTeamRadios" id="individualChallenge" defaultChecked />

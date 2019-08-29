@@ -29,7 +29,7 @@ function Home({ accountManager, setAccountManager, newOrHistorical, setNewOrHist
       <h3 className="mb-5">Welcome</h3>
 
       <p>Please complete this form to submit a custom platform tile request.</p>
-      <p>The standard tile creation process Service Level Agreement is two (2) weeks or ten (10) business days.</p>
+      <p>The standard tile creation process can take up to 30 days.</p>
 
       <div className="form-group mt-5">
         <label htmlFor="primaryAccountManager">Primary Account Manager</label>
@@ -48,8 +48,8 @@ function Home({ accountManager, setAccountManager, newOrHistorical, setNewOrHist
         </select>
       </div>
 
-      <label>Lorem Enim laudantium laboris but eaque?</label>
-      <img className="tooltip-icon" src="images/tooltip.svg" data-toggle="tooltip" data-original-title="Default tooltip" />
+      <label>Will this be a brand new tile or would you like to search your tile history for previously used content?</label>
+        <img className="tooltip-icon" src="images/tooltip.svg" data-toggle="tooltip" data-html="true" data-placement="auto" title="<strong>Net New: </strong><p>Create a brand new tile for your platform.</p><strong>Historical: </strong><p>Search your platform history and rerun or revise your tiles from previous program years.</p>"/>
       <div className="form-check">
         <input className="form-check-input" type="radio" name="netNewOrHistoricalRadios" id="netNew" value="NetNew" onChange={handleNewOrHistoricalChange} checked={newOrHistorical === 'NetNew'} />
         <label className="form-check-label" htmlFor="netNew">Net New</label>

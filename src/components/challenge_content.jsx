@@ -42,36 +42,39 @@ function ChallengeContent({
     <section id="challengeContent" className="row">
       <div className="col-6">
 
-        <h3 className="mb-5">Challenge Content</h3>
+         <h3 className="mb-5">Tile Content</h3>
 
         <div className="form-group">
-          <label htmlFor="challengeTitle">Challenge Title</label>
-          <input type="text" className="form-control" id="challengeTitle" placeholder="Lorem Ipsum Dolor sit Amet" value={challengeTitle} onChange={handleChallengeTitleChange} />
+          <label htmlFor="challengeTitle">Title</label>
+          <input type="text" className="form-control" id="challengeTitle" placeholder="" value={challengeTitle} onChange={handleChallengeTitleChange} />
           <small className="form-text text-muted">{challengeTitle.length}/100 Characters</small>
         </div>
 
         <div className="form-group">
-          <label htmlFor="activityText">Activity Text</label>
-          <input type="text" className="form-control" id="activityText" placeholder="do the activity in the description" value={activityText} onChange={handleActivityTextChange} />
+          <label htmlFor="activityText">Call to Action</label>
+          <input type="text" className="form-control" id="activityText" placeholder="To complete this activity..." value={activityText} onChange={handleActivityTextChange} />
+          {/* <p>50 character limit (includes spaces). </p> */}
+          <ul className="text-list">
+          <li>Example 1: To complete this activity... go to the dentist.</li>
+          <li>Example 2: To complete this activity... participate in the holiday food drive..</li>
+          </ul>
+
           <small className="form-text text-muted">{activityText.length}/50 Characters</small>
         </div>
 
         <div className="form-group">
           <label htmlFor="shortDescription">Short Description</label>
           <p>A concise statement describing what the participant must do to earn points. Recommendation is no more than one or two sentences.</p>
-          <textarea className="form-control" id="shortDescription" rows="5" placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit..." value={shortDescription} onChange={handleShortDescriptionChange}></textarea>
+          <textarea className="form-control" id="shortDescription" rows="5" placeholder="" value={shortDescription} onChange={handleShortDescriptionChange}></textarea>
           <small className="form-text text-muted">{shortDescription.length}/600 Characters</small>
         </div>
 
         <div className="form-group">
           <label htmlFor="longDescription">Long Description</label>
-          <p>Expand on the details and guidelines of the challenge, why this challenge is important, and what pertinent information a participant will need in order to complete the challenge.</p>
-
+          <p>List all important details and information a participant will need.</p>
           <TrumbowygBox longDescription={longDescription} setLongDescription={setLongDescription} />
-
           <small className="form-text text-muted">{longDescription.length}/2000 Characters</small>
         </div>
-
       </div>
       <div className="col-6">
         <TilePreview imageUrl={imageUrl} challengeTitle={challengeTitle} activityText={activityText} shortDescription={shortDescription} longDescription={longDescription} />
