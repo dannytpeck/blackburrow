@@ -152,7 +152,7 @@ function App() {
     $('#confirmSubmitModal').modal();
     if (acknowledgementChecked) {
 
-      const phase = 'Phase 1';
+      const phase = 'Yearlong';
       base('Challenges').create({
         'Title': challengeTitle,
         'Calendar': calendar.fields['hash'],
