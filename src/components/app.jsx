@@ -35,7 +35,7 @@ function App() {
   const [historicalEdits, setHistoricalEdits] = React.useState('No');
 
   // ChallengeContent
-  const [imageUrl, setImageUrl] = React.useState('http://via.placeholder.com/540x270');
+  const [imageUrl, setImageUrl] = React.useState('http://via.placeholder.com/2000x1000');
   const [challengeTitle, setChallengeTitle] = React.useState('');
   const [activityText, setActivityText] = React.useState('');
   const [shortDescription, setShortDescription] = React.useState('');
@@ -117,8 +117,7 @@ function App() {
     .done(data => {
       const url = data.data[0].permalink;
       const confirmationText = `
-        <p>View your new challenge in <a href="${calendarUrl}" target="_blank">Calendar Builder</a></p>
-        <p>Or <a href="https://calendarbuilder.dev.adurolife.com/blackburrow/#/${calendarHash}">create another custom challenge</a>.</p>
+        <p>View it in your <a href="${calendarUrl}" target="_blank">Calendar Builder</a> or submit <a href="https://calendarbuilder.dev.adurolife.com/blackburrow/#/${calendarHash}">another request</a>.</p>
         <p>Wrike task created successfully (keeping this here for testing for now): <a href="${url}" target="_blank">${url}</a></p>
       `;
       $('#confirmSubmitModal .modal-body').append(confirmationText);
@@ -195,7 +194,7 @@ function App() {
           return;
         }
 
-        $('#confirmSubmitModal .modal-body').html('<p>Challenge added successfully!</p>');
+        $('#confirmSubmitModal .modal-body').html('<p>Your request has been received!</p>');
 
         // Submit to wrike using record details
         submitToWrike(record);

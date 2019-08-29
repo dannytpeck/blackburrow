@@ -33,7 +33,7 @@ function TrumbowygBox({ longDescription, setLongDescription }) {
   }, []); // Pass empty array to only run once on mount
 
 	return (
-		<div className="editor" placeholder="Lorem ipsum dolor sit amet, consectetuer adipiscing elit..."></div>
+		<div className="editor" placeholder=""></div>
 	);
 
 }
