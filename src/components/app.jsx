@@ -430,6 +430,7 @@ function App() {
           pointValue={pointValue}
           featuredActivity={featuredActivity}
           targeting={targeting}
+          specificDemographicText={specificDemographicText}
           imageUrl={imageUrl}
           challengeTitle={challengeTitle}
           activityText={activityText}
