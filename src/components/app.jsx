@@ -463,8 +463,11 @@ function App() {
           pointValue={pointValue}
           setPointValue={setPointValue}
           featuredActivity={featuredActivity}
+          setFeaturedActivity={setFeaturedActivity}
           targeting={targeting}
+          setTargeting={setTargeting}
           specificDemographicText={specificDemographicText}
+          setSpecificDemographicText={setSpecificDemographicText}
           imageUrl={imageUrl}
           setImageUrl={setImageUrl}
           challengeTitle={challengeTitle}
