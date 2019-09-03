@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import Airtable from 'airtable';
 const base = new Airtable({ apiKey: 'keyCxnlep0bgotSrX' }).base('appN1J6yscNwlzbzq');
-const baseAMs = new Airtable({ apiKey: 'keylwZtbvFbcT3sgw' }).base('appvtvj7itXI6NPDT');
 
 import Header from './header';
 import Footer from './footer';
@@ -23,7 +22,8 @@ function App() {
 
   // Home
   const [accountManager, setAccountManager] = React.useState('');
-  console.log(accountManager);
+  const [accountManagerWrikeId, setAccountManagerWrikeId] = React.useState('');
+  const [accountManagers, setAccountManagers] = React.useState([]);
   const [newOrHistorical, setNewOrHistorical] = React.useState('NetNew');
 
   // NetNew
@@ -85,24 +85,7 @@ function App() {
     const today = moment().format('YYYY-MM-DD');
     const dueDate = moment().add(14, 'days').format('YYYY-MM-DD');
 
-    let responsibleAm = 'KUAB7PEE'; // Jill | TODO: Use airtable Account Managers base to filter by Name and grab Wrike ID
-
-    baseAMs('Account Managers').select({
-      filterByFormula: `{Name}='${accountManager}'`
-    }).eachPage(function page(records, fetchNextPage) {
-
-      records.forEach(function(record) {
-        responsibleAm = record[0].fields['Wrike ID'];
-      });
-
-      fetchNextPage();
-
-    }, function done(err) {
-      if (err) {
-        console.error(err); 
-        return;
-      }
-    });
+    let responsibleAm = accountManagerWrikeId;
 
     let responsibleEditor = 'KUAEFOGT'; // Meredith
     let responsibleAmy = 'KUAFS43Q'; // Amy
@@ -369,6 +352,10 @@ function App() {
         return <Home
           accountManager={accountManager}
           setAccountManager={setAccountManager}
+          accountManagerWrikeId={accountManagerWrikeId}
+          setAccountManagerWrikeId={setAccountManagerWrikeId}
+          accountManagers={accountManagers}
+          setAccountManagers={setAccountManagers}
           newOrHistorical={newOrHistorical}
           setNewOrHistorical={setNewOrHistorical}
         />;
