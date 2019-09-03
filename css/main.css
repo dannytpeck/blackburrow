@@ -72,11 +72,13 @@ label {
   vertical-align: top;
 }
 
+/* Hidden - Style for Addtional Resources which is hidden
 #confirmChallengeDetails ul {
   color: #7b7b7b;
   padding-left: 2em;
   list-style-image: url('../images/document-text.svg');
 }
+*/
 
 #spinner {
   display: none;
@@ -115,10 +117,10 @@ label[for="subgroupIdNumber"] {
   margin-left: 1em;
 }
 
-.text-list, li {
+.text-caption-list{
   margin: 0;
   padding-left: 0;
-  list-style: none;
+  list-style-type: none;
 }
 
 /* Boostrap Classes */

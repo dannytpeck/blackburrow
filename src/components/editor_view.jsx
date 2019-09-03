@@ -11,14 +11,17 @@ function EditorView({
   tileType,
   setTileType,
   startDate,
-  setStateDate,
+  setStartDate,
   endDate,
   setEndDate,
   pointValue,
   setPointValue,
   featuredActivity,
+  setFeaturedActivity,
   targeting,
+  setTargeting,
   specificDemographicText,
+  setSpecificDemographicText,
   imageUrl,
   setImageUrl,
   challengeTitle,
@@ -43,12 +46,15 @@ function EditorView({
 
       console.log('Retrieved', record);
       setTileType(record.fields['Reward Occurrence'] + ' ' + record.fields['Verified']);
-      setStateDate(record.fields['Start date']);
+      setStartDate(record.fields['Start date']);
       setEndDate(record.fields['End date']);
       setPointValue(record.fields['Points']);
       setImageUrl(record.fields['Header Image']);
       setChallengeTitle(record.fields['Title'] ? record.fields['Title'] : '');
       setActivityText(record.fields['Activity Goal Text'] ? record.fields['Activity Goal Text'] : '');
+      setFeaturedActivity(record.fields['Featured Activity'] === 'yes' ? record.fields['Featured Activity'] : '');
+      setTargeting(record.fields['Targeted Activity'] === 'yes' ? 'Specific Demographic' : 'Entire Population');
+      setSpecificDemographicText(record.fields['Targeting Notes'] ? record.fields['Targeting Notes'] : '');
       setShortDescription(record.fields['Instructions'] ? record.fields['Instructions'] : '');
       setLongDescription(record.fields['More Information Html'] ? record.fields['More Information Html'] : '');
 
@@ -129,7 +135,7 @@ function EditorView({
         <p>{targeting}</p>
 
         <p>
-          <span>Targeting Notes:</span><span>{specificDemographicText}</span>
+          <span>Targeting Notes: </span><span>{specificDemographicText}</span>
         </p>
 
         <div className="form-check">

@@ -15,6 +15,7 @@ function ConfirmChallengeDetails({
   pointValue,
   featuredActivity,
   targeting,
+  specificDemographicText,
   imageUrl,
   challengeTitle,
   activityText,
@@ -81,6 +82,11 @@ function ConfirmChallengeDetails({
 
         <label>Targeting:</label>
         <p>{targeting}</p>
+
+        <div style={{ display: targeting === 'Specific Demographic' ? 'block' : 'none' }}>
+          <label>Targeting Notes:</label>
+          <p>{specificDemographicText}</p>
+        </div>
 
         {/* Hiding Additional Resources section for now
         <label>Additional Resources:</label>

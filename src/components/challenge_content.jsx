@@ -53,8 +53,7 @@ function ChallengeContent({
         <div className="form-group">
           <label htmlFor="activityText">Call to Action</label>
           <input type="text" className="form-control" id="activityText" placeholder="To complete this activity..." value={activityText} onChange={handleActivityTextChange} />
-          {/* <p>50 character limit (includes spaces). </p> */}
-          <ul className="text-list">
+          <ul className="text-caption-list">
           <li>Example 1: To complete this activity... go to the dentist.</li>
           <li>Example 2: To complete this activity... participate in the holiday food drive..</li>
           </ul>
