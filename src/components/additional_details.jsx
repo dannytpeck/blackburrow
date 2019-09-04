@@ -4,6 +4,7 @@ import TilePreview from './tile_preview';
 
 /* globals $ */
 function AdditionalDetails({
+  tileType,
   featuredActivity,
   setFeaturedActivity,
   targeting,
@@ -14,6 +15,7 @@ function AdditionalDetails({
   setImageUrl,
   challengeTitle,
   activityText,
+  activityGoalNumber,
   shortDescription,
   longDescription
 }) {
@@ -122,7 +124,7 @@ function AdditionalDetails({
 
       </div>
       <div className="col-6">
-        <TilePreview imageUrl={imageUrl} challengeTitle={challengeTitle} activityText={activityText} shortDescription={shortDescription} longDescription={longDescription} />
+        <TilePreview tileType={tileType} imageUrl={imageUrl} challengeTitle={challengeTitle} activityText={activityText} activityGoalNumber={activityGoalNumber} shortDescription={shortDescription} longDescription={longDescription} />
       </div>
     </section>
   );

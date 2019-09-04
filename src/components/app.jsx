@@ -436,11 +436,13 @@ function App() {
 
       case 'ChallengeContent':
         return <ChallengeContent
+          tileType={tileType}
           imageUrl={imageUrl}
           challengeTitle={challengeTitle}
           setChallengeTitle={setChallengeTitle}
           activityText={activityText}
           setActivityText={setActivityText}
+          activityGoalNumber={activityGoalNumber}
           shortDescription={shortDescription}
           setShortDescription={setShortDescription}
           longDescription={longDescription}
@@ -449,6 +451,7 @@ function App() {
 
       case 'AdditionalDetails':
         return <AdditionalDetails
+          tileType={tileType}
           featuredActivity={featuredActivity}
           setFeaturedActivity={setFeaturedActivity}
           targeting={targeting}
@@ -459,6 +462,7 @@ function App() {
           setImageUrl={setImageUrl}
           challengeTitle={challengeTitle}
           activityText={activityText}
+          activityGoalNumber={activityGoalNumber}
           shortDescription={shortDescription}
           longDescription={longDescription}
         />;
@@ -479,12 +483,14 @@ function App() {
           imageUrl={imageUrl}
           challengeTitle={challengeTitle}
           activityText={activityText}
+          activityGoalNumber={activityGoalNumber}
           shortDescription={shortDescription}
           longDescription={longDescription}
         />;
 
       case 'StepConfiguration':
         return <StepConfiguration
+          tileType={tileType}
           imageUrl={imageUrl}
           challengeTitle={challengeTitle}
           activityText={activityText}
