@@ -22,6 +22,8 @@ function App() {
 
   // Home
   const [accountManager, setAccountManager] = React.useState('');
+  const [accountManagerWrikeId, setAccountManagerWrikeId] = React.useState('');
+  const [accountManagers, setAccountManagers] = React.useState([]);
   const [newOrHistorical, setNewOrHistorical] = React.useState('NetNew');
 
   // NetNew
@@ -81,6 +83,7 @@ function App() {
   function submitToWrike(record) {
     console.log(record);
     const today = moment().format('YYYY-MM-DD');
+    
     const wrikeStartDate = moment(startDate).subtract(21, 'days').format('YYYY-MM-DD');
     const wrikeDueDate = moment(wrikeStartDate).add(14, 'days').format('YYYY-MM-DD');
     let customTileType = '';
@@ -101,9 +104,10 @@ function App() {
         break;
     }
 
-    const responsibleAm = 'KUAB7PEE'; // Jill
+    const responsibleAm = accountManagerWrikeId;
     const responsibleEditor = 'KUAEFOGT'; // Meredith
     const responsibleAmy = 'KUAFS43Q'; // Amy
+
     const calendarUrl = `https://calendarbuilder.dev.adurolife.com/calendar-builder/#/${calendarHash}`;
     const editorUrl = `https://calendarbuilder.dev.adurolife.com/blackburrow/#/${calendarHash}/edit/${record.id}`;
 
@@ -181,7 +185,7 @@ function App() {
     $('#confirmSubmitModal').modal();
     if (acknowledgementChecked) {
 
-      const phase = 'Phase 1';
+      const phase = 'Yearlong';
       base('Challenges').create({
         'Title': challengeTitle,
         'Calendar': calendar.fields['hash'],
@@ -377,6 +381,10 @@ function App() {
         return <Home
           accountManager={accountManager}
           setAccountManager={setAccountManager}
+          accountManagerWrikeId={accountManagerWrikeId}
+          setAccountManagerWrikeId={setAccountManagerWrikeId}
+          accountManagers={accountManagers}
+          setAccountManagers={setAccountManagers}
           newOrHistorical={newOrHistorical}
           setNewOrHistorical={setNewOrHistorical}
         />;

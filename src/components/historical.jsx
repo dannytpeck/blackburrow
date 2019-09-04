@@ -94,6 +94,10 @@ function Historical({
     setHistoricalEdits(e.target.value);
   }
 
+  function handlePointValueChange(e) {
+    setPointValue(e.target.value);
+  }
+
   return (
     <section id="historical" className="row">
       <div className="col-6">
@@ -127,7 +131,7 @@ function Historical({
             <div className="form-group">
               <label htmlFor="pointValue">Point Value</label>
               <img className="tooltip-icon" src="images/tooltip.svg" data-toggle="tooltip" data-original-title="Default tooltip" />
-              <input type="text" className="form-control" id="pointValue" />
+              <input type="text" className="form-control" id="pointValue" value={pointValue} onChange={handlePointValueChange} />
             </div>
           </div>
         </div>

@@ -1,28 +1,52 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import Airtable from 'airtable';
+const baseAMs = new Airtable({ apiKey: 'keylwZtbvFbcT3sgw' }).base('appvtvj7itXI6NPDT');
 
 /* globals $ */
-function Home({ accountManager, setAccountManager, newOrHistorical, setNewOrHistorical }) {
-  // TODO: Add state to hold account manager list from airtable
+function Home({ accountManager, setAccountManager, accountManagerWrikeId, setAccountManagerWrikeId, accountManagers, setAccountManagers, newOrHistorical, setNewOrHistorical }) {
 
   // Make airtable calls when app starts
   useEffect(() => {
-
-    // TODO: Add airtable call that pulls in a list of account managers
 
     // Enable all tooltips on the page
     $(function() {
       $('[data-toggle="tooltip"]').tooltip();
     });
 
+    baseAMs('Account Managers').select({
+      view: 'Grid view'
+    }).eachPage((records, fetchNextPage) => {
+
+      setAccountManagers(records);
+
+      fetchNextPage();
+
+    }, function done(err) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+    });
+
   }, []); // Pass empty array to only run once on mount
 
   function handleAccountManagerChange(e) {
+    let obj = document.getElementById('primaryAccountManager');
+    let selectedOption = obj.options[obj.selectedIndex];
     setAccountManager(e.target.value);
+    setAccountManagerWrikeId(selectedOption.getAttribute('data-wrikeid'));
   }
 
   function handleNewOrHistoricalChange(e) {
     setNewOrHistorical(e.target.value);
   }
+
+  let accountManagerNames = accountManagers.map((item) => {
+    const value= JSON.stringify(item);
+    return (
+      <option key={item.id} value={item.fields['Name']} data-wrikeid={item.fields['Wrike ID']}>{item.fields['Name']}</option>
+    );
+  });
 
   return (
     <section className="border" id="home">
@@ -35,16 +59,7 @@ function Home({ accountManager, setAccountManager, newOrHistorical, setNewOrHist
         <label htmlFor="primaryAccountManager">Primary Account Manager</label>
         <select className="form-control" id="primaryAccountManager" value={accountManager} onChange={handleAccountManagerChange}>
           <option>Select an Account Manager</option>
-          <option>Aaron D.</option>
-          <option>Alison D.</option>
-          <option>Ardith F.</option>
-          <option>Cara C.</option>
-          <option>Erin H.</option>
-          <option>Jack U.</option>
-          <option>James W.</option>
-          <option>Jeremy K.</option>
-          <option>Jill R.</option>
-          <option>Katie D.</option>
+          {accountManagerNames}
         </select>
       </div>
 
