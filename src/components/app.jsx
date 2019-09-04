@@ -221,8 +221,8 @@ function App() {
         'Device Units': tileType === 'Steps Challenge' ? 'steps' : '',
         'Header Image': imageUrl,
         'Limeade Image Url': newOrHistorical === 'Historical' ? imageUrl : '',
-        'Team Size Minimum': teamMin,
-        'Team Size Maximum': teamMax
+        'Team Size Minimum': teamMin.toString(),
+        'Team Size Maximum': teamMax.toString()
       }, (err, record) => {
         if (err) {
           console.error(err);
@@ -420,6 +420,8 @@ function App() {
           setTileType={setTileType}
           activityGoalNumber={activityGoalNumber}
           setActivityGoalNumber={setActivityGoalNumber}
+          setTeamMin={setTeamMin}
+          setTeamMax={setTeamMax}
           imageUrl={imageUrl}
           setImageUrl={setImageUrl}
           challengeTitle={challengeTitle}

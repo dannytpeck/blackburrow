@@ -21,6 +21,8 @@ function Historical({
   setHistoricalEdits,
   tileType,
   setTileType,
+  setTeamMin,
+  setTeamMax,
   imageUrl,
   setImageUrl,
   challengeTitle,
@@ -85,10 +87,13 @@ function Historical({
     setLongDescription(challenge.AboutChallenge);
     setActivityGoalNumber(challenge.ChallengeTarget);
 
-    console.log(challenge.ActivityType);
-
     if (challenge.ActivityType === 'exercise' ) {
       setTileType('Steps Challenge');
+    }
+
+    if (challenge.IsTeamChallenge === true) {
+      setTeamMin(challenge.TeamSize.MinTeamSize);
+      setTeamMax(challenge.TeamSize.MaxTeamSize);
     }
 
   }
