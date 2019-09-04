@@ -8,6 +8,8 @@ function StepConfiguration({
   imageUrl,
   challengeTitle,
   activityText,
+  activityGoalNumber,
+  setActivityGoalNumber,
   endDate,
   shortDescription,
   longDescription,
@@ -39,6 +41,10 @@ function StepConfiguration({
 
   function handleTeamMaxChange(e) {
     setTeamMax(e.target.value);
+  }
+
+  function handleStepsGoalChange(e) {
+    setActivityGoalNumber(e.target.value);
   }
 
   return (

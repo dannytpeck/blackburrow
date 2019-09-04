@@ -28,6 +28,7 @@ function App() {
 
   // NetNew
   const [tileType, setTileType] = React.useState('One-Time Self-Report Challenge');
+  console.log({ tileType });
   const [startDate, setStartDate] = React.useState('');
   const [endDate, setEndDate] = React.useState('');
   const [pointValue, setPointValue] = React.useState('');
@@ -47,6 +48,8 @@ function App() {
   const [individualOrTeam, setIndividualOrTeam] = React.useState('Individual');
   const [teamMin, setTeamMin] = React.useState();
   const [teamMax, setTeamMax] = React.useState();
+  const [activityGoalNumber, setActivityGoalNumber] = React.useState('');
+  console.log({ activityGoalNumber });
 
   // AdditionalDetails
   const [featuredActivity, setFeaturedActivity] = React.useState(false);
@@ -160,9 +163,8 @@ function App() {
   function submitToAirtable() {
     const acknowledgementChecked = $('#acknowledgement').prop('checked');
     const isFeatured = featuredActivity ? 'yes' : 'no';
-    console.log('isFeatured = ' + isFeatured);
     const isTargeted = (targeting === 'Specific Demographic') ? 'yes' : 'no';
-    console.log('isTargeted = ' + isTargeted);
+    const activityGoal = activityGoalNumber ? activityGoalNumber.toString() : '';
 
     let customTileType = '';
     switch (newOrHistorical) {
@@ -212,13 +214,13 @@ function App() {
         'Targeting Column 3': null,
         'Targeting Value 3': '',
         'Custom Tile Type': customTileType,
-        'Activity Tracking Type': 'Event',
-        'Activity Goal': '',
+        'Activity Tracking Type': tileType === 'Steps Challenge' ? 'Units' : 'Event',
+        'Activity Goal': activityGoal,
         'Activity Goal Text': activityText,
         'Device Enabled': tileType === 'Steps Challenge' ? 'yes' : 'no',
         'Device Units': tileType === 'Steps Challenge' ? 'steps' : '',
         'Header Image': imageUrl,
-        'Limeade Image Url': '',
+        'Limeade Image Url': newOrHistorical === 'Historical' ? imageUrl : '',
         'Team Size Minimum': teamMin,
         'Team Size Maximum': teamMax
       }, (err, record) => {
@@ -414,6 +416,10 @@ function App() {
           setPointValue={setPointValue}
           historicalEdits={historicalEdits}
           setHistoricalEdits={setHistoricalEdits}
+          tileType={tileType}
+          setTileType={setTileType}
+          activityGoalNumber={activityGoalNumber}
+          setActivityGoalNumber={setActivityGoalNumber}
           imageUrl={imageUrl}
           setImageUrl={setImageUrl}
           challengeTitle={challengeTitle}
@@ -480,6 +486,8 @@ function App() {
           imageUrl={imageUrl}
           challengeTitle={challengeTitle}
           activityText={activityText}
+          activityGoalNumber={activityGoalNumber}
+          setActivityGoalNumber={setActivityGoalNumber}
           endDate={endDate}
           shortDescription={shortDescription}
           longDescription={longDescription}
@@ -511,6 +519,8 @@ function App() {
           setChallengeTitle={setChallengeTitle}
           activityText={activityText}
           setActivityText={setActivityText}
+          activityGoalNumber={activityGoalNumber}
+          setActivityGoalNumber={setActivityGoalNumber}
           shortDescription={shortDescription}
           setShortDescription={setShortDescription}
           longDescription={longDescription}

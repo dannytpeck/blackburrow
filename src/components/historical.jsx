@@ -19,12 +19,16 @@ function Historical({
   setPointValue,
   historicalEdits,
   setHistoricalEdits,
+  tileType,
+  setTileType,
   imageUrl,
   setImageUrl,
   challengeTitle,
   setChallengeTitle,
   activityText,
   setActivityText,
+  activityGoalNumber,
+  setActivityGoalNumber,
   shortDescription,
   setShortDescription,
   longDescription,
@@ -79,6 +83,13 @@ function Historical({
     setActivityText(challenge.ActivityType);
     setShortDescription(challenge.ShortDescription.replace(/<[^>]*>?/ig, ''));
     setLongDescription(challenge.AboutChallenge);
+    setActivityGoalNumber(challenge.ChallengeTarget);
+
+    console.log(challenge.ActivityType);
+
+    if (challenge.ActivityType === 'exercise' ) {
+      setTileType('Steps Challenge');
+    }
 
   }
 
