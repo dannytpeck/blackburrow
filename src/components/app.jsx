@@ -328,7 +328,7 @@ function App() {
     switch (step) {
       case 'Home':
         if (!calendar) {
-          alert('Check your url, a calendar hash is required');
+          alert('Check your url, a calendar ID is required');
         } if (!accountManager) {
           alert('Select an Account Manager to Continue');
         } else {
