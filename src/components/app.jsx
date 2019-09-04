@@ -81,7 +81,26 @@ function App() {
   function submitToWrike(record) {
     console.log(record);
     const today = moment().format('YYYY-MM-DD');
-    const dueDate = moment().add(14, 'days').format('YYYY-MM-DD');
+    const wrikeStartDate = moment(startDate).subtract(21, 'days').format('YYYY-MM-DD');
+    const wrikeDueDate = moment(wrikeStartDate).add(14, 'days').format('YYYY-MM-DD');
+    let customTileType = '';
+
+    switch (newOrHistorical) {
+      case 'NetNew':
+        customTileType = 'Net New';
+        break;
+      case 'Historical':
+        switch (historicalEdits) {
+          case 'Yes':
+            customTileType = 'Revised';
+            break;
+          case 'No':
+            customTileType = 'Rerun';
+            break;
+        }
+        break;
+    }
+
     const responsibleAm = 'KUAB7PEE'; // Jill
     const responsibleEditor = 'KUAEFOGT'; // Meredith
     const responsibleAmy = 'KUAFS43Q'; // Amy
@@ -89,17 +108,27 @@ function App() {
     const editorUrl = `https://calendarbuilder.dev.adurolife.com/blackburrow/#/${calendarHash}/edit/${record.id}`;
 
     const description = `
+      <p>Client Name: ${calendar.fields['client']}</p>
+      <p>Tile Type: ${customTileType}</p>
+      <p>Tile Name: ${challengeTitle}</p>
+      <p>Start Date: ${moment(startDate).format('L')}</p>
+      <br/>
+      <p>Editor View: <a href="${editorUrl}">${editorUrl}</a></p>
+      <p>Client Challenge Calendar: <a href="${calendarUrl}">${calendarUrl}</a></p>
+      <p>Tile Image: <a href="${imageUrl}">${imageUrl}</p>
+      <br/>
+
       <p>A new custom challenge has been created in Blackburrow... View it here: <a href="${editorUrl}">${editorUrl}</a></p>
       <p>View the client's <a href="${calendarUrl}">program Calendar</a>.</p>
       <p>Download the image from <a href="${imageUrl}">${imageUrl}</a></p>
     `;
 
     const data = {
-      title: `Custom Challenge - ${calendar.fields['client']} - ${challengeTitle}`,
+      title: `${calendar.fields['client']} - ${challengeTitle} - ${startDate}`,
       description: description,
       dates: {
-        start: today,
-        due: dueDate
+        start: wrikeStartDate,
+        due: wrikeDueDate
       },
       responsibles: [responsibleAm, responsibleEditor]
     };
