@@ -81,6 +81,11 @@ function Historical({
     console.log(challenge);
 
     setImageUrl(challenge.ChallengeLogoURL);
+    // if pulling in /cfs image, setImageUrl as limeade trophy image
+    if (challenge.ChallengeLogoURL.includes('/cfs-file') === true || challenge.ChallengeLogoURL === '' || challenge.ChallengeLogoURL.includes('/images/') === true) {
+      setImageUrl('https://cdn.limeade.com/images/item-image-default-small.jpg');
+    }
+
     setChallengeTitle(challenge.Name);
     setActivityText(challenge.ActivityType);
     setShortDescription(challenge.ShortDescription.replace(/<[^>]*>?/ig, ''));
