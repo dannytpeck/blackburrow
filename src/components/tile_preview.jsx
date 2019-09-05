@@ -14,6 +14,10 @@ function TilePreview({
   let previewActivityText = activityText;
   if (tileType === 'Steps Challenge') {
     previewActivityText = `${activityText} ${activityGoalNumber} steps`;
+  } else if (tileType === 'Weekly Days') {
+    previewActivityText = `${activityText} on at least ${activityGoalNumber} separate days each week`;
+  } else if (tileType === 'Weekly Units') {
+    previewActivityText = `${activityText} ${activityGoalNumber} times each week`;
   }
 
 	return (
