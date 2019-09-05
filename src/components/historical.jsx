@@ -19,12 +19,18 @@ function Historical({
   setPointValue,
   historicalEdits,
   setHistoricalEdits,
+  tileType,
+  setTileType,
+  setTeamMin,
+  setTeamMax,
   imageUrl,
   setImageUrl,
   challengeTitle,
   setChallengeTitle,
   activityText,
   setActivityText,
+  activityGoalNumber,
+  setActivityGoalNumber,
   shortDescription,
   setShortDescription,
   longDescription,
@@ -79,6 +85,21 @@ function Historical({
     setActivityText(challenge.ActivityType);
     setShortDescription(challenge.ShortDescription.replace(/<[^>]*>?/ig, ''));
     setLongDescription(challenge.AboutChallenge);
+    setActivityGoalNumber(challenge.ChallengeTarget);
+
+    if (challenge.ActivityType === 'exercise' ) {
+      setTileType('Steps Challenge');
+    }
+
+    if (challenge.IsTeamChallenge === true) {
+      setTeamMin(challenge.TeamSize.MinTeamSize);
+      setTeamMax(challenge.TeamSize.MaxTeamSize);
+    }
+
+    // setting tile type to secret values if the historical challenge is Weekly Days or Weekly Units
+    if (challenge.Frequency === 'Weekly' || challenge.Frequency === 'weekly') {
+      setTileType('Weekly Days');
+    }
 
   }
 
@@ -153,7 +174,7 @@ function Historical({
       </div>
 
       <div className="col-6">
-        <TilePreview imageUrl={imageUrl} challengeTitle={challengeTitle} activityText={activityText} shortDescription={shortDescription} longDescription={longDescription} />
+        <TilePreview tileType={tileType} imageUrl={imageUrl} challengeTitle={challengeTitle} activityText={activityText} activityGoalNumber={activityGoalNumber} shortDescription={shortDescription} longDescription={longDescription} />
       </div>
     </section>
   );
