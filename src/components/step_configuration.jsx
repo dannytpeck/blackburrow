@@ -34,6 +34,11 @@ function StepConfiguration({
 
   function handleIndividualOrTeamChange(e) {
     setIndividualOrTeam(e.target.value);
+
+    // Set initial team size values in case people don't change them
+    // there's probably a better day to do this, Good First Commit
+    e.target.value === 'Team' ? setTeamMin('4') : setTeamMin('');
+    e.target.value === 'Team' ? setTeamMax('12') : setTeamMax('');
   }
 
   function handleTeamMinChange(e) {
