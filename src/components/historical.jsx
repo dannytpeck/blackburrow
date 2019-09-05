@@ -96,6 +96,11 @@ function Historical({
       setTeamMax(challenge.TeamSize.MaxTeamSize);
     }
 
+    // setting tile type to secret values if the historical challenge is Weekly Days or Weekly Units
+    if (challenge.Frequency === 'Weekly' || challenge.Frequency === 'weekly') {
+      setTileType('Weekly Days');
+    }
+
   }
 
   function handleStartDateChange(e) {

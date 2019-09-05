@@ -28,7 +28,6 @@ function App() {
 
   // NetNew
   const [tileType, setTileType] = React.useState('One-Time Self-Report Challenge');
-  console.log({ tileType });
   const [startDate, setStartDate] = React.useState('');
   const [endDate, setEndDate] = React.useState('');
   const [pointValue, setPointValue] = React.useState('');
@@ -36,6 +35,7 @@ function App() {
   // Historical
   const [limeadeChallenges, setLimeadeChallenges] = React.useState([]);
   const [historicalEdits, setHistoricalEdits] = React.useState('No');
+  const [weekly, setWeekly] = React.useState(false);
 
   // ChallengeContent
   const [imageUrl, setImageUrl] = React.useState('http://via.placeholder.com/2000x1000');
@@ -49,7 +49,6 @@ function App() {
   const [teamMin, setTeamMin] = React.useState();
   const [teamMax, setTeamMax] = React.useState();
   const [activityGoalNumber, setActivityGoalNumber] = React.useState('');
-  console.log({ activityGoalNumber });
 
   // AdditionalDetails
   const [featuredActivity, setFeaturedActivity] = React.useState(false);
@@ -162,9 +161,26 @@ function App() {
 
   function submitToAirtable() {
     const acknowledgementChecked = $('#acknowledgement').prop('checked');
+    const rewardOccurrence = tileType === 'Weekly Days' || tileType === 'Weekly Units' ? 'Weekly' : 'Once';
     const isFeatured = featuredActivity ? 'yes' : 'no';
     const isTargeted = (targeting === 'Specific Demographic') ? 'yes' : 'no';
     const activityGoal = activityGoalNumber ? activityGoalNumber.toString() : '';
+
+    let activityTrackingType = '';
+    switch (tileType) {
+      case 'One-Time Self-Report Challenge':
+      case 'Verified Challenge':
+      case 'Informational Tile':
+        activityTrackingType = 'Event';
+        break;
+      case 'Weekly Days':
+        activityTrackingType = 'Days';
+        break;
+      case 'Weekly Units':
+      case 'Steps Challenge':
+        activityTrackingType = 'Units';
+        break;
+    }
 
     let customTileType = '';
     switch (newOrHistorical) {
@@ -199,7 +215,7 @@ function App() {
         'Points': pointValue,
         'Total Points': pointValue,
         'Team Activity': individualOrTeam === 'Team' ? 'yes' : 'no',
-        'Reward Occurrence': 'Once',
+        'Reward Occurrence': rewardOccurrence,
         'Category': 'Health and Fitness',
         'Instructions': shortDescription,
         'More Information Html': longDescription,
@@ -214,15 +230,15 @@ function App() {
         'Targeting Column 3': null,
         'Targeting Value 3': '',
         'Custom Tile Type': customTileType,
-        'Activity Tracking Type': tileType === 'Steps Challenge' ? 'Units' : 'Event',
+        'Activity Tracking Type': activityTrackingType,
         'Activity Goal': activityGoal,
         'Activity Goal Text': activityText,
         'Device Enabled': tileType === 'Steps Challenge' ? 'yes' : 'no',
         'Device Units': tileType === 'Steps Challenge' ? 'steps' : '',
         'Header Image': imageUrl,
         'Limeade Image Url': newOrHistorical === 'Historical' ? imageUrl : '',
-        'Team Size Minimum': teamMin.toString(),
-        'Team Size Maximum': teamMax.toString()
+        'Team Size Minimum': individualOrTeam === 'Team' ? teamMin.toString() : '',
+        'Team Size Maximum': individualOrTeam === 'Team' ? teamMax.toString() : ''
       }, (err, record) => {
         if (err) {
           console.error(err);
