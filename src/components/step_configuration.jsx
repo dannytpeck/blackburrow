@@ -72,7 +72,7 @@ function StepConfiguration({
         <div className="row">
           <div className="col">
             <div className="form-group">
-              <input type="text" className="form-control" placeholder="50,000" />
+              <input type="text" className="form-control" placeholder="50,000" onChange={handleStepsGoalChange} />
             </div>
           </div>
           <div className="col">
