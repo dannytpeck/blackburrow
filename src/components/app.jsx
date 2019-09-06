@@ -85,7 +85,7 @@ function App() {
   function submitToWrike(record) {
     console.log(record);
     const today = moment().format('YYYY-MM-DD');
-    
+
     const wrikeStartDate = moment(startDate).subtract(21, 'days').format('YYYY-MM-DD');
     const wrikeDueDate = moment(wrikeStartDate).add(14, 'days').format('YYYY-MM-DD');
     let customTileType = '';
@@ -116,22 +116,17 @@ function App() {
 
     const description = `
       <p>Client Name: ${calendar.fields['client']}</p>
-      <p>Tile Type: ${customTileType}</p>
+      <p>Tile Type: ${tileType}</p>
       <p>Tile Name: ${challengeTitle}</p>
       <p>Start Date: ${moment(startDate).format('L')}</p>
       <br/>
       <p>Editor View: <a href="${editorUrl}">${editorUrl}</a></p>
       <p>Client Challenge Calendar: <a href="${calendarUrl}">${calendarUrl}</a></p>
       <p>Tile Image: <a href="${imageUrl}">${imageUrl}</p>
-      <br/>
-
-      <p>A new custom challenge has been created in Blackburrow... View it here: <a href="${editorUrl}">${editorUrl}</a></p>
-      <p>View the client's <a href="${calendarUrl}">program Calendar</a>.</p>
-      <p>Download the image from <a href="${imageUrl}">${imageUrl}</a></p>
     `;
 
     const data = {
-      title: `${calendar.fields['client']} - ${challengeTitle} - ${startDate}`,
+      title: `${calendar.fields['client']} - ${customTileType} - ${tileType} - ${challengeTitle} - ${startDate}`,
       description: description,
       dates: {
         start: wrikeStartDate,
@@ -153,8 +148,7 @@ function App() {
     .done(data => {
       const url = data.data[0].permalink;
       const confirmationText = `
-        <p>View it in your <a href="${calendarUrl}" target="_blank">Calendar Builder</a> or submit <a href="${blackburrowUrl}">another request</a>.</p>
-        <p>Wrike task created successfully (keeping this here for testing for now): <a href="${url}" target="_blank">${url}</a></p>
+        <p>View it in your <a href="${calendarUrl}" target="_blank">Calendar Builder</a> or submit <a href="https://calendarbuilder.dev.adurolife.com/blackburrow/#/${calendarHash}">another request</a>.</p>
       `;
       $('#confirmSubmitModal .modal-body').append(confirmationText);
     });
