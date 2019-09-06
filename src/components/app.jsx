@@ -111,6 +111,7 @@ function App() {
     const responsibleAmy = 'KUAFS43Q'; // Amy
 
     const calendarUrl = `https://calendarbuilder.dev.adurolife.com/calendar-builder/#/${calendarHash}`;
+    const blackburrowUrl = `https://calendarbuilder.dev.adurolife.com/blackburrow/#/${calendarHash}`;
     const editorUrl = `https://calendarbuilder.dev.adurolife.com/blackburrow/#/${calendarHash}/edit/${record.id}`;
 
     const description = `
@@ -152,7 +153,7 @@ function App() {
     .done(data => {
       const url = data.data[0].permalink;
       const confirmationText = `
-        <p>View it in your <a href="${calendarUrl}" target="_blank">Calendar Builder</a> or submit <a href="https://calendarbuilder.dev.adurolife.com/blackburrow/#/${calendarHash}">another request</a>.</p>
+        <p>View it in your <a href="${calendarUrl}" target="_blank">Calendar Builder</a> or submit <a href="${blackburrowUrl}">another request</a>.</p>
         <p>Wrike task created successfully (keeping this here for testing for now): <a href="${url}" target="_blank">${url}</a></p>
       `;
       $('#confirmSubmitModal .modal-body').append(confirmationText);
