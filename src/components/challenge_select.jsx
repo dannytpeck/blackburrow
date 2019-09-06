@@ -37,10 +37,11 @@ function ChallengeSelect({ challenges, setChallenge }) {
   return (
     <div className="challenge-select form-group">
       <label htmlFor="searchPreviousChallenge">Search Previous Challenge</label>
+      <img className="tooltip-icon" src="images/tooltip.svg" data-html="true" data-toggle="tooltip" data-original-title="<p>Search your tile history by beginning to type of the name of previous run tile. You will see the tile name and it's orginal start and end dates.</p><p>Note: you may have run a tile in more than one program year. We recommend selecting the most recently run version of the tile.</p>" />
       <img id="spinner" src="images/spinner.svg" />
       <div className="dropdown">
         <div className="challenge-search input-group">
-          <input id="searchPreviousChallenge" value={searchText} onChange={handleChange} type="text" className="form-control" placeholder="Lorem Ipsum Dolor sit Amet" />
+          <input id="searchPreviousChallenge" value={searchText} onChange={handleChange} type="text" className="form-control" placeholder="Search for a challenge by name" />
           <span className="oi oi-magnifying-glass"></span>
         </div>
 

@@ -111,6 +111,7 @@ function App() {
     const responsibleAmy = 'KUAFS43Q'; // Amy
 
     const calendarUrl = `https://calendarbuilder.dev.adurolife.com/calendar-builder/#/${calendarHash}`;
+    const blackburrowUrl = `https://calendarbuilder.dev.adurolife.com/blackburrow/#/${calendarHash}`;
     const editorUrl = `https://calendarbuilder.dev.adurolife.com/blackburrow/#/${calendarHash}/edit/${record.id}`;
 
     const description = `

@@ -81,6 +81,11 @@ function Historical({
     console.log(challenge);
 
     setImageUrl(challenge.ChallengeLogoURL);
+    // if pulling in /cfs image, setImageUrl as limeade trophy image
+    if (challenge.ChallengeLogoURL.includes('/cfs-file') === true || challenge.ChallengeLogoURL === '' || challenge.ChallengeLogoURL.includes('/images/') === true) {
+      setImageUrl('https://cdn.limeade.com/images/item-image-default-small.jpg');
+    }
+
     setChallengeTitle(challenge.Name);
     setActivityText(challenge.ActivityType);
     setShortDescription(challenge.ShortDescription.replace(/<[^>]*>?/ig, ''));
@@ -123,7 +128,7 @@ function Historical({
     <section id="historical" className="row">
       <div className="col-6">
 
-        <h3 className="mb-5">Challenge Content</h3>
+        <h3 className="mb-5">Search Historical Tiles</h3>
 
         <ChallengeSelect challenges={limeadeChallenges} setChallenge={setChallenge} />
 
@@ -132,7 +137,7 @@ function Historical({
           <div className="col">
             <div className="form-group">
               <label htmlFor="startDate">Start Date</label>
-              <img className="tooltip-icon" src="images/tooltip.svg" data-toggle="tooltip" data-original-title="Default tooltip" />
+              <img className="tooltip-icon" src="images/tooltip.svg" data-html="true" data-toggle="tooltip" data-original-title="The day the tile will go live on the platform." />
               <input type="date" className="form-control" id="startDate" value={startDate} onChange={handleStartDateChange} />
             </div>
           </div>
@@ -140,7 +145,7 @@ function Historical({
           <div className="col">
             <div className="form-group">
               <label htmlFor="endDate">End Date</label>
-              <img className="tooltip-icon" src="images/tooltip.svg" data-toggle="tooltip" data-original-title="Default tooltip" />
+              <img className="tooltip-icon" src="images/tooltip.svg" data-html="true" data-toggle="tooltip" data-original-title="<p><strong>Info Tiles and Verified Challenges:</strong> The last day a tile is visible on the platform.</p><p><strong>Self-Report and Steps Challenges: </strong> The last day a participant can join the challenge. This will be followed by a 3-day grace period in which a participant can still track completion of the challenge, to earn points. </p><p>Challenge end date should NOT be set after your program end date.</p>" />
               <input type="date" className="form-control" id="endDate" value={endDate} onChange={handleEndDateChange} />
             </div>
           </div>
@@ -151,7 +156,7 @@ function Historical({
           <div className="col-6">
             <div className="form-group">
               <label htmlFor="pointValue">Point Value</label>
-              <img className="tooltip-icon" src="images/tooltip.svg" data-toggle="tooltip" data-original-title="Default tooltip" />
+              <img className="tooltip-icon" src="images/tooltip.svg" data-html="true" data-toggle="tooltip" data-original-title="Number of points awarded upon completion." />
               <input type="text" className="form-control" id="pointValue" value={pointValue} onChange={handlePointValueChange} />
             </div>
           </div>
