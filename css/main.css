@@ -17,6 +17,7 @@ label {
 }
 
 #header h1 {
+  font-size: 1.75em;
   font-weight: 300;
   color: #7B7B7B;
 }
@@ -70,6 +71,10 @@ label {
 .choose-image .form-group {
   display: inline-block;
   vertical-align: top;
+}
+
+.size-dropdown{
+  width: 50%;
 }
 
 /* Hidden - Style for Addtional Resources which is hidden

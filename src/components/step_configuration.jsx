@@ -59,7 +59,7 @@ function StepConfiguration({
 
         <h3 className="mb-5">Challenge Configuration</h3>
 
-        <label className="mb-0">Is this a Team Challenge?</label>
+        <label className="mb-0">Is this an Individual or Team Challenge?</label>
 
         <div className="form-check">
           <input className="form-check-input" type="radio" name="individualOrTeamRadios" id="individualChallenge" value="Individual" onChange={handleIndividualOrTeamChange} checked={individualOrTeam === 'Individual'} />
@@ -71,9 +71,7 @@ function StepConfiguration({
         </div>
 
         <label className="mt-5 mb-0">Number of steps needed to earn points</label>
-        <small className="form-text text-muted text-left">Lorem steps needed to win points.</small>
-        <small className="form-text text-muted text-left">Lorem participants can keep tracking after they have enough points until the End Date.</small>
-
+        <small className="form-text text-muted text-left"><p><strong>Weekly (available for Individual Challenges Only):</strong> Track XX steps each week during the challenge period. Goal resets each Monday. Points are awarded weekly, after the steps-goal is met. </p><p><strong>By End Date:</strong> Track XX steps before the end of the challenge. Points are awarded once, after the steps-goal is met.</p></small>
         <div className="row">
           <div className="col">
             <div className="form-group">
