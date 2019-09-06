@@ -145,7 +145,7 @@ function Historical({
           <div className="col">
             <div className="form-group">
               <label htmlFor="endDate">End Date</label>
-              <img className="tooltip-icon" src="images/tooltip.svg" data-html="true" data-toggle="tooltip" data-original-title="<p><strong>Info Tiles and Verified Challenges:</strong> The last day a tile is visible on the platform.</p><p><strong>Self-Report and Steps Challenges: </strong> The last day a participant can join the challenge. This will be followed by a 3-day grace period in which a participant can still track completion of the challenge, to earn points. </p><p>Challenge end date should NOT be set after your program end date.</p>" />
+              <img className="tooltip-icon" src="images/tooltip.svg" data-html="true" data-toggle="tooltip" data-original-title="<strong>Info Tiles and Verified Challenges:</strong><p>The last day a tile is visible on the platform.</p><strong>Self-Report and Steps Challenges: </strong><p>The last day a participant can join the challenge. This will be followed by a 3-day grace period in which a participant can still track completion of the challenge, to earn points. </p><p>Challenge end date should NOT be set after your program end date.</p>" />
               <input type="date" className="form-control" id="endDate" value={endDate} onChange={handleEndDateChange} />
             </div>
           </div>

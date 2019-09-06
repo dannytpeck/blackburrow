@@ -41,7 +41,7 @@ function ChallengeSelect({ challenges, setChallenge }) {
       <img id="spinner" src="images/spinner.svg" />
       <div className="dropdown">
         <div className="challenge-search input-group">
-          <input id="searchPreviousChallenge" value={searchText} onChange={handleChange} type="text" className="form-control" placeholder="Search for a challenge by name" />
+          <input id="searchPreviousChallenge" value={searchText} onChange={handleChange} type="text" className="form-control" placeholder="Begin typing a tile name here..." />
           <span className="oi oi-magnifying-glass"></span>
         </div>
 
