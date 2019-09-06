@@ -50,12 +50,13 @@ function Home({ accountManager, setAccountManager, accountManagerWrikeId, setAcc
 
   return (
     <section className="border" id="home">
-      <h3 className="mb-5">Welcome</h3>
+      <h3 className="mb-5">Welcome!</h3>
       <p>We think you're kind of a big deal.</p>
-      <p>Thank you for using our new and improved Custom Tile Request Tool for the 2019/2020 Refresh Season.<br/>Please use this tool to submit all requests for your upcoming program year and beyond.</p>
-      <p>During our 'refresh months' (September - January) requests will be prioritized based on program start dates. <br/>If your tile request is intended to go live during a current program year, please utilize our original <a href="https://www.wrike.com/form/eyJhY2NvdW50SWQiOjc4MzY3MywidGFza0Zvcm1JZCI6MjE1NDQ3fQk0NzIxMjI4NTU1NjU2CTJkYjM0YTNkNTc0Y2E0OTE5NWQwODA1YjE5ZTM5ZDdmYTMwMzlmMzYyMTQ4NmExNDk3OTQyMmM0YTcxZmM1NmY=" target="_blank">Custom Tile Request Form</a></p>
-      <br/>
-      <p>The standard tile creation process can take up to 30 days.</p>
+      <p>Thank you for using ADURO’s Custom Tile Request Tool. This tool was thoughtfully designed to assist you in creating customer-specific content for your Human Performance platform.</p>
+      <p>Requests will be prioritized based on program start dates.</p>
+      <p>TILE REQUEST WITH START DATES ON OR BEFORE DECEMBER 31, 2019 - Utilize our original <a href="https://www.wrike.com/form/eyJhY2NvdW50SWQiOjc4MzY3MywidGFza0Zvcm1JZCI6MjE1NDQ3fQk0NzIxMjI4NTU1NjU2CTJkYjM0YTNkNTc0Y2E0OTE5NWQwODA1YjE5ZTM5ZDdmYTMwMzlmMzYyMTQ4NmExNDk3OTQyMmM0YTcxZmM1NmY=" target="_blank">Custom Tile Request Form.</a></p>
+      <p>TILE REQUESTS WITH START DATES ON OR AFTER JANUARY 1, 2020 - Use this cool new tool.</p>
+      <p>Note: The standard tile creation process can take up to 30 days.</p>
 
       <div className="form-group mt-5">
         <label htmlFor="primaryAccountManager">Primary Account Manager</label>

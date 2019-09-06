@@ -111,18 +111,33 @@ function App() {
     const responsibleAmy = 'KUAFS43Q'; // Amy
 
     const calendarUrl = `https://calendarbuilder.dev.adurolife.com/calendar-builder/#/${calendarHash}`;
-    const blackburrowUrl = `https://calendarbuilder.dev.adurolife.com/blackburrow/#/${calendarHash}`;
-    const editorUrl = `https://calendarbuilder.dev.adurolife.com/blackburrow/#/${calendarHash}/edit/${record.id}`;
+    const ctrtUrl = `https://calendarbuilder.dev.adurolife.com/ctrt/#/${calendarHash}`;
+    const editorUrl = `https://calendarbuilder.dev.adurolife.com/ctrt/#/${calendarHash}/edit/${record.id}`;
 
     const description = `
       <p>Client Name: ${calendar.fields['client']}</p>
       <p>Tile Type: ${tileType}</p>
+      <p>Net-New or Historical: ${customTileType}</p>
       <p>Tile Name: ${challengeTitle}</p>
       <p>Start Date: ${moment(startDate).format('L')}</p>
       <br/>
       <p>Editor View: <a href="${editorUrl}">${editorUrl}</a></p>
       <p>Client Challenge Calendar: <a href="${calendarUrl}">${calendarUrl}</a></p>
       <p>Tile Image: <a href="${imageUrl}">${imageUrl}</p>
+      <br/>
+      <p><strong>1) WAIT! STOP! Before moving on...</strong></p>
+      <p>If tile type is: "Verified Challenge" AND "Revised" or "Rerun", &#64; the AM with the below message:</p><br/>
+      <p><em>"A request was received to rerun or revise a historical tile for your client. Please answer this questions:</em></p><br/>
+      <p><em>Can this tile be made into a Partner Challenge or must it be configured as a classic CIE?</em></p><br/>
+      <p><em>The following examples would require a tile to be configured as a CIE:</em></p>
+      <ol>
+        <li><em>ID 7: Complete a Health Screening</em></li>
+        <li><em>ID 10: Well-being Assessment</em></li>
+        <li><em>RAS Programs (i.e. Breathe Easy, My Health Matters, etc.)</em></li>
+        <li><em>Any CIE tied to an integration or workflow (i.e. Naturally Slim)</em></li>
+      </ol>
+      <p><em>Thank you for clarifying!""</em></p><br/>
+      <p>If Partner Challenge, continue with process as normal. <br/>If CIE, review the content and add this task to the WebConfig folder.</p>
     `;
 
     const data = {
@@ -148,7 +163,7 @@ function App() {
     .done(data => {
       const url = data.data[0].permalink;
       const confirmationText = `
-        <p>View it in your <a href="${calendarUrl}" target="_blank">Calendar Builder</a> or submit <a href="https://calendarbuilder.dev.adurolife.com/blackburrow/#/${calendarHash}">another request</a>.</p>
+        <p>View it in your <a href="${calendarUrl}" target="_blank">Calendar Builder</a> or submit <a href="https://calendarbuilder.dev.adurolife.com/ctrt/#/${calendarHash}">another request</a>.</p>
       `;
       $('#confirmSubmitModal .modal-body').append(confirmationText);
     });

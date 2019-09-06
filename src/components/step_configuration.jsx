@@ -71,7 +71,7 @@ function StepConfiguration({
         </div>
 
         <label className="mt-5 mb-0">Number of steps needed to earn points</label>
-        <small className="form-text text-muted text-left"><p><strong>Weekly (available for Individual Challenges Only):</strong> Track XX steps each week during the challenge period. Goal resets each Monday. Points are awarded weekly, after the steps-goal is met. </p><p><strong>By End Date:</strong> Track XX steps before the end of the challenge. Points are awarded once, after the steps-goal is met.</p></small>
+        <small className="form-text text-muted text-left"><strong>Weekly (available for Individual Challenges Only):</strong><p>Track XX steps each week during the challenge period. Goal resets each Monday. Points are awarded weekly, after the steps-goal is met. </p><strong>By End Date:</strong><p>Track XX steps before the end of the challenge. Points are awarded once, after the steps-goal is met.</p></small>
         <div className="row">
           <div className="col">
             <div className="form-group">
