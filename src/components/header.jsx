@@ -18,7 +18,7 @@ function Header() {
       <div className="row">
         <div className="col-6 offset-3">
             <img className="logo" src="images/ADURO-Logo-Horizontal.png" />
-            <h1 className="my-1">Custom Tile Request Form</h1>
+            <h1 className="my-1">Custom Tile Request Tool</h1>
         </div>
         <div className="col-3">
             <p className="client-name">Client Name: {clientName}</p>
