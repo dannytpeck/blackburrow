@@ -37,6 +37,9 @@ function NetNew({
   function handlePointValueChange(e) {
     setPointValue(e.target.value);
   }
+  if (tileType === 'Informational Tile') {
+    setPointValue('0');
+  }
 
   return (
     <section id="netNew" className="row">

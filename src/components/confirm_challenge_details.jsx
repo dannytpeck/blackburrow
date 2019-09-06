@@ -51,6 +51,8 @@ function ConfirmChallengeDetails({
           <div className="col">
             <label>Individual or Team:</label>
             <p>{individualOrTeam}</p>
+            <label>Number of Steps to earn points</label>
+            <p>{activityGoalNumber} steps</p>
           </div>
         </div>
 
