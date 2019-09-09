@@ -86,24 +86,47 @@ function Historical({
       setImageUrl('https://cdn.limeade.com/images/item-image-default-small.jpg');
     }
 
-    setChallengeTitle(challenge.Name);
-    setActivityText(challenge.ActivityType);
-    setShortDescription(challenge.ShortDescription.replace(/<[^>]*>?/ig, ''));
-    setLongDescription(challenge.AboutChallenge);
-    setActivityGoalNumber(challenge.ChallengeTarget);
+    // Parse information if importing a CIE (convert it into a Verified Partner Challenge) if ID is negative (wtf Limeade)
+    if (challenge.ChallengeId < 0) {
+      // set tile as Verified Challenge
+      setTileType('Verified Challenge');
+      // set other relevant fields
+      setChallengeTitle(challenge.Name);
+      setActivityText('do the activity in the description');
 
-    if (challenge.ActivityType === 'exercise' ) {
-      setTileType('Steps Challenge');
-    }
+      // parse the AboutChallenge into separate short and long descriptions
+      const regexForFirstSentence = /^(.*?(?<!\b\w)[.?!])\s+[A-Z0-9]/;
+      const cieFirstSentence = challenge.AboutChallenge.match(regexForFirstSentence)[1];
+      const cieShortDescription = cieFirstSentence.replace(/<[^>]*>?/ig, '');
+      const cieLongDescription = challenge.AboutChallenge.slice(cieFirstSentence.length, challenge.AboutChallenge.length);
 
-    if (challenge.IsTeamChallenge === true) {
-      setTeamMin(challenge.TeamSize.MinTeamSize);
-      setTeamMax(challenge.TeamSize.MaxTeamSize);
-    }
+      // set short and long description accordingly
+      setShortDescription(cieShortDescription);
+      setLongDescription(cieLongDescription);
 
-    // setting tile type to secret values if the historical challenge is Weekly Days or Weekly Units
-    if (challenge.Frequency === 'Weekly' || challenge.Frequency === 'weekly') {
-      setTileType('Weekly Days');
+    } else if (challenge.ChallengeId > 0) { // if ID is positive, therefore Self-Report or Partner challenge
+      setChallengeTitle(challenge.Name);
+      setActivityText(challenge.ActivityType);
+      setShortDescription(challenge.ShortDescription.replace(/<[^>]*>?/ig, ''));
+      setLongDescription(challenge.AboutChallenge);
+      setActivityGoalNumber(challenge.ChallengeTarget);
+
+      if (challenge.ActivityType === 'exercise' ) {
+        setTileType('Steps Challenge');
+      }
+
+      if (challenge.IsTeamChallenge === true) {
+        setTeamMin(challenge.TeamSize.MinTeamSize);
+        setTeamMax(challenge.TeamSize.MaxTeamSize);
+      }
+
+      // setting tile type to secret values if the historical challenge is Weekly Days or Weekly Units
+      if (challenge.Frequency === 'Weekly' || challenge.Frequency === 'weekly') {
+        setTileType('Weekly Days');
+      }
+
+    } else {
+      console.log('Challenge cannot be parsed. Check if the ChallengeId = 0');
     }
 
   }
