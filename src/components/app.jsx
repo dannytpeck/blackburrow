@@ -152,7 +152,7 @@ function App() {
 
     $.ajax({
       type: 'POST',
-      url: 'https://www.wrike.com/api/v4/folders/IEAAX5JZI4KS73DO/tasks',
+      url: 'https://www.wrike.com/api/v4/folders/IEAAX5JZI4LYLGP4/tasks',
       data: JSON.stringify(data),
       dataType: 'json',
       contentType: 'application/json',
@@ -163,7 +163,7 @@ function App() {
     .done(data => {
       const url = data.data[0].permalink;
       const confirmationText = `
-        <p>View it in your <a href="${calendarUrl}" target="_blank">Calendar Builder</a> or submit <a href="https://calendarbuilder.dev.adurolife.com/ctrt/#/${calendarHash}">another request</a>.</p>
+        <p>View it in your <a href="${calendarUrl}" target="_blank">Calendar Builder</a> or submit <a href="${ctrtUrl}">another request</a>.</p>
       `;
       $('#confirmSubmitModal .modal-body').append(confirmationText);
     });
