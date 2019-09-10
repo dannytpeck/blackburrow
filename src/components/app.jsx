@@ -359,13 +359,17 @@ function App() {
   function nextStep() {
     switch (step) {
       case 'Home':
-        if (!calendar) {
-          alert('Check your url, a calendar ID is required');
-        } if (!accountManager) {
-          alert('Select an Account Manager to Continue');
+        if (!calendar || !accountManager) {
+          if (!calendar) {
+            alert('Check your url, a calendar ID is required');
+          } 
+          if (!accountManager) {
+            alert('Select an Account Manager to Continue');
+          }
         } else {
-          setStep(newOrHistorical);
-        }
+            setStep(newOrHistorical);
+          }
+        
         break;
       case 'NetNew':
         if (validatedFields()) {
