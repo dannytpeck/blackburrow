@@ -287,6 +287,7 @@ function App() {
     const $challengeTitle = $('#challengeTitle');
     const $activityText = $('#activityText');
     const $shortDescription = $('#shortDescription');
+    const $specificDemographicText = $('#targetingDetails');
 
     let allInputsAreValid = true;
 
@@ -315,6 +316,9 @@ function App() {
         validate($challengeTitle);
         validate($activityText);
         validate($shortDescription);
+        break;
+      case 'AdditionalDetails':
+        targeting === 'Specific Demographic' ? validate($specificDemographicText) : '';
         break;
     }
 
@@ -394,7 +398,9 @@ function App() {
         }
         break;
       case 'AdditionalDetails':
-        setStep('ConfirmChallengeDetails');
+        if (validatedFields()) {
+          setStep('ConfirmChallengeDetails');
+        }
         break;
       case 'StepConfiguration':
         setStep('AdditionalDetails');
