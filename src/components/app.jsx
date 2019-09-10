@@ -300,17 +300,32 @@ function App() {
       }
     }
 
+    // validation for start and end date timing
+    function validateStartIsBeforeEndDate() {
+      if (moment(endDate).isBefore(startDate)) {
+        alert('Error: The Start Date must be before the End Date.');
+        $startDate.addClass('is-invalid');
+        $endDate.addClass('is-invalid');
+        allInputsAreValid = false;
+      } else {
+        $startDate.removeClass('is-invalid');
+        $endDate.removeClass('is-invalid');
+      }
+    }
+
     switch (step) {
       case 'NetNew':
         validate($startDate);
         validate($endDate);
         validate($pointValue);
+        validateStartIsBeforeEndDate();
         break;
       case 'Historical':
         validate($searchPreviousChallenge);
         validate($startDate);
         validate($endDate);
         validate($pointValue);
+        validateStartIsBeforeEndDate();
         break;
       case 'ChallengeContent':
         validate($challengeTitle);
