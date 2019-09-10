@@ -83,7 +83,7 @@ function NetNew({
             <div className="form-group">
               <label htmlFor="pointValue">Point Value</label>
               <img className="tooltip-icon" src="images/tooltip.svg" data-html="true" data-toggle="tooltip" data-placement="auto" data-original-title="Number of points awarded upon completion." />
-              <input type="text" className="form-control" id="pointValue" value={pointValue} onChange={handlePointValueChange} />
+              <input type="number" className="form-control" id="pointValue" value={pointValue} onChange={handlePointValueChange} />
             </div>
           </div>
         </div>
