@@ -152,7 +152,7 @@ function App() {
 
     $.ajax({
       type: 'POST',
-      url: 'https://www.wrike.com/api/v4/folders/IEAAX5JZI4KS73DO/tasks',
+      url: 'https://www.wrike.com/api/v4/folders/IEAAX5JZI4LYLGP4/tasks',
       data: JSON.stringify(data),
       dataType: 'json',
       contentType: 'application/json',
@@ -163,7 +163,7 @@ function App() {
     .done(data => {
       const url = data.data[0].permalink;
       const confirmationText = `
-        <p>View it in your <a href="${calendarUrl}" target="_blank">Calendar Builder</a> or submit <a href="https://calendarbuilder.dev.adurolife.com/ctrt/#/${calendarHash}">another request</a>.</p>
+        <p>View it in your <a href="${calendarUrl}" target="_blank">Calendar Builder</a> or submit <a href="${ctrtUrl}">another request</a>.</p>
       `;
       $('#confirmSubmitModal .modal-body').append(confirmationText);
     });
@@ -221,7 +221,7 @@ function App() {
         'Phase': phase,
         'Start date': startDate,
         'End date': endDate,
-        'Verified': tileType === 'Verified' ? 'Verified' : 'Self-Report',
+        'Verified': tileType === 'Verified Challenge' ? 'Verified' : 'Self-Report',
         'Points': pointValue,
         'Total Points': pointValue,
         'Team Activity': individualOrTeam === 'Team' ? 'yes' : 'no',
@@ -287,6 +287,7 @@ function App() {
     const $challengeTitle = $('#challengeTitle');
     const $activityText = $('#activityText');
     const $shortDescription = $('#shortDescription');
+    const $specificDemographicText = $('#targetingDetails');
 
     let allInputsAreValid = true;
 
@@ -299,22 +300,40 @@ function App() {
       }
     }
 
+    // validation for start and end date timing
+    function validateStartIsBeforeEndDate() {
+      if (moment(endDate).isBefore(startDate)) {
+        alert('Error: The Start Date must be before the End Date.');
+        $startDate.addClass('is-invalid');
+        $endDate.addClass('is-invalid');
+        allInputsAreValid = false;
+      } else {
+        $startDate.removeClass('is-invalid');
+        $endDate.removeClass('is-invalid');
+      }
+    }
+
     switch (step) {
       case 'NetNew':
         validate($startDate);
         validate($endDate);
         validate($pointValue);
+        validateStartIsBeforeEndDate();
         break;
       case 'Historical':
         validate($searchPreviousChallenge);
         validate($startDate);
         validate($endDate);
         validate($pointValue);
+        validateStartIsBeforeEndDate();
         break;
       case 'ChallengeContent':
         validate($challengeTitle);
         validate($activityText);
         validate($shortDescription);
+        break;
+      case 'AdditionalDetails':
+        targeting === 'Specific Demographic' ? validate($specificDemographicText) : '';
         break;
     }
 
@@ -355,13 +374,17 @@ function App() {
   function nextStep() {
     switch (step) {
       case 'Home':
-        if (!calendar) {
-          alert('Check your url, a calendar ID is required');
-        } if (!accountManager) {
-          alert('Select an Account Manager to Continue');
+        if (!calendar || !accountManager) {
+          if (!calendar) {
+            alert('Check your url, a calendar ID is required');
+          } 
+          if (!accountManager) {
+            alert('Select an Account Manager to Continue');
+          }
         } else {
-          setStep(newOrHistorical);
-        }
+            setStep(newOrHistorical);
+          }
+        
         break;
       case 'NetNew':
         if (validatedFields()) {
@@ -382,6 +405,7 @@ function App() {
           case 'One-Time Self-Report Challenge':
           case 'Verified Challenge':
           case 'Informational Tile':
+          case 'Weekly Days':
             if (validatedFields()) {
               setStep('AdditionalDetails');
             }
@@ -394,7 +418,9 @@ function App() {
         }
         break;
       case 'AdditionalDetails':
-        setStep('ConfirmChallengeDetails');
+        if (validatedFields()) {
+          setStep('ConfirmChallengeDetails');
+        }
         break;
       case 'StepConfiguration':
         setStep('AdditionalDetails');
