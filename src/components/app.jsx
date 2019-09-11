@@ -127,7 +127,7 @@ function App() {
       <br/>
       <p><strong>1) WAIT! STOP! Before moving on...</strong></p>
       <p>If tile type is: "Verified Challenge" AND "Revised" or "Rerun", &#64; the AM with the below message:</p><br/>
-      <p><em>"A request was received to rerun or revise a historical tile for your client. Please answer this questions:</em></p><br/>
+      <p><em>"A request was received to rerun or revise a historical tile for your client. Please answer this question:</em></p><br/>
       <p><em>Can this tile be made into a Partner Challenge or must it be configured as a classic CIE?</em></p><br/>
       <p><em>The following examples would require a tile to be configured as a CIE:</em></p>
       <ol>
