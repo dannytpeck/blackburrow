@@ -405,6 +405,7 @@ function App() {
           case 'One-Time Self-Report Challenge':
           case 'Verified Challenge':
           case 'Informational Tile':
+          case 'Weekly Days':
             if (validatedFields()) {
               setStep('AdditionalDetails');
             }
