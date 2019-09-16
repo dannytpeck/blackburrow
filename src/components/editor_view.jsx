@@ -81,6 +81,10 @@ function EditorView({
     setShortDescription(e.target.value);
   }
 
+  function handleLimeadeImageChange(e) {
+    setImageUrl(e.target.value);
+  }
+
   function handleImageChange(e) {
 
     console.log(e.target.files);
@@ -157,10 +161,10 @@ function EditorView({
         <h3 className="mb-3">Challenge Content</h3>
 
         <div className="form-group">
-          <label>Replace or Change Image</label>
+          <label>Image URL</label>
           <div className="choose-image">
             <div className="form-group">
-              <input type="file" className="form-control-file" id="uploadImage" onChange={handleImageChange} />
+              <input type="text" className="form-control" id="limeadeImage" placeholder="Enter Limeade Image URL" value={imageUrl} onChange={handleLimeadeImageChange} />
             </div>
           </div>
         </div>
