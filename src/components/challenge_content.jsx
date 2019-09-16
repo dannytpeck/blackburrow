@@ -57,13 +57,8 @@ function ChallengeContent({
 
         <div className="form-group">
           <label htmlFor="activityText">Call to Action</label>
-
           <input type="text" className="form-control" id="activityText" placeholder="To complete this activity..." value={activityText} onChange={handleActivityTextChange} readOnly={tileType === 'Steps Challenge' ? true : false} />
           <small className="form-text text-muted">{activityText.length}/50 Characters</small>
-          <ul className="text-caption-list">
-            <li><small>Example 1: To complete this activity... go to the dentist.</small></li>
-            <li><small>Example 2: To complete this activity... participate in the holiday food drive..</small></li>
-          </ul>
         </div>
 
         <div className="form-group">
