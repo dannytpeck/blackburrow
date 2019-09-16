@@ -51,7 +51,7 @@ function EditorView({
       setStartDate(record.fields['Start date']);
       setEndDate(record.fields['End date']);
       setPointValue(record.fields['Points']);
-      setImageUrl(record.fields['Header Image']);
+      record.fields['Limeade Image Url'] ? setImageUrl(record.fields['Limeade Image Url']) : setImageUrl(record.fields['Header Image']);
       setChallengeTitle(record.fields['Title'] ? record.fields['Title'] : '');
       setActivityText(record.fields['Activity Goal Text'] ? record.fields['Activity Goal Text'] : '');
       setFeaturedActivity(record.fields['Featured Activity'] === 'yes' ? record.fields['Featured Activity'] : '');
