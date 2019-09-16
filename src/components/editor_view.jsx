@@ -47,6 +47,7 @@ function EditorView({
       }
 
       console.log('Retrieved', record);
+      // TODO: make setTileType code more robust (separate out tileType and Verified?)
       setTileType(record.fields['Reward Occurrence'] + ' ' + record.fields['Verified']);
       setStartDate(record.fields['Start date']);
       setEndDate(record.fields['End date']);
@@ -69,6 +70,14 @@ function EditorView({
 
   }, []); // Pass empty array to only run once on mount
 
+  function handleStartDateChange(e) {
+    setStartDate(e.target.value);
+  }
+
+  function handleEndDateChange(e) {
+    setEndDate(e.target.value);
+  }
+
   function handleChallengeTitleChange(e) {
     setChallengeTitle(e.target.value);
   }
@@ -85,29 +94,6 @@ function EditorView({
     setImageUrl(e.target.value);
   }
 
-  function handleImageChange(e) {
-
-    console.log(e.target.files);
-    const imageFile = e.target.files[0];
-
-    const formData = new FormData();
-    formData.append('image', imageFile);
-
-    fetch('https://api.imgur.com/3/image', {
-      method: 'POST',
-      headers: {
-        Authorization: 'Client-ID a27c82776f2c9f3',
-      },
-      body: formData
-    }).then(response => {
-      return response.json();
-    }).then(json => {
-      console.log(json);
-      setImageUrl(json.data.link);
-    });
-
-  }
-
   return (
     <section id="editorView" className="row">
       <div className="col-6">
@@ -119,15 +105,15 @@ function EditorView({
         <label>Tile Type:</label>
         <p>{tileType}</p>
 
-        <div className="row">
+        <div className="row mb-3">
           <div className="col">
             <label>Start Date:</label>
-            <p>{moment(startDate).format('L')}</p>
+            <input type="date" className="form-control" id="startDate" value={startDate} onChange={handleStartDateChange} />
           </div>
 
           <div className="col">
             <label>End Date:</label>
-            <p>{moment(endDate).format('L')}</p>
+            <input type="date" className="form-control" id="endDate" value={endDate} onChange={handleEndDateChange} />
           </div>
         </div>
 

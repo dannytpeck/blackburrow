@@ -277,6 +277,28 @@ function App() {
     }
   }
 
+  // TODO: wrike Editor View submission function
+  function submitEditsToAirtable() {
+    // find record to update
+    const recordId = window.location.hash.slice(22);
+
+    base('Calendars').find(recordId, function(err, record) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+
+      console.log('Retrieved', record);
+      // update airtable record
+
+
+      // log updated changes
+      console.log('Updated', record);
+
+    });
+
+  }
+
   // Basic validation (is a value present?)
   // TODO: this is currently just for NetNew as a demo, add for all Steps and improve
   function validatedFields() {
@@ -596,7 +618,7 @@ function App() {
     <div className="app">
       <Header />
       {renderStep()}
-      <Footer step={step} previousStep={previousStep} nextStep={nextStep} submitToAirtable={submitToAirtable} />
+      <Footer step={step} previousStep={previousStep} nextStep={nextStep} submitToAirtable={submitToAirtable} submitEditsToAirtable={submitEditsToAirtable} />
       <ConfirmSubmitModal />
     </div>
   );
