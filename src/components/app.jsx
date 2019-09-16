@@ -277,24 +277,81 @@ function App() {
     }
   }
 
-  // TODO: wrike Editor View submission function
+  // TODO: write Editor View submission function
   function submitEditsToAirtable() {
-    // find record to update
-    const recordId = window.location.hash.slice(22);
+    // get recordId to update
+    // const recordId = window.location.hash.slice(22);
+    const recordId = 'recJZ6rahlExPxYEQ';
 
-    base('Calendars').find(recordId, function(err, record) {
+    // create translation variables
+    const rewardOccurrence = tileType === 'Weekly Days' || tileType === 'Weekly Units' ? 'Weekly' : 'Once';
+    const isFeatured = featuredActivity ? 'yes' : 'no';
+    const isTargeted = (targeting === 'Specific Demographic') ? 'yes' : 'no';
+    const activityGoal = activityGoalNumber ? activityGoalNumber.toString() : '';
+    
+    // TODO: figure out hth to get and set targeting details
+
+    let activityTrackingType = '';
+    switch (tileType) {
+      case 'One-Time Self-Report Challenge':
+      case 'Verified Challenge':
+      case 'Informational Tile':
+        activityTrackingType = 'Event';
+        break;
+      case 'Weekly Days':
+        activityTrackingType = 'Days';
+        break;
+      case 'Weekly Units':
+      case 'Steps Challenge':
+        activityTrackingType = 'Units';
+        break;
+    }
+
+    // update airtable record
+    base('Challenges').update([
+      {
+        'id': recordId,
+        'fields': {
+          'Title': challengeTitle,
+          'Start date': startDate,
+          'End date': endDate,
+          'Verified': tileType === 'Verified Challenge' || tileType === 'Informational Tile' ? 'Verified' : 'Self-Report',
+          'Team Activity': individualOrTeam === 'Team Challenge' ? 'yes' : 'no',
+          'Team Size Minimum': teamMin,
+          'Team Size Maximum': teamMax,
+          'Reward Occurrence': rewardOccurrence,
+          'Points': pointValue,
+          'Total Points': pointValue,
+          'Device Enabled': tileType === 'Steps Challenge' ? 'yes' : 'no',
+          'Category': 'Health and Fitness',
+          'Activity Tracking Type': activityTrackingType,
+          'Activity Goal': activityGoal,
+          'Activity Goal Text': activityText,
+          'Device Units': tileType === 'Steps Challenge' ? 'steps' : '',
+          'Header Image': imageUrl,
+          'Limeade Image Url': imageUrl,
+          'Instructions':shortDescription,
+          'More Information Html': longDescription,
+          'Featured Activity': isFeatured,
+          'Targeted Activity': isTargeted,
+          'Targeting Notes': specificDemographicText,
+          'Subgroup': null,
+          'Targeting Column 1': null,
+          'Targeting Value 1': '',
+          'Targeting Column 2': null,
+          'Targeting Value 2': '',
+          'Targeting Column 3': null,
+          'Targeting Value 3': ''
+        }
+      }
+    ], function(err, records) {
       if (err) {
         console.error(err);
         return;
       }
-
-      console.log('Retrieved', record);
-      // update airtable record
-
-
-      // log updated changes
-      console.log('Updated', record);
-
+      records.forEach(function(record) {
+        console.log(record);
+      });
     });
 
   }
@@ -589,6 +646,14 @@ function App() {
           setEndDate={setEndDate}
           pointValue={pointValue}
           setPointValue={setPointValue}
+          weekly={weekly}
+          setWeekly={setWeekly}
+          individualOrTeam={individualOrTeam}
+          setIndividualOrTeam={setIndividualOrTeam}
+          teamMin={teamMin}
+          setTeamMin={setTeamMin}
+          teamMax={teamMax}
+          setTeamMax={setTeamMax}
           featuredActivity={featuredActivity}
           setFeaturedActivity={setFeaturedActivity}
           targeting={targeting}

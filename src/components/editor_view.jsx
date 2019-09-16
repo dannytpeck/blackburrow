@@ -16,6 +16,14 @@ function EditorView({
   setEndDate,
   pointValue,
   setPointValue,
+  weekly,
+  setWeekly,
+  individualOrTeam,
+  setIndividualOrTeam,
+  teamMin,
+  setTeamMin,
+  teamMax,
+  setTeamMax,
   featuredActivity,
   setFeaturedActivity,
   targeting,
@@ -47,13 +55,45 @@ function EditorView({
       }
 
       console.log('Retrieved', record);
-      // TODO: make setTileType code more robust (separate out tileType and Verified?)
-      setTileType(record.fields['Reward Occurrence'] + ' ' + record.fields['Verified']);
+
+      // translate airtable values into tileType
+      switch (record.fields['Verified']) {
+        case 'Points Upload':
+        case 'System Awarded':
+          if (record.fields['Points'] > 0) {
+            setTileType('Verified Challenge');
+          } else if (record.fields['Points'] === 0) {
+            setTileType('Informational Tile');
+          }
+          break;
+        case 'Self-Report':
+          switch (record.fields['Device Enabled']) {
+            case 'Yes':
+            case 'yes':
+              setTileType('Steps Challenge');
+              break;
+            case 'No':
+            case 'no':
+              if (record.fields['Reward Occurrence'] === 'Weekly' || record.fields['Reward Occurrence'] === 'weekly') {
+                setTileType('Weekly Days');
+              } else if (record.fields['Reward Occurrence'] === 'Once' || record.fields['Reward Occurrence'] === 'One Time') {
+                setTileType('One-Time Self-Report Challenge');
+              }
+              break;
+          }
+      }
+
       setStartDate(record.fields['Start date']);
       setEndDate(record.fields['End date']);
       setPointValue(record.fields['Points']);
       record.fields['Limeade Image Url'] ? setImageUrl(record.fields['Limeade Image Url']) : setImageUrl(record.fields['Header Image']);
       setChallengeTitle(record.fields['Title'] ? record.fields['Title'] : '');
+      // TODO: figure out hth to get and set targeting details
+      setWeekly(record.fields['Reward Occurrence'] === 'Weekly' || record.fields['Reward Occurrence'] === 'weekly' ? 'Weekly Days' : 'Once');
+      setIndividualOrTeam(record.fields['Team Activity'] === 'yes' ? 'Team Challenge' : 'Individual Challenge');
+      setTeamMin(record.fields['Team Size Minimum'] ? record.fields['Team Size Minimum'] : '');
+      setTeamMax(record.fields['Team Size Maximum'] ? record.fields['Team Size Maximum'] : '');
+      setActivityGoalNumber(record.fields['Activity Goal'] ? record.fields['Activity Goal'] : '');
       setActivityText(record.fields['Activity Goal Text'] ? record.fields['Activity Goal Text'] : '');
       setFeaturedActivity(record.fields['Featured Activity'] === 'yes' ? record.fields['Featured Activity'] : '');
       setTargeting(record.fields['Targeted Activity'] === 'yes' ? 'Specific Demographic' : 'Entire Population');
@@ -119,6 +159,8 @@ function EditorView({
 
         <label>Points:</label>
         <p>{pointValue}</p>
+
+        {/*  */}
 
         <label>Featured Activity:</label>
         <p>{featuredActivity ? 'Yes' : 'No'}</p>
