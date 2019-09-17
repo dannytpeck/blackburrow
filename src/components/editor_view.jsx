@@ -161,6 +161,11 @@ function EditorView({
     setShortDescription(e.target.value);
   }
 
+  // adding for textarea Long Description changing while debugging Trumbowyg
+  function handleLongDescriptionChange(e) {
+    setLongDescription(e.target.value);
+  }
+
   function handleLimeadeImageChange(e) {
     setImageUrl(e.target.value);
     validateLimeadeImage(e.target.value);
@@ -272,14 +277,22 @@ function EditorView({
           </div>
         </div>
 
-        <label>Targeting:</label>
-        <p>{targeting}</p>
+        <div className="form-group">  
+          <label>Targeting:</label>
+          <div className="form-check">
+            <input className="form-check-input" type="radio" name="targetingRadios" id="entirePopulation" value="Entire Population" onChange={handleTargetingChange} checked={targeting === 'Entire Population'} />
+            <label className="form-check-label" htmlFor="entirePopulation">Entire Population</label>
+          </div>
+          <div className="form-check">
+            <input className="form-check-input" type="radio" name="targetingRadios" id="specificDemographic" value="Specific Demographic" onChange={handleTargetingChange} checked={targeting === 'Specific Demographic'} />
+            <label className="form-check-label" htmlFor="specificDemographic">Specific Demographic</label>
+          </div>
+        </div>
 
         {/* TODO: Add logic for changing targeting values */}
-        <div style={{ display: targeting === 'Specific Demographic' ? 'block' : 'none' }}>
-          <p>
-            <span>Targeting Notes: </span><span>{specificDemographicText}</span>
-          </p>
+        <div className="form-group" style={{ display: targeting === 'Specific Demographic' ? 'block' : 'none' }}>
+          <label>Targeting Notes</label>
+          <p>{specificDemographicText}</p>
 
           <div className="form-check">
             <input className="form-check-input" type="radio" name="subgroupsOrTagsRadios" id="subgroups" defaultChecked />
@@ -292,7 +305,7 @@ function EditorView({
 
           <div className="form-group mt-3 mb-5">
             <label htmlFor="subgroupIdNumber">Subgroup</label>
-            <input type="number" className="form-control" id="subgroupIdNumber" min="1" max="8" defaultValue="1" />
+            <input type="number" className="form-control" id="subgroupIdNumber" min="1" max="8" />
           </div>
         </div>
 
@@ -335,6 +348,7 @@ function EditorView({
           <label htmlFor="longDescription">Long Description</label>
           <p>List all important details and information a participant will need.</p>
           <TrumbowygBox longDescription={longDescription} setLongDescription={setLongDescription} />
+          <textarea className="col-md-12" rows="8" value={longDescription} onChange={handleLongDescriptionChange}></textarea>
           <small className="form-text text-muted">{longDescription.length}/2000 Characters</small>
         </div>
 
