@@ -137,6 +137,14 @@ function EditorView({
     setTeamMax(e.target.value);
   }
 
+  function handleFeaturedActivityChange(e) {
+    setFeaturedActivity(e.target.checked);
+  }
+
+  function handleTargetingChange(e) {
+    setTargeting(e.target.value);
+  }
+
   function handleChallengeTitleChange(e) {
     setChallengeTitle(e.target.value);
   }
@@ -253,8 +261,16 @@ function EditorView({
           </div>
         </div>
 
-        <label>Featured Activity:</label>
-        <p>{featuredActivity ? 'Yes' : 'No'}</p>
+        <div className="form-group">
+          <label>Featured Activity:</label>
+          <div id="featuredActivityCheck" className="form-check mt-2">
+            <input className="form-check-input" type="checkbox" id="featuredActivityYes" checked={featuredActivity} onChange={handleFeaturedActivityChange} />
+            <label className="form-check-label" htmlFor="featuredActivityYes">
+              <span className="mr-2 align-middle"></span>
+              <span className="align-middle">Yes</span>
+            </label>
+          </div>
+        </div>
 
         <label>Targeting:</label>
         <p>{targeting}</p>
