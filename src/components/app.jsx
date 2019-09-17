@@ -14,6 +14,7 @@ import ConfirmChallengeDetails from './confirm_challenge_details';
 import StepConfiguration from './step_configuration';
 import ConfirmSubmitModal from './confirm_submit_modal';
 import EditorView from './editor_view';
+import SaveNotification from './save_notification';
 
 /* globals $ */
 function App() {
@@ -280,8 +281,7 @@ function App() {
   // TODO: write Editor View submission function
   function submitEditsToAirtable() {
     // get recordId to update
-    // const recordId = window.location.hash.slice(22);
-    const recordId = 'recJZ6rahlExPxYEQ';
+    const recordId = window.location.hash.slice(22);
 
     // create translation variables
     const rewardOccurrence = tileType === 'Weekly Days' || tileType === 'Weekly Units' ? 'Weekly' : 'Once';
@@ -308,52 +308,46 @@ function App() {
     }
 
     // update airtable record
-    base('Challenges').update([
+    base('Challenges').update(recordId, 
       {
-        'id': recordId,
-        'fields': {
-          'Title': challengeTitle,
-          'Start date': startDate,
-          'End date': endDate,
-          'Verified': tileType === 'Verified Challenge' || tileType === 'Informational Tile' ? 'Verified' : 'Self-Report',
-          'Team Activity': individualOrTeam === 'Team Challenge' ? 'yes' : 'no',
-          'Team Size Minimum': teamMin,
-          'Team Size Maximum': teamMax,
-          'Reward Occurrence': rewardOccurrence,
-          'Points': pointValue,
-          'Total Points': pointValue,
-          'Device Enabled': tileType === 'Steps Challenge' ? 'yes' : 'no',
-          'Category': 'Health and Fitness',
-          'Activity Tracking Type': activityTrackingType,
-          'Activity Goal': activityGoal,
-          'Activity Goal Text': activityText,
-          'Device Units': tileType === 'Steps Challenge' ? 'steps' : '',
-          'Header Image': imageUrl,
-          'Limeade Image Url': imageUrl,
-          'Instructions':shortDescription,
-          'More Information Html': longDescription,
-          'Featured Activity': isFeatured,
-          'Targeted Activity': isTargeted,
-          'Targeting Notes': specificDemographicText,
-          'Subgroup': null,
-          'Targeting Column 1': null,
-          'Targeting Value 1': '',
-          'Targeting Column 2': null,
-          'Targeting Value 2': '',
-          'Targeting Column 3': null,
-          'Targeting Value 3': ''
-        }
-      }
-    ], function(err, records) {
+        'Title': challengeTitle,
+        'Start date': startDate,
+        'End date': endDate,
+        'Verified': tileType === 'Verified Challenge' || tileType === 'Informational Tile' ? 'Verified' : 'Self-Report',
+        'Team Activity': individualOrTeam === 'Team Challenge' ? 'yes' : 'no',
+        'Team Size Minimum': teamMin,
+        'Team Size Maximum': teamMax,
+        'Reward Occurrence': rewardOccurrence,
+        'Points': pointValue,
+        'Total Points': pointValue,
+        'Device Enabled': tileType === 'Steps Challenge' ? 'yes' : 'no',
+        'Category': 'Health and Fitness',
+        'Activity Tracking Type': activityTrackingType,
+        'Activity Goal': activityGoal,
+        'Activity Goal Text': activityText,
+        'Device Units': tileType === 'Steps Challenge' ? 'steps' : '',
+        'Header Image': imageUrl,
+        'Limeade Image Url': imageUrl,
+        'Instructions':shortDescription,
+        'More Information Html': longDescription,
+        'Featured Activity': isFeatured,
+        'Targeted Activity': isTargeted,
+        'Targeting Notes': specificDemographicText,
+        'Subgroup': null,
+        'Targeting Column 1': null,
+        'Targeting Value 1': '',
+        'Targeting Column 2': null,
+        'Targeting Value 2': '',
+        'Targeting Column 3': null,
+        'Targeting Value 3': ''
+      }, function(err, record) {
       if (err) {
         console.error(err);
         return;
       }
-      records.forEach(function(record) {
-        console.log(record);
-      });
+      console.log('Updated', record);
+      $('#saveNotification').html('Saved ' + challengeTitle).delay(800).fadeOut(2000);
     });
-
   }
 
   // Basic validation (is a value present?)
@@ -681,6 +675,7 @@ function App() {
 
   return (
     <div className="app">
+      <SaveNotification />
       <Header />
       {renderStep()}
       <Footer step={step} previousStep={previousStep} nextStep={nextStep} submitToAirtable={submitToAirtable} submitEditsToAirtable={submitEditsToAirtable} />
