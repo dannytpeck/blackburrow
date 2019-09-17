@@ -51,14 +51,14 @@ function ConfirmChallengeDetails({
           <div className="col">
             <label>Individual or Team:</label>
             <p>{individualOrTeam}</p>
-            <label>Number of Steps to earn points</label>
+            <label>Number of Steps to earn points:</label>
             <p>{activityGoalNumber} steps</p>
           </div>
         </div>
 
         <div className="row" style={{ display: individualOrTeam === 'Team' ? 'block' : 'none' }}>
           <div className="col">
-            <label>Team Size</label>
+            <label>Team Size:</label>
             <p>{teamMin} - {teamMax} people</p>
           </div>
         </div>
