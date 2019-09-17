@@ -314,7 +314,7 @@ function App() {
         'Start date': startDate,
         'End date': endDate,
         'Verified': tileType === 'Verified Challenge' || tileType === 'Informational Tile' ? 'Verified' : 'Self-Report',
-        'Team Activity': individualOrTeam === 'Team Challenge' ? 'yes' : 'no',
+        'Team Activity': individualOrTeam === 'Team' ? 'yes' : 'no',
         'Team Size Minimum': teamMin,
         'Team Size Maximum': teamMax,
         'Reward Occurrence': rewardOccurrence,

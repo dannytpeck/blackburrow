@@ -91,7 +91,7 @@ function EditorView({
       setChallengeTitle(record.fields['Title'] ? record.fields['Title'] : '');
       // TODO: figure out hth to get and set targeting details
       setWeekly(record.fields['Reward Occurrence'] === 'Weekly' || record.fields['Reward Occurrence'] === 'weekly' ? 'Weekly Days' : 'Once');
-      setIndividualOrTeam(record.fields['Team Activity'] === 'yes' ? 'Team Challenge' : 'Individual Challenge');
+      setIndividualOrTeam(record.fields['Team Activity'] === 'yes' ? 'Team' : 'Individual');
       setTeamMin(record.fields['Team Size Minimum'] ? record.fields['Team Size Minimum'] : '');
       setTeamMax(record.fields['Team Size Maximum'] ? record.fields['Team Size Maximum'] : '');
       setActivityGoalNumber(record.fields['Activity Goal'] ? record.fields['Activity Goal'] : '');
@@ -121,12 +121,32 @@ function EditorView({
     setEndDate(e.target.value);
   }
 
+  function handlePointValueChange(e) {
+    setPointValue(e.target.value);
+  }
+
+  function handleIndividualOrTeamChange(e) {
+    setIndividualOrTeam(e.target.value);
+  }
+
+  function handleTeamMinChange(e) {
+    setTeamMin(e.target.value);
+  }
+
+  function handleTeamMaxChange(e) {
+    setTeamMax(e.target.value);
+  }
+
   function handleChallengeTitleChange(e) {
     setChallengeTitle(e.target.value);
   }
 
   function handleActivityTextChange(e) {
     setActivityText(e.target.value);
+  }
+
+  function handleActivityGoalNumberChange(e) {
+    setActivityGoalNumber(e.target.value);
   }
 
   function handleShortDescriptionChange(e) {
@@ -162,17 +182,76 @@ function EditorView({
             <label>Start Date:</label>
             <input type="date" className="form-control" id="startDate" value={startDate} onChange={handleStartDateChange} />
           </div>
-
           <div className="col">
             <label>End Date:</label>
             <input type="date" className="form-control" id="endDate" value={endDate} onChange={handleEndDateChange} />
           </div>
         </div>
 
-        <label>Points:</label>
-        <p>{pointValue}</p>
+        <div className="form-row">
+          <div className="col-6">
+            <div className="form-group">
+              <label htmlFor="pointValue">Point Value</label>
+              <input type="number" className="form-control" id="pointValue" value={pointValue} onChange={handlePointValueChange} />
+            </div>
+          </div>
+        </div>
 
-        {/* TODO: add team and activity goal and stuff */}
+        <div className="form-group">
+          <label className="mb-0">Is this an Individual or Team Challenge?</label>
+          <div className="form-check">
+            <input className="form-check-input" type="radio" name="individualOrTeamRadios" id="individualChallenge" value="Individual" onChange={handleIndividualOrTeamChange} checked={individualOrTeam === 'Individual'} />
+            <label className="form-check-label" htmlFor="individualChallenge">Individual Challenge</label>
+          </div>
+          <div className="form-check">
+            <input className="form-check-input" type="radio" name="individualOrTeamRadios" id="teamChallenge" value="Team" onChange={handleIndividualOrTeamChange} checked={individualOrTeam === 'Team'} />
+            <label className="form-check-label" htmlFor="teamChallenge">Team Challenge</label>
+          </div>
+        </div>
+
+        <div className="form-row mt-2" style={{ display: individualOrTeam === 'Team' ? 'block' : 'none' }}>
+          <div className="col-8">
+            <div className="form-group">
+              <label className="mb-0" htmlFor="teamSize">Team Size</label>
+              <small className="form-text text-muted text-left">Team sizes can be between 2 and 20 people.</small>
+                <div className="row">
+                  <div className="col">
+                    <label htmlFor="teamMin">Team Minimum</label>
+                    <select className="form-control" id="teamMin" value={teamMin} onChange={handleTeamMinChange}>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                    </select>
+                  </div>
+                  <div className="col">
+                    <label htmlFor="teamMax">Team Maximum</label>
+                    <select className="form-control" id="teamMax" value={teamMax} onChange={handleTeamMaxChange}>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                      <option>6</option>
+                      <option>7</option>
+                      <option>8</option>
+                      <option>9</option>
+                      <option>10</option>
+                      <option>11</option>
+                      <option>12</option>
+                      <option>13</option>
+                      <option>14</option>
+                      <option>15</option>
+                      <option>16</option>
+                      <option>17</option>
+                      <option>18</option>
+                      <option>19</option>
+                      <option>20</option>
+                    </select>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
 
         <label>Featured Activity:</label>
         <p>{featuredActivity ? 'Yes' : 'No'}</p>
@@ -180,22 +259,25 @@ function EditorView({
         <label>Targeting:</label>
         <p>{targeting}</p>
 
-        <p>
-          <span>Targeting Notes: </span><span>{specificDemographicText}</span>
-        </p>
+        {/* TODO: Add logic for changing targeting values */}
+        <div style={{ display: targeting === 'Specific Demographic' ? 'block' : 'none' }}>
+          <p>
+            <span>Targeting Notes: </span><span>{specificDemographicText}</span>
+          </p>
 
-        <div className="form-check">
-          <input className="form-check-input" type="radio" name="subgroupsOrTagsRadios" id="subgroups" defaultChecked />
-          <label className="form-check-label" htmlFor="subgroups">Subgroups</label>
-        </div>
-        <div className="form-check">
-          <input className="form-check-input" type="radio" name="subgroupsOrTagsRadios" id="tags" />
-          <label className="form-check-label" htmlFor="tags">Tags</label>
-        </div>
+          <div className="form-check">
+            <input className="form-check-input" type="radio" name="subgroupsOrTagsRadios" id="subgroups" defaultChecked />
+            <label className="form-check-label" htmlFor="subgroups">Subgroups</label>
+          </div>
+          <div className="form-check">
+            <input className="form-check-input" type="radio" name="subgroupsOrTagsRadios" id="tags" />
+            <label className="form-check-label" htmlFor="tags">Tags</label>
+          </div>
 
-        <div className="form-group mt-3 mb-5">
-          <label htmlFor="subgroupIdNumber">Subgroup</label>
-          <input type="number" className="form-control" id="subgroupIdNumber" min="1" max="8" defaultValue="1" />
+          <div className="form-group mt-3 mb-5">
+            <label htmlFor="subgroupIdNumber">Subgroup</label>
+            <input type="number" className="form-control" id="subgroupIdNumber" min="1" max="8" defaultValue="1" />
+          </div>
         </div>
 
         <h3 className="mb-3">Challenge Content</h3>
@@ -217,8 +299,13 @@ function EditorView({
 
         <div className="form-group">
           <label htmlFor="activityText">Activity Text</label>
-          <input type="text" className="form-control" id="activityText" value={activityText} onChange={handleActivityTextChange} />
+          <input type="text" className="form-control" id="activityText" value={activityText} onChange={handleActivityTextChange} readOnly={tileType === 'Steps Challenge' ? true : false} />
           <small className="form-text text-muted">{activityText.length}/50 Characters</small>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="activityGoalNumber">Activity Goal Number (or steps count)</label>
+          <input type="number" className="form-control" id="activityGoalNumber" min="1" value={activityGoalNumber} onChange={handleActivityGoalNumberChange} />
         </div>
 
         <div className="form-group">
