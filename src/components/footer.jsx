@@ -9,7 +9,7 @@ function Footer({ step, previousStep, nextStep, submitToAirtable, submitEditsToA
       submitButton = <button type="button" className="btn btn-primary ml-5" onClick={submitToAirtable}>Submit</button>;
       break;
     case 'EditorView':
-      submitButton = <button type="button" className="btn btn-primary ml-5" onClick={submitEditsToAirtable}>Submit</button>;
+      submitButton = <button type="button" className="btn btn-primary ml-5" onClick={submitEditsToAirtable}>Save</button>;
       break;
   }
 

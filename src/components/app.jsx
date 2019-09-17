@@ -278,7 +278,7 @@ function App() {
     }
   }
 
-  // TODO: write Editor View submission function
+  // Editor View submission function
   function submitEditsToAirtable() {
     // get recordId to update
     const recordId = window.location.hash.slice(22);
@@ -351,7 +351,6 @@ function App() {
   }
 
   // Basic validation (is a value present?)
-  // TODO: this is currently just for NetNew as a demo, add for all Steps and improve
   function validatedFields() {
     const $startDate = $('#startDate');
     const $endDate = $('#endDate');

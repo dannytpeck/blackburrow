@@ -86,7 +86,8 @@ function EditorView({
       setStartDate(record.fields['Start date']);
       setEndDate(record.fields['End date']);
       setPointValue(record.fields['Points']);
-      record.fields['Limeade Image Url'] ? setImageUrl(record.fields['Limeade Image Url']) : setImageUrl(record.fields['Header Image']);
+      setImageUrl(record.fields['Limeade Image Url'] ? record.fields['Limeade Image Url'] : record.fields['Header Image']);
+      validateLimeadeImage();
       setChallengeTitle(record.fields['Title'] ? record.fields['Title'] : '');
       // TODO: figure out hth to get and set targeting details
       setWeekly(record.fields['Reward Occurrence'] === 'Weekly' || record.fields['Reward Occurrence'] === 'weekly' ? 'Weekly Days' : 'Once');
@@ -107,6 +108,8 @@ function EditorView({
     $(function() {
       $('[data-toggle="tooltip"]').tooltip();
     });
+
+    
 
   }, []); // Pass empty array to only run once on mount
 
@@ -132,6 +135,15 @@ function EditorView({
 
   function handleLimeadeImageChange(e) {
     setImageUrl(e.target.value);
+    validateLimeadeImage(e.target.value);
+  }
+
+  function validateLimeadeImage() {
+    if ($('#limeadeImage').val().includes('/PDW/') === true) {
+      $('#limeadeImage').removeClass('is-invalid');
+    } else {
+      $('#limeadeImage').addClass('is-invalid');
+    }
   }
 
   return (
@@ -160,7 +172,7 @@ function EditorView({
         <label>Points:</label>
         <p>{pointValue}</p>
 
-        {/*  */}
+        {/* TODO: add team and activity goal and stuff */}
 
         <label>Featured Activity:</label>
         <p>{featuredActivity ? 'Yes' : 'No'}</p>
@@ -189,7 +201,7 @@ function EditorView({
         <h3 className="mb-3">Challenge Content</h3>
 
         <div className="form-group">
-          <label>Image URL</label>
+          <label>Limeade Image URL</label>
           <div className="choose-image">
             <div className="form-group">
               <input type="text" className="form-control" id="limeadeImage" placeholder="Enter Limeade Image URL" value={imageUrl} onChange={handleLimeadeImageChange} />
