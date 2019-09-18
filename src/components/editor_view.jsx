@@ -16,6 +16,14 @@ function EditorView({
   setEndDate,
   pointValue,
   setPointValue,
+  weekly,
+  setWeekly,
+  individualOrTeam,
+  setIndividualOrTeam,
+  teamMin,
+  setTeamMin,
+  teamMax,
+  setTeamMax,
   featuredActivity,
   setFeaturedActivity,
   targeting,
@@ -24,6 +32,22 @@ function EditorView({
   setSpecificDemographicText,
   imageUrl,
   setImageUrl,
+  targetingType,
+  setTargetingType,
+  subgroup,
+  setSubgroup,
+  targetingColumn1,
+  setTargetingColumn1,
+  targetingValue1,
+  setTargetingValue1,
+  targetingColumn2,
+  setTargetingColumn2,
+  targetingValue2,
+  setTargetingValue2,
+  targetingColumn3,
+  setTargetingColumn3,
+  targetingValue3,
+  setTargetingValue3,
   challengeTitle,
   setChallengeTitle,
   activityText,
@@ -47,16 +71,57 @@ function EditorView({
       }
 
       console.log('Retrieved', record);
-      setTileType(record.fields['Reward Occurrence'] + ' ' + record.fields['Verified']);
+
+      // translate airtable values into tileType
+      switch (record.fields['Verified']) {
+        case 'Points Upload':
+        case 'System Awarded':
+          if (record.fields['Points'] > 0) {
+            setTileType('Verified Challenge');
+          } else if (record.fields['Points'] === 0) {
+            setTileType('Informational Tile');
+          }
+          break;
+        case 'Self-Report':
+          switch (record.fields['Device Enabled']) {
+            case 'Yes':
+            case 'yes':
+              setTileType('Steps Challenge');
+              break;
+            case 'No':
+            case 'no':
+              if (record.fields['Reward Occurrence'] === 'Weekly' || record.fields['Reward Occurrence'] === 'weekly') {
+                setTileType('Weekly Days');
+              } else if (record.fields['Reward Occurrence'] === 'Once' || record.fields['Reward Occurrence'] === 'One Time') {
+                setTileType('One-Time Self-Report Challenge');
+              }
+              break;
+          }
+      }
+
       setStartDate(record.fields['Start date']);
       setEndDate(record.fields['End date']);
       setPointValue(record.fields['Points']);
-      setImageUrl(record.fields['Header Image']);
+      setImageUrl(record.fields['Limeade Image Url'] ? record.fields['Limeade Image Url'] : record.fields['Header Image']);
+      validateLimeadeImage();
       setChallengeTitle(record.fields['Title'] ? record.fields['Title'] : '');
+      setWeekly(record.fields['Reward Occurrence'] === 'Weekly' || record.fields['Reward Occurrence'] === 'weekly' ? 'Weekly Days' : 'Once');
+      setIndividualOrTeam(record.fields['Team Activity'] === 'yes' ? 'Team' : 'Individual');
+      setTeamMin(record.fields['Team Size Minimum'] ? record.fields['Team Size Minimum'] : '');
+      setTeamMax(record.fields['Team Size Maximum'] ? record.fields['Team Size Maximum'] : '');
+      setActivityGoalNumber(record.fields['Activity Goal'] ? record.fields['Activity Goal'] : '');
       setActivityText(record.fields['Activity Goal Text'] ? record.fields['Activity Goal Text'] : '');
       setFeaturedActivity(record.fields['Featured Activity'] === 'yes' ? record.fields['Featured Activity'] : '');
       setTargeting(record.fields['Targeted Activity'] === 'yes' ? 'Specific Demographic' : 'Entire Population');
       setSpecificDemographicText(record.fields['Targeting Notes'] ? record.fields['Targeting Notes'] : '');
+      setTargetingType(record.fields['Subgroup'] ? 'Subgroups' : 'Tags');
+      setSubgroup(record.fields['Subgroup'] ? record.fields['Subgroup'] : '');
+      setTargetingColumn1(record.fields['Targeting Column 1']);
+      setTargetingValue1(record.fields['Targeting Value 1'] ? record.fields['Targeting Value 1'] : '');
+      setTargetingColumn2(record.fields['Targeting Column 2']);
+      setTargetingValue2(record.fields['Targeting Value 2'] ? record.fields['Targeting Value 2'] : '');
+      setTargetingColumn3(record.fields['Targeting Column 3']);
+      setTargetingValue3(record.fields['Targeting Value 3'] ? record.fields['Targeting Value 3'] : '');
       setShortDescription(record.fields['Instructions'] ? record.fields['Instructions'] : '');
       setLongDescription(record.fields['More Information Html'] ? record.fields['More Information Html'] : '');
 
@@ -67,7 +132,94 @@ function EditorView({
       $('[data-toggle="tooltip"]').tooltip();
     });
 
+    
+
   }, []); // Pass empty array to only run once on mount
+
+  function handleStartDateChange(e) {
+    setStartDate(e.target.value);
+  }
+
+  function handleEndDateChange(e) {
+    setEndDate(e.target.value);
+  }
+
+  function handlePointValueChange(e) {
+    setPointValue(e.target.value);
+  }
+
+  function handleIndividualOrTeamChange(e) {
+    setIndividualOrTeam(e.target.value);
+  }
+
+  function handleTeamMinChange(e) {
+    setTeamMin(e.target.value);
+  }
+
+  function handleTeamMaxChange(e) {
+    setTeamMax(e.target.value);
+  }
+
+  function handleFeaturedActivityChange(e) {
+    setFeaturedActivity(e.target.checked);
+  }
+
+  function handleTargetingChange(e) {
+    setTargeting(e.target.value);
+    if (e.target.value === 'Entire Population') {
+      // clearing out the other targeting values so they won't interfere on upload
+      setSubgroup('');
+      setTargetingColumn1('');
+      setTargetingValue1('');
+      setTargetingColumn2('');
+      setTargetingValue2('');
+      setTargetingColumn3('');
+      setTargetingValue3('');
+    }
+  }
+
+  function handleTargetingTypeChange(e) {
+    setTargetingType(e.target.value);
+    // clearing out the other targeting values so they won't interfere on upload
+    if (e.target.value === 'Tags') {
+      setSubgroup('');
+    } else if (e.target.value === 'Subgroups') {
+      setTargetingColumn1('');
+      setTargetingValue1('');
+      setTargetingColumn2('');
+      setTargetingValue2('');
+      setTargetingColumn3('');
+      setTargetingValue3('');
+    }
+  }
+
+  function handleSubgroupChange(e) {
+    setSubgroup(e.target.value);
+  }
+
+  function handleTargetingColumn1Change(e) {
+    setTargetingColumn1(e.target.value);
+  }
+
+  function handleTargetingValue1Change(e) {
+    setTargetingValue1(e.target.value);
+  }
+
+  function handleTargetingColumn2Change(e) {
+    setTargetingColumn2(e.target.value);
+  }
+
+  function handleTargetingValue2Change(e) {
+    setTargetingValue2(e.target.value);
+  }
+
+  function handleTargetingColumn3Change(e) {
+    setTargetingColumn3(e.target.value);
+  }
+
+  function handleTargetingValue3Change(e) {
+    setTargetingValue3(e.target.value);
+  }
 
   function handleChallengeTitleChange(e) {
     setChallengeTitle(e.target.value);
@@ -77,31 +229,30 @@ function EditorView({
     setActivityText(e.target.value);
   }
 
+  function handleActivityGoalNumberChange(e) {
+    setActivityGoalNumber(e.target.value);
+  }
+
   function handleShortDescriptionChange(e) {
     setShortDescription(e.target.value);
   }
 
-  function handleImageChange(e) {
+  // adding for textarea Long Description changing while debugging Trumbowyg
+  function handleLongDescriptionChange(e) {
+    setLongDescription(e.target.value);
+  }
 
-    console.log(e.target.files);
-    const imageFile = e.target.files[0];
+  function handleLimeadeImageChange(e) {
+    setImageUrl(e.target.value);
+    validateLimeadeImage(e.target.value);
+  }
 
-    const formData = new FormData();
-    formData.append('image', imageFile);
-
-    fetch('https://api.imgur.com/3/image', {
-      method: 'POST',
-      headers: {
-        Authorization: 'Client-ID a27c82776f2c9f3',
-      },
-      body: formData
-    }).then(response => {
-      return response.json();
-    }).then(json => {
-      console.log(json);
-      setImageUrl(json.data.link);
-    });
-
+  function validateLimeadeImage() {
+    if ($('#limeadeImage').val().includes('/PDW/') === true) {
+      $('#limeadeImage').removeClass('is-invalid');
+    } else {
+      $('#limeadeImage').addClass('is-invalid');
+    }
   }
 
   return (
@@ -115,52 +266,226 @@ function EditorView({
         <label>Tile Type:</label>
         <p>{tileType}</p>
 
-        <div className="row">
+        <div className="row mb-3">
           <div className="col">
             <label>Start Date:</label>
-            <p>{moment(startDate).format('L')}</p>
+            <input type="date" className="form-control" id="startDate" value={startDate} onChange={handleStartDateChange} />
           </div>
-
           <div className="col">
             <label>End Date:</label>
-            <p>{moment(endDate).format('L')}</p>
+            <input type="date" className="form-control" id="endDate" value={endDate} onChange={handleEndDateChange} />
           </div>
         </div>
 
-        <label>Points:</label>
-        <p>{pointValue}</p>
-
-        <label>Featured Activity:</label>
-        <p>{featuredActivity ? 'Yes' : 'No'}</p>
-
-        <label>Targeting:</label>
-        <p>{targeting}</p>
-
-        <p>
-          <span>Targeting Notes: </span><span>{specificDemographicText}</span>
-        </p>
-
-        <div className="form-check">
-          <input className="form-check-input" type="radio" name="subgroupsOrTagsRadios" id="subgroups" defaultChecked />
-          <label className="form-check-label" htmlFor="subgroups">Subgroups</label>
-        </div>
-        <div className="form-check">
-          <input className="form-check-input" type="radio" name="subgroupsOrTagsRadios" id="tags" />
-          <label className="form-check-label" htmlFor="tags">Tags</label>
+        <div className="form-row">
+          <div className="col-6">
+            <div className="form-group">
+              <label htmlFor="pointValue">Point Value</label>
+              <input type="number" className="form-control" id="pointValue" value={pointValue} onChange={handlePointValueChange} />
+            </div>
+          </div>
         </div>
 
-        <div className="form-group mt-3 mb-5">
-          <label htmlFor="subgroupIdNumber">Subgroup</label>
-          <input type="number" className="form-control" id="subgroupIdNumber" min="1" max="8" defaultValue="1" />
+        <div className="form-group">
+          <label className="mb-0">Is this an Individual or Team Challenge?</label>
+          <div className="form-check">
+            <input className="form-check-input" type="radio" name="individualOrTeamRadios" id="individualChallenge" value="Individual" onChange={handleIndividualOrTeamChange} checked={individualOrTeam === 'Individual'} />
+            <label className="form-check-label" htmlFor="individualChallenge">Individual Challenge</label>
+          </div>
+          <div className="form-check">
+            <input className="form-check-input" type="radio" name="individualOrTeamRadios" id="teamChallenge" value="Team" onChange={handleIndividualOrTeamChange} checked={individualOrTeam === 'Team'} />
+            <label className="form-check-label" htmlFor="teamChallenge">Team Challenge</label>
+          </div>
+        </div>
+
+        <div className="form-row mt-2" style={{ display: individualOrTeam === 'Team' ? 'block' : 'none' }}>
+          <div className="col-8">
+            <div className="form-group">
+              <label className="mb-0" htmlFor="teamSize">Team Size</label>
+              <small className="form-text text-muted text-left">Team sizes can be between 2 and 20 people.</small>
+                <div className="row">
+                  <div className="col">
+                    <label htmlFor="teamMin">Team Minimum</label>
+                    <select className="form-control" id="teamMin" value={teamMin} onChange={handleTeamMinChange}>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                    </select>
+                  </div>
+                  <div className="col">
+                    <label htmlFor="teamMax">Team Maximum</label>
+                    <select className="form-control" id="teamMax" value={teamMax} onChange={handleTeamMaxChange}>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                      <option>6</option>
+                      <option>7</option>
+                      <option>8</option>
+                      <option>9</option>
+                      <option>10</option>
+                      <option>11</option>
+                      <option>12</option>
+                      <option>13</option>
+                      <option>14</option>
+                      <option>15</option>
+                      <option>16</option>
+                      <option>17</option>
+                      <option>18</option>
+                      <option>19</option>
+                      <option>20</option>
+                    </select>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label>Featured Activity:</label>
+          <div id="featuredActivityCheck" className="form-check mt-2">
+            <input className="form-check-input" type="checkbox" id="featuredActivityYes" checked={featuredActivity} onChange={handleFeaturedActivityChange} />
+            <label className="form-check-label" htmlFor="featuredActivityYes">
+              <span className="mr-2 align-middle"></span>
+              <span className="align-middle">Yes</span>
+            </label>
+          </div>
+        </div>
+
+        <div className="form-group">  
+          <label>Targeting:</label>
+          <div className="form-check">
+            <input className="form-check-input" type="radio" name="targetingRadios" id="entirePopulation" value="Entire Population" onChange={handleTargetingChange} checked={targeting === 'Entire Population'} />
+            <label className="form-check-label" htmlFor="entirePopulation">Entire Population</label>
+          </div>
+          <div className="form-check">
+            <input className="form-check-input" type="radio" name="targetingRadios" id="specificDemographic" value="Specific Demographic" onChange={handleTargetingChange} checked={targeting === 'Specific Demographic'} />
+            <label className="form-check-label" htmlFor="specificDemographic">Specific Demographic</label>
+          </div>
+        </div>
+
+        <div className="form-group" style={{ display: targeting === 'Specific Demographic' ? 'block' : 'none' }}>
+          <label>Targeting Notes</label>
+          <p>{specificDemographicText}</p>
+
+          <div className="form-check">
+            <input className="form-check-input" type="radio" name="subgroupsOrTagsRadios" id="subgroups" value="Subgroups" onChange={handleTargetingTypeChange} checked={targetingType === 'Subgroups'} />
+            <label className="form-check-label" htmlFor="subgroups">Subgroups</label>
+          </div>
+          <div className="form-check">
+            <input className="form-check-input" type="radio" name="subgroupsOrTagsRadios" id="tags" value="Tags" onChange={handleTargetingTypeChange} checked={targetingType === 'Tags'} />
+            <label className="form-check-label" htmlFor="tags">Tags</label>
+          </div>
+
+          <div className="form-group mt-3 mb-5 subgroup-targeting" style={{ display: targetingType === 'Subgroups' ? 'block' : 'none' }}>
+            <label htmlFor="subgroupIdNumber">Subgroup</label>
+            <input type="number" className="form-control" id="subgroupIdNumber" min="1" max="8" value={subgroup} onChange={handleSubgroupChange} />
+          </div>
+
+          <div className="form-group mt-3 mb-5 tags-targeting" style={{ display: targetingType === 'Tags' ? 'block' : 'none' }}>
+            <div className="row">
+              <div className="col-md-6">
+                <label htmlFor="targetingColumn1">Targeting Column 1</label>
+                <select className="form-control" id="targetingColumn1" value={targetingColumn1} onChange={handleTargetingColumn1Change}>
+                  <option></option>
+                  <option>AgeRange</option>
+                  <option>BargainingUnit</option>
+                  <option>Class</option>
+                  <option>Country</option>
+                  <option>CurrentWalking</option>
+                  <option>Department</option>
+                  <option>District</option>
+                  <option>Division</option>
+                  <option>Facility</option>
+                  <option>Group</option>
+                  <option>HealthPlan</option>
+                  <option>IncentiveLevel</option>
+                  <option>JobCode</option>
+                  <option>Location</option>
+                  <option>Region</option>
+                  <option>RelationshipCode</option>
+                  <option>Status</option>
+                  <option>Store</option>
+                </select>
+              </div>
+              <div className="col-md-6">
+                <label htmlFor="targetingValue1">Targeting Value 1</label>
+                <input type="text" className="form-control" id="targetingValue1" value={targetingValue1} onChange={handleTargetingValue1Change}/>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-md-6">
+                <label htmlFor="targetingColumn2">Targeting Column 2</label>
+                <select className="form-control" id="targetingColumn2" value={targetingColumn2} onChange={handleTargetingColumn2Change}>
+                  <option></option>
+                  <option>AgeRange</option>
+                  <option>BargainingUnit</option>
+                  <option>Class</option>
+                  <option>Country</option>
+                  <option>CurrentWalking</option>
+                  <option>Department</option>
+                  <option>District</option>
+                  <option>Division</option>
+                  <option>Facility</option>
+                  <option>Group</option>
+                  <option>HealthPlan</option>
+                  <option>IncentiveLevel</option>
+                  <option>JobCode</option>
+                  <option>Location</option>
+                  <option>Region</option>
+                  <option>RelationshipCode</option>
+                  <option>Status</option>
+                  <option>Store</option>
+                </select>
+              </div>
+              <div className="col-md-6">
+                <label htmlFor="targetingValue2">Targeting Value 2</label>
+                <input type="text" className="form-control" id="targetingValue2" value={targetingValue2} onChange={handleTargetingValue2Change}/>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-md-6">
+                <label htmlFor="targetingColumn2">Targeting Column 3</label>
+                <select className="form-control" id="targetingColumn3" value={targetingColumn3} onChange={handleTargetingColumn3Change}>
+                  <option></option>
+                  <option>AgeRange</option>
+                  <option>BargainingUnit</option>
+                  <option>Class</option>
+                  <option>Country</option>
+                  <option>CurrentWalking</option>
+                  <option>Department</option>
+                  <option>District</option>
+                  <option>Division</option>
+                  <option>Facility</option>
+                  <option>Group</option>
+                  <option>HealthPlan</option>
+                  <option>IncentiveLevel</option>
+                  <option>JobCode</option>
+                  <option>Location</option>
+                  <option>Region</option>
+                  <option>RelationshipCode</option>
+                  <option>Status</option>
+                  <option>Store</option>
+                </select>
+              </div>
+              <div className="col-md-6">
+                <label htmlFor="targetingValue3">Targeting Value 3</label>
+                <input type="text" className="form-control" id="targetingValue3" value={targetingValue3} onChange={handleTargetingValue3Change}/>
+              </div>
+            </div>
+          </div>
         </div>
 
         <h3 className="mb-3">Challenge Content</h3>
 
         <div className="form-group">
-          <label>Replace or Change Image</label>
+          <label>Limeade Image URL</label>
           <div className="choose-image">
             <div className="form-group">
-              <input type="file" className="form-control-file" id="uploadImage" onChange={handleImageChange} />
+              <input type="text" className="form-control" id="limeadeImage" placeholder="Enter Limeade Image URL" value={imageUrl} onChange={handleLimeadeImageChange} />
             </div>
           </div>
         </div>
@@ -173,8 +498,13 @@ function EditorView({
 
         <div className="form-group">
           <label htmlFor="activityText">Activity Text</label>
-          <input type="text" className="form-control" id="activityText" value={activityText} onChange={handleActivityTextChange} />
+          <input type="text" className="form-control" id="activityText" value={activityText} onChange={handleActivityTextChange} readOnly={tileType === 'Steps Challenge' ? true : false} />
           <small className="form-text text-muted">{activityText.length}/50 Characters</small>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="activityGoalNumber">Activity Goal Number (or steps count)</label>
+          <input type="number" className="form-control" id="activityGoalNumber" min="1" value={activityGoalNumber} onChange={handleActivityGoalNumberChange} />
         </div>
 
         <div className="form-group">
@@ -187,7 +517,9 @@ function EditorView({
         <div className="form-group">
           <label htmlFor="longDescription">Long Description</label>
           <p>List all important details and information a participant will need.</p>
-          <TrumbowygBox longDescription={longDescription} setLongDescription={setLongDescription} />
+          {/* Hiding trumbowyg while it gets debugged to pull in LongDescription */}
+          {/* <TrumbowygBox longDescription={longDescription} setLongDescription={setLongDescription} /> */}
+          <textarea className="col-md-12" rows="8" value={longDescription} onChange={handleLongDescriptionChange}></textarea>
           <small className="form-text text-muted">{longDescription.length}/2000 Characters</small>
         </div>
 

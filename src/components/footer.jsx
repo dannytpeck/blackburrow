@@ -1,7 +1,17 @@
 import React from 'react';
 
-function Footer({ step, previousStep, nextStep, submitToAirtable }) {
+function Footer({ step, previousStep, nextStep, submitToAirtable, submitEditsToAirtable }) {
   const calendarHash = window.location.hash.slice(2);
+
+  let submitButton = '';
+  switch (step) {
+    case 'ConfirmChallengeDetails':
+      submitButton = <button type="button" className="btn btn-primary ml-5" onClick={submitToAirtable}>Submit</button>;
+      break;
+    case 'EditorView':
+      submitButton = <button type="button" className="btn btn-primary ml-5" onClick={submitEditsToAirtable}>Save</button>;
+      break;
+  }
 
   return (
     <footer id="footer">
@@ -11,8 +21,8 @@ function Footer({ step, previousStep, nextStep, submitToAirtable }) {
         <button type="button" className="btn btn-outline-primary" onClick={previousStep}>Back</button>
       }
       {
-        step === 'ConfirmChallengeDetails' ?
-        <button type="button" className="btn btn-primary ml-5" onClick={submitToAirtable}>Submit</button> :
+        step === 'ConfirmChallengeDetails' || step === 'EditorView' ?
+        submitButton :
         <button type="button" className="btn btn-primary ml-5" onClick={nextStep}>Next</button>
       }
     </footer>

@@ -14,6 +14,7 @@ import ConfirmChallengeDetails from './confirm_challenge_details';
 import StepConfiguration from './step_configuration';
 import ConfirmSubmitModal from './confirm_submit_modal';
 import EditorView from './editor_view';
+import SaveNotification from './save_notification';
 
 /* globals $ */
 function App() {
@@ -54,6 +55,17 @@ function App() {
   const [featuredActivity, setFeaturedActivity] = React.useState(false);
   const [targeting, setTargeting] = React.useState('Entire Population');
   const [specificDemographicText, setSpecificDemographicText] = React.useState('');
+
+  // EditorView
+  const [targetingType, setTargetingType] = React.useState('');
+  const [subgroup, setSubgroup] = React.useState('');
+  const [targetingColumn1, setTargetingColumn1] = React.useState('');
+  const [targetingValue1, setTargetingValue1] = React.useState('');
+  const [targetingColumn2, setTargetingColumn2] = React.useState('');
+  const [targetingValue2, setTargetingValue2] = React.useState('');
+  const [targetingColumn3, setTargetingColumn3] = React.useState('');
+  const [targetingValue3, setTargetingValue3] = React.useState('');
+
 
   const calendarHash = window.location.hash.slice(2, 16);
 
@@ -277,8 +289,77 @@ function App() {
     }
   }
 
+  // Editor View submission function
+  function submitEditsToAirtable() {
+    // get recordId to update
+    const recordId = window.location.hash.slice(22);
+
+    // create translation variables
+    const rewardOccurrence = tileType === 'Weekly Days' || tileType === 'Weekly Units' ? 'Weekly' : 'Once';
+    const isFeatured = featuredActivity ? 'yes' : 'no';
+    const isTargeted = (targeting === 'Specific Demographic') ? 'yes' : 'no';
+    const activityGoal = activityGoalNumber ? activityGoalNumber.toString() : '';
+
+    let activityTrackingType = '';
+    switch (tileType) {
+      case 'One-Time Self-Report Challenge':
+      case 'Verified Challenge':
+      case 'Informational Tile':
+        activityTrackingType = 'Event';
+        break;
+      case 'Weekly Days':
+        activityTrackingType = 'Days';
+        break;
+      case 'Weekly Units':
+      case 'Steps Challenge':
+        activityTrackingType = 'Units';
+        break;
+    }
+
+    // update airtable record
+    base('Challenges').update(recordId, 
+      {
+        'Title': challengeTitle,
+        'Start date': startDate,
+        'End date': endDate,
+        'Verified': tileType === 'Verified Challenge' || tileType === 'Informational Tile' ? 'Verified' : 'Self-Report',
+        'Team Activity': individualOrTeam === 'Team' ? 'yes' : 'no',
+        'Team Size Minimum': teamMin,
+        'Team Size Maximum': teamMax,
+        'Reward Occurrence': rewardOccurrence,
+        'Points': pointValue,
+        'Total Points': pointValue,
+        'Device Enabled': tileType === 'Steps Challenge' ? 'yes' : 'no',
+        'Category': 'Health and Fitness',
+        'Activity Tracking Type': activityTrackingType,
+        'Activity Goal': activityGoal,
+        'Activity Goal Text': activityText,
+        'Device Units': tileType === 'Steps Challenge' ? 'steps' : '',
+        'Header Image': imageUrl,
+        'Limeade Image Url': imageUrl,
+        'Instructions':shortDescription,
+        'More Information Html': longDescription,
+        'Featured Activity': isFeatured,
+        'Targeted Activity': isTargeted,
+        'Targeting Notes': specificDemographicText,
+        'Subgroup': targetingType === 'Subgroups' ? subgroup : '',
+        'Targeting Column 1': targetingType === 'Tags' ? targetingColumn1 : '',
+        'Targeting Value 1': targetingType === 'Tags' ? targetingValue1 : '',
+        'Targeting Column 2': targetingType === 'Tags' ? targetingColumn2 : '',
+        'Targeting Value 2': targetingType === 'Tags' ? targetingValue2 : '',
+        'Targeting Column 3': targetingType === 'Tags' ? targetingColumn3 : '',
+        'Targeting Value 3': targetingType === 'Tags' ? targetingValue3 : ''
+      }, function(err, record) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      console.log('Updated', record);
+      $('#saveNotification').html('Saved ' + challengeTitle).delay(800).fadeOut(2000);
+    });
+  }
+
   // Basic validation (is a value present?)
-  // TODO: this is currently just for NetNew as a demo, add for all Steps and improve
   function validatedFields() {
     const $startDate = $('#startDate');
     const $endDate = $('#endDate');
@@ -567,12 +648,36 @@ function App() {
           setEndDate={setEndDate}
           pointValue={pointValue}
           setPointValue={setPointValue}
+          weekly={weekly}
+          setWeekly={setWeekly}
+          individualOrTeam={individualOrTeam}
+          setIndividualOrTeam={setIndividualOrTeam}
+          teamMin={teamMin}
+          setTeamMin={setTeamMin}
+          teamMax={teamMax}
+          setTeamMax={setTeamMax}
           featuredActivity={featuredActivity}
           setFeaturedActivity={setFeaturedActivity}
           targeting={targeting}
           setTargeting={setTargeting}
           specificDemographicText={specificDemographicText}
           setSpecificDemographicText={setSpecificDemographicText}
+          targetingType={targetingType}
+          setTargetingType={setTargetingType}
+          subgroup={subgroup}
+          setSubgroup={setSubgroup}
+          targetingColumn1={targetingColumn1}
+          setTargetingColumn1={setTargetingColumn1}
+          targetingValue1={targetingValue1}
+          setTargetingValue1={setTargetingValue1}
+          targetingColumn2={targetingColumn2}
+          setTargetingColumn2={setTargetingColumn2}
+          targetingValue2={targetingValue2}
+          setTargetingValue2={setTargetingValue2}
+          targetingColumn3={targetingColumn3}
+          setTargetingColumn3={setTargetingColumn3}
+          targetingValue3={targetingValue3}
+          setTargetingValue3={setTargetingValue3}
           imageUrl={imageUrl}
           setImageUrl={setImageUrl}
           challengeTitle={challengeTitle}
@@ -594,9 +699,10 @@ function App() {
 
   return (
     <div className="app">
+      <SaveNotification />
       <Header />
       {renderStep()}
-      <Footer step={step} previousStep={previousStep} nextStep={nextStep} submitToAirtable={submitToAirtable} />
+      <Footer step={step} previousStep={previousStep} nextStep={nextStep} submitToAirtable={submitToAirtable} submitEditsToAirtable={submitEditsToAirtable} />
       <ConfirmSubmitModal />
     </div>
   );

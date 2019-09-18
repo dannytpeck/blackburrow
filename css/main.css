@@ -37,6 +37,14 @@ label {
   margin: 2em 0;
 }
 
+#saveNotification {
+  position: fixed;
+  right: 1em;
+  color: #1EA369;
+  z-index: 100;
+  background: white;
+}
+
 .form-check-label {
   font-weight: initial;
 }
@@ -66,11 +74,6 @@ label {
 
 .image-wrapper img {
   width: 100%;
-}
-
-.choose-image .form-group {
-  display: inline-block;
-  vertical-align: top;
 }
 
 .size-dropdown{
