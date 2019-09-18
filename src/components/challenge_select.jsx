@@ -30,8 +30,11 @@ function ChallengeSelect({ challenges, setChallenge }) {
   }
 
   const filteredChallenges = challenges.filter(challenge => {
-    const name = challenge.Name.toLowerCase();
-    return name.includes(searchText.toLowerCase());
+    // rudimentary way of filtering challenges in search results if they're not hidden and they started before today
+    if (challenge.DisplayInProgram === true && moment(challenge.StartDate).isBefore(moment(), 'day')) {
+      const name = challenge.Name.toLowerCase();
+      return name.includes(searchText.toLowerCase());
+    }
   });
 
   return (
