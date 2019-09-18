@@ -99,14 +99,14 @@ label {
 }
 
 #featuredActivityYes + label > span:first-child {
-  background: url('../images/star-inactive.svg') no-repeat;
+  background: url('../images/star-icon-inactive.svg') no-repeat;
   display: inline-block;
   height: 24px;
   width: 24px;
 }
 
 #featuredActivityYes:checked + label > span:first-child {
-  background: url('../images/star.png') no-repeat;
+  background: url('../images/star-icon.png') no-repeat;
   display: inline-block;
   height: 24px;
   width: 24px;
@@ -133,7 +133,7 @@ label[for="subgroupIdNumber"] {
   min-width: 25em;
   height: auto;
   text-align: left;
-  font-size: 0.9em;
+  font-size: 1em;
   background-color: #606060;
 }
 
