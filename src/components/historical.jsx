@@ -97,7 +97,24 @@ function Historical({
       // parse the AboutChallenge into separate short and long descriptions
       const regexForFirstSentence = /^(.*?(?<!\b\w)[.?!])\s+[A-Z0-9]/;
       const cieFirstSentence = challenge.AboutChallenge.match(regexForFirstSentence)[1];
-      const cieShortDescription = cieFirstSentence.replace(/<[^>]*>?/ig, '');
+      // first, replace the HTML tags, next, replace escaped characters brought in
+      const cieShortDescription = cieFirstSentence
+        .replace(/<[^>]*>?/ig, '')
+        .replace(/\u00A9/g, '') // removing copyright from shortDescription
+        .replace(/&copy;/g, '') // removing copyright from shortDescription
+        .replace(/&nbsp;/g, ' ')
+        .replace(/&lsquo;/g, "'")
+        .replace(/&rsquo;/g, "'")
+        .replace(/&ldquo;/g, '"')
+        .replace(/&rdquo;/g, '"')
+        .replace(/&#38;/g, 'and')
+        .replace(/&amp;/g, 'and')
+        .replace(/\u2013/g, '-')
+        .replace(/\u2014/g, '-')
+        .replace(/\u2019/g, '\'')
+        .replace(/\u201C/g, '"')
+        .replace(/\u201D/g, '"')
+        .replace(/\t/g, '');
       const cieLongDescription = challenge.AboutChallenge.slice(cieFirstSentence.length, challenge.AboutChallenge.length);
 
       // set short and long description accordingly
@@ -107,7 +124,24 @@ function Historical({
     } else if (challenge.ChallengeId > 0) { // if ID is positive, therefore Self-Report or Partner challenge
       setChallengeTitle(challenge.Name);
       setActivityText(challenge.ActivityType);
-      setShortDescription(challenge.ShortDescription.replace(/<[^>]*>?/ig, ''));
+      setShortDescription(challenge.ShortDescription
+        .replace(/<[^>]*>?/ig, '')
+        .replace(/\u00A9/g, '') // removing copyright from shortDescription
+        .replace(/&copy;/g, '') // removing copyright from shortDescription
+        .replace(/&nbsp;/g, ' ')
+        .replace(/&lsquo;/g, "'")
+        .replace(/&rsquo;/g, "'")
+        .replace(/&ldquo;/g, '"')
+        .replace(/&rdquo;/g, '"')
+        .replace(/&#38;/g, 'and')
+        .replace(/&amp;/g, 'and')
+        .replace(/\u2013/g, '-')
+        .replace(/\u2014/g, '-')
+        .replace(/\u2019/g, '\'')
+        .replace(/\u201C/g, '"')
+        .replace(/\u201D/g, '"')
+        .replace(/\t/g, '')
+      );
       setLongDescription(challenge.AboutChallenge);
       setActivityGoalNumber(challenge.ChallengeTarget);
 
