@@ -32,6 +32,22 @@ function EditorView({
   setSpecificDemographicText,
   imageUrl,
   setImageUrl,
+  targetingType,
+  setTargetingType,
+  subgroup,
+  setSubgroup,
+  targetingColumn1,
+  setTargetingColumn1,
+  targetingValue1,
+  setTargetingValue1,
+  targetingColumn2,
+  setTargetingColumn2,
+  targetingValue2,
+  setTargetingValue2,
+  targetingColumn3,
+  setTargetingColumn3,
+  targetingValue3,
+  setTargetingValue3,
   challengeTitle,
   setChallengeTitle,
   activityText,
@@ -89,7 +105,6 @@ function EditorView({
       setImageUrl(record.fields['Limeade Image Url'] ? record.fields['Limeade Image Url'] : record.fields['Header Image']);
       validateLimeadeImage();
       setChallengeTitle(record.fields['Title'] ? record.fields['Title'] : '');
-      // TODO: figure out hth to get and set targeting details
       setWeekly(record.fields['Reward Occurrence'] === 'Weekly' || record.fields['Reward Occurrence'] === 'weekly' ? 'Weekly Days' : 'Once');
       setIndividualOrTeam(record.fields['Team Activity'] === 'yes' ? 'Team' : 'Individual');
       setTeamMin(record.fields['Team Size Minimum'] ? record.fields['Team Size Minimum'] : '');
@@ -99,6 +114,14 @@ function EditorView({
       setFeaturedActivity(record.fields['Featured Activity'] === 'yes' ? record.fields['Featured Activity'] : '');
       setTargeting(record.fields['Targeted Activity'] === 'yes' ? 'Specific Demographic' : 'Entire Population');
       setSpecificDemographicText(record.fields['Targeting Notes'] ? record.fields['Targeting Notes'] : '');
+      setTargetingType(record.fields['Subgroup'] ? 'Subgroups' : 'Tags');
+      setSubgroup(record.fields['Subgroup'] ? record.fields['Subgroup'] : '');
+      setTargetingColumn1(record.fields['Targeting Column 1']);
+      setTargetingValue1(record.fields['Targeting Value 1'] ? record.fields['Targeting Value 1'] : '');
+      setTargetingColumn2(record.fields['Targeting Column 2']);
+      setTargetingValue2(record.fields['Targeting Value 2'] ? record.fields['Targeting Value 2'] : '');
+      setTargetingColumn3(record.fields['Targeting Column 3']);
+      setTargetingValue3(record.fields['Targeting Value 3'] ? record.fields['Targeting Value 3'] : '');
       setShortDescription(record.fields['Instructions'] ? record.fields['Instructions'] : '');
       setLongDescription(record.fields['More Information Html'] ? record.fields['More Information Html'] : '');
 
@@ -143,6 +166,59 @@ function EditorView({
 
   function handleTargetingChange(e) {
     setTargeting(e.target.value);
+    if (e.target.value === 'Entire Population') {
+      // clearing out the other targeting values so they won't interfere on upload
+      setSubgroup('');
+      setTargetingColumn1('');
+      setTargetingValue1('');
+      setTargetingColumn2('');
+      setTargetingValue2('');
+      setTargetingColumn3('');
+      setTargetingValue3('');
+    }
+  }
+
+  function handleTargetingTypeChange(e) {
+    setTargetingType(e.target.value);
+    // clearing out the other targeting values so they won't interfere on upload
+    if (e.target.value === 'Tags') {
+      setSubgroup('');
+    } else if (e.target.value === 'Subgroups') {
+      setTargetingColumn1('');
+      setTargetingValue1('');
+      setTargetingColumn2('');
+      setTargetingValue2('');
+      setTargetingColumn3('');
+      setTargetingValue3('');
+    }
+  }
+
+  function handleSubgroupChange(e) {
+    setSubgroup(e.target.value);
+  }
+
+  function handleTargetingColumn1Change(e) {
+    setTargetingColumn1(e.target.value);
+  }
+
+  function handleTargetingValue1Change(e) {
+    setTargetingValue1(e.target.value);
+  }
+
+  function handleTargetingColumn2Change(e) {
+    setTargetingColumn2(e.target.value);
+  }
+
+  function handleTargetingValue2Change(e) {
+    setTargetingValue2(e.target.value);
+  }
+
+  function handleTargetingColumn3Change(e) {
+    setTargetingColumn3(e.target.value);
+  }
+
+  function handleTargetingValue3Change(e) {
+    setTargetingValue3(e.target.value);
   }
 
   function handleChallengeTitleChange(e) {
@@ -289,23 +365,117 @@ function EditorView({
           </div>
         </div>
 
-        {/* TODO: Add logic for changing targeting values */}
         <div className="form-group" style={{ display: targeting === 'Specific Demographic' ? 'block' : 'none' }}>
           <label>Targeting Notes</label>
           <p>{specificDemographicText}</p>
 
           <div className="form-check">
-            <input className="form-check-input" type="radio" name="subgroupsOrTagsRadios" id="subgroups" defaultChecked />
+            <input className="form-check-input" type="radio" name="subgroupsOrTagsRadios" id="subgroups" value="Subgroups" onChange={handleTargetingTypeChange} checked={targetingType === 'Subgroups'} />
             <label className="form-check-label" htmlFor="subgroups">Subgroups</label>
           </div>
           <div className="form-check">
-            <input className="form-check-input" type="radio" name="subgroupsOrTagsRadios" id="tags" />
+            <input className="form-check-input" type="radio" name="subgroupsOrTagsRadios" id="tags" value="Tags" onChange={handleTargetingTypeChange} checked={targetingType === 'Tags'} />
             <label className="form-check-label" htmlFor="tags">Tags</label>
           </div>
 
-          <div className="form-group mt-3 mb-5">
+          <div className="form-group mt-3 mb-5 subgroup-targeting" style={{ display: targetingType === 'Subgroups' ? 'block' : 'none' }}>
             <label htmlFor="subgroupIdNumber">Subgroup</label>
-            <input type="number" className="form-control" id="subgroupIdNumber" min="1" max="8" />
+            <input type="number" className="form-control" id="subgroupIdNumber" min="1" max="8" value={subgroup} onChange={handleSubgroupChange} />
+          </div>
+
+          <div className="form-group mt-3 mb-5 tags-targeting" style={{ display: targetingType === 'Tags' ? 'block' : 'none' }}>
+            <div className="row">
+              <div className="col-md-6">
+                <label htmlFor="targetingColumn1">Targeting Column 1</label>
+                <select className="form-control" id="targetingColumn1" value={targetingColumn1} onChange={handleTargetingColumn1Change}>
+                  <option></option>
+                  <option>AgeRange</option>
+                  <option>BargainingUnit</option>
+                  <option>Class</option>
+                  <option>Country</option>
+                  <option>CurrentWalking</option>
+                  <option>Department</option>
+                  <option>District</option>
+                  <option>Division</option>
+                  <option>Facility</option>
+                  <option>Group</option>
+                  <option>HealthPlan</option>
+                  <option>IncentiveLevel</option>
+                  <option>JobCode</option>
+                  <option>Location</option>
+                  <option>Region</option>
+                  <option>RelationshipCode</option>
+                  <option>Status</option>
+                  <option>Store</option>
+                </select>
+              </div>
+              <div className="col-md-6">
+                <label htmlFor="targetingValue1">Targeting Value 1</label>
+                <input type="text" className="form-control" id="targetingValue1" value={targetingValue1} onChange={handleTargetingValue1Change}/>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-md-6">
+                <label htmlFor="targetingColumn2">Targeting Column 2</label>
+                <select className="form-control" id="targetingColumn2" value={targetingColumn2} onChange={handleTargetingColumn2Change}>
+                  <option></option>
+                  <option>AgeRange</option>
+                  <option>BargainingUnit</option>
+                  <option>Class</option>
+                  <option>Country</option>
+                  <option>CurrentWalking</option>
+                  <option>Department</option>
+                  <option>District</option>
+                  <option>Division</option>
+                  <option>Facility</option>
+                  <option>Group</option>
+                  <option>HealthPlan</option>
+                  <option>IncentiveLevel</option>
+                  <option>JobCode</option>
+                  <option>Location</option>
+                  <option>Region</option>
+                  <option>RelationshipCode</option>
+                  <option>Status</option>
+                  <option>Store</option>
+                </select>
+              </div>
+              <div className="col-md-6">
+                <label htmlFor="targetingValue2">Targeting Value 2</label>
+                <input type="text" className="form-control" id="targetingValue2" value={targetingValue2} onChange={handleTargetingValue2Change}/>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-md-6">
+                <label htmlFor="targetingColumn2">Targeting Column 3</label>
+                <select className="form-control" id="targetingColumn3" value={targetingColumn3} onChange={handleTargetingColumn3Change}>
+                  <option></option>
+                  <option>AgeRange</option>
+                  <option>BargainingUnit</option>
+                  <option>Class</option>
+                  <option>Country</option>
+                  <option>CurrentWalking</option>
+                  <option>Department</option>
+                  <option>District</option>
+                  <option>Division</option>
+                  <option>Facility</option>
+                  <option>Group</option>
+                  <option>HealthPlan</option>
+                  <option>IncentiveLevel</option>
+                  <option>JobCode</option>
+                  <option>Location</option>
+                  <option>Region</option>
+                  <option>RelationshipCode</option>
+                  <option>Status</option>
+                  <option>Store</option>
+                </select>
+              </div>
+              <div className="col-md-6">
+                <label htmlFor="targetingValue3">Targeting Value 3</label>
+                <input type="text" className="form-control" id="targetingValue3" value={targetingValue3} onChange={handleTargetingValue3Change}/>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -347,7 +517,8 @@ function EditorView({
         <div className="form-group">
           <label htmlFor="longDescription">Long Description</label>
           <p>List all important details and information a participant will need.</p>
-          <TrumbowygBox longDescription={longDescription} setLongDescription={setLongDescription} />
+          {/* Hiding trumbowyg while it gets debugged to pull in LongDescription */}
+          {/* <TrumbowygBox longDescription={longDescription} setLongDescription={setLongDescription} /> */}
           <textarea className="col-md-12" rows="8" value={longDescription} onChange={handleLongDescriptionChange}></textarea>
           <small className="form-text text-muted">{longDescription.length}/2000 Characters</small>
         </div>

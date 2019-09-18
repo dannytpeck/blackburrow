@@ -56,6 +56,17 @@ function App() {
   const [targeting, setTargeting] = React.useState('Entire Population');
   const [specificDemographicText, setSpecificDemographicText] = React.useState('');
 
+  // EditorView
+  const [targetingType, setTargetingType] = React.useState('');
+  const [subgroup, setSubgroup] = React.useState('');
+  const [targetingColumn1, setTargetingColumn1] = React.useState('');
+  const [targetingValue1, setTargetingValue1] = React.useState('');
+  const [targetingColumn2, setTargetingColumn2] = React.useState('');
+  const [targetingValue2, setTargetingValue2] = React.useState('');
+  const [targetingColumn3, setTargetingColumn3] = React.useState('');
+  const [targetingValue3, setTargetingValue3] = React.useState('');
+
+
   const calendarHash = window.location.hash.slice(2, 16);
 
   // Make airtable calls when app starts
@@ -288,8 +299,6 @@ function App() {
     const isFeatured = featuredActivity ? 'yes' : 'no';
     const isTargeted = (targeting === 'Specific Demographic') ? 'yes' : 'no';
     const activityGoal = activityGoalNumber ? activityGoalNumber.toString() : '';
-    
-    // TODO: figure out hth to get and set targeting details
 
     let activityTrackingType = '';
     switch (tileType) {
@@ -333,13 +342,13 @@ function App() {
         'Featured Activity': isFeatured,
         'Targeted Activity': isTargeted,
         'Targeting Notes': specificDemographicText,
-        'Subgroup': null,
-        'Targeting Column 1': null,
-        'Targeting Value 1': '',
-        'Targeting Column 2': null,
-        'Targeting Value 2': '',
-        'Targeting Column 3': null,
-        'Targeting Value 3': ''
+        'Subgroup': targetingType === 'Subgroups' ? subgroup : '',
+        'Targeting Column 1': targetingType === 'Tags' ? targetingColumn1 : '',
+        'Targeting Value 1': targetingType === 'Tags' ? targetingValue1 : '',
+        'Targeting Column 2': targetingType === 'Tags' ? targetingColumn2 : '',
+        'Targeting Value 2': targetingType === 'Tags' ? targetingValue2 : '',
+        'Targeting Column 3': targetingType === 'Tags' ? targetingColumn3 : '',
+        'Targeting Value 3': targetingType === 'Tags' ? targetingValue3 : ''
       }, function(err, record) {
       if (err) {
         console.error(err);
@@ -653,6 +662,22 @@ function App() {
           setTargeting={setTargeting}
           specificDemographicText={specificDemographicText}
           setSpecificDemographicText={setSpecificDemographicText}
+          targetingType={targetingType}
+          setTargetingType={setTargetingType}
+          subgroup={subgroup}
+          setSubgroup={setSubgroup}
+          targetingColumn1={targetingColumn1}
+          setTargetingColumn1={setTargetingColumn1}
+          targetingValue1={targetingValue1}
+          setTargetingValue1={setTargetingValue1}
+          targetingColumn2={targetingColumn2}
+          setTargetingColumn2={setTargetingColumn2}
+          targetingValue2={targetingValue2}
+          setTargetingValue2={setTargetingValue2}
+          targetingColumn3={targetingColumn3}
+          setTargetingColumn3={setTargetingColumn3}
+          targetingValue3={targetingValue3}
+          setTargetingValue3={setTargetingValue3}
           imageUrl={imageUrl}
           setImageUrl={setImageUrl}
           challengeTitle={challengeTitle}
