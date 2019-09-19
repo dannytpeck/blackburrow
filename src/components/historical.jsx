@@ -21,6 +21,8 @@ function Historical({
   setHistoricalEdits,
   tileType,
   setTileType,
+  individualOrTeam,
+  setIndividualOrTeam,
   setTeamMin,
   setTeamMax,
   imageUrl,
@@ -155,6 +157,7 @@ function Historical({
       }
 
       if (challenge.IsTeamChallenge === true) {
+        setIndividualOrTeam('Team');
         setTeamMin(challenge.TeamSize.MinTeamSize);
         setTeamMax(challenge.TeamSize.MaxTeamSize);
       }

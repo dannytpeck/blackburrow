@@ -553,6 +553,8 @@ function App() {
           setTileType={setTileType}
           activityGoalNumber={activityGoalNumber}
           setActivityGoalNumber={setActivityGoalNumber}
+          individualOrTeam={individualOrTeam}
+          setIndividualOrTeam={setIndividualOrTeam}
           setTeamMin={setTeamMin}
           setTeamMax={setTeamMax}
           imageUrl={imageUrl}
