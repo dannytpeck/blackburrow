@@ -96,7 +96,12 @@ function Historical({
 
       // parse the AboutChallenge into separate short and long descriptions
       const regexForFirstSentence = /^(.*?(?<!\b\w)[.?!])\s+[A-Z0-9]/;
-      const cieFirstSentence = challenge.AboutChallenge.match(regexForFirstSentence)[1];
+      let cieFirstSentence = '';
+      if (challenge.AboutChallenge.match(regexForFirstSentence) !== null) {
+        cieFirstSentence = challenge.AboutChallenge.match(regexForFirstSentence)[1];
+      } else {
+        cieFirstSentence = ''; // create cieFirstSentence as a single space in case it would fail otherwise
+      }
       // first, replace the HTML tags, next, replace escaped characters brought in
       const cieShortDescription = cieFirstSentence
         .replace(/<[^>]*>?/ig, '')
