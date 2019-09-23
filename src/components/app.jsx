@@ -429,11 +429,38 @@ function App() {
       case 'Historical':
         setStep('Home');
         break;
-      case 'ChallengeContent':
+      case 'StepConfiguration':
         if (limeadeChallenges.length > 0) {
           setStep('Historical');
         } else {
           setStep('NetNew');
+        }
+        break;
+      case 'ChallengeContent':
+        if (limeadeChallenges.length > 0) {
+          switch (tileType) {
+            case 'One-Time Self-Report Challenge':
+            case 'Verified Challenge':
+            case 'Informational Tile':
+            case 'Weekly Days':
+              setStep('Historical');
+              break;
+            case 'Steps Challenge':
+              setStep('StepConfiguration');
+              break;
+          }
+        } else {
+          switch (tileType) {
+            case 'One-Time Self-Report Challenge':
+            case 'Verified Challenge':
+            case 'Informational Tile':
+            case 'Weekly Days':
+              setStep('NetNew');
+              break;
+            case 'Steps Challenge':
+              setStep('StepConfiguration');
+              break;
+          }
         }
         break;
       case 'AdditionalDetails':
@@ -441,14 +468,16 @@ function App() {
         break;
       case 'ConfirmChallengeDetails':
         if (limeadeChallenges.length > 0) {
-          setStep('Historical');
+          if (historicalEdits === 'Yes') {
+            setStep('AdditionalDetails');
+          } else if (historicalEdits === 'No') {
+            setStep('Historical');
+          }
         } else {
           setStep('AdditionalDetails');
         }
         break;
-      case 'StepConfiguration':
-        setStep('ChallengeContent');
-        break;
+      
     }
   }
 
@@ -469,42 +498,56 @@ function App() {
         break;
       case 'NetNew':
         if (validatedFields()) {
-          setStep('ChallengeContent');
+          switch (tileType) {
+            case 'One-Time Self-Report Challenge':
+            case 'Verified Challenge':
+            case 'Informational Tile':
+            case 'Weekly Days':
+              if (validatedFields()) {
+                setStep('ChallengeContent');
+              }
+              break;
+            case 'Steps Challenge':
+              if (validatedFields()) {
+                setStep('StepConfiguration');
+              }
+              break;
+          }
         }
         break;
       case 'Historical':
         if (validatedFields()) {
           if (historicalEdits === 'Yes') {
-            setStep('ChallengeContent');
+            switch (tileType) {
+              case 'One-Time Self-Report Challenge':
+              case 'Verified Challenge':
+              case 'Informational Tile':
+              case 'Weekly Days':
+                if (validatedFields()) {
+                  setStep('ChallengeContent');
+                }
+                break;
+              case 'Steps Challenge':
+                if (validatedFields()) {
+                  setStep('StepConfiguration');
+                }
+                break;
+            }
           } else if (historicalEdits === 'No') {
             setStep('ConfirmChallengeDetails');
           }
         }
         break;
+      case 'StepConfiguration':
+        setStep('ChallengeContent');
+        break;
       case 'ChallengeContent':
-        switch (tileType) {
-          case 'One-Time Self-Report Challenge':
-          case 'Verified Challenge':
-          case 'Informational Tile':
-          case 'Weekly Days':
-            if (validatedFields()) {
-              setStep('AdditionalDetails');
-            }
-            break;
-          case 'Steps Challenge':
-            if (validatedFields()) {
-              setStep('StepConfiguration');
-            }
-            break;
-        }
+        setStep('AdditionalDetails');
         break;
       case 'AdditionalDetails':
         if (validatedFields()) {
           setStep('ConfirmChallengeDetails');
         }
-        break;
-      case 'StepConfiguration':
-        setStep('AdditionalDetails');
         break;
     }
   }
