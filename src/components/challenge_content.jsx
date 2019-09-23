@@ -37,6 +37,8 @@ function ChallengeContent({
   }
   if (tileType === 'Steps Challenge') {
     setActivityText('exercise');
+  } else if (tileType === 'Verified Challenge') {
+    setActivityText('do the activity in the description');
   }
 
   function handleShortDescriptionChange(e) {
@@ -57,7 +59,7 @@ function ChallengeContent({
 
         <div className="form-group">
           <label htmlFor="activityText">Call to Action</label>
-          <input type="text" className="form-control" id="activityText" placeholder="To complete this activity..." value={activityText} onChange={handleActivityTextChange} readOnly={tileType === 'Steps Challenge' ? true : false} />
+          <input type="text" className="form-control" id="activityText" placeholder="To complete this activity..." value={activityText} onChange={handleActivityTextChange} readOnly={tileType === 'Steps Challenge' || tileType === 'Verified Challenge' ? true : false} />
           <small className="form-text text-muted">{activityText.length}/50 Characters</small>
         </div>
 
