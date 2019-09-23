@@ -571,6 +571,8 @@ function App() {
         return <NetNew
           tileType={tileType}
           setTileType={setTileType}
+          activityText={activityText}
+          setActivityText={setActivityText}
           startDate={startDate}
           setStartDate={setStartDate}
           endDate={endDate}
@@ -596,6 +598,8 @@ function App() {
           setTileType={setTileType}
           activityGoalNumber={activityGoalNumber}
           setActivityGoalNumber={setActivityGoalNumber}
+          individualOrTeam={individualOrTeam}
+          setIndividualOrTeam={setIndividualOrTeam}
           setTeamMin={setTeamMin}
           setTeamMax={setTeamMax}
           imageUrl={imageUrl}
@@ -619,6 +623,7 @@ function App() {
           activityText={activityText}
           setActivityText={setActivityText}
           activityGoalNumber={activityGoalNumber}
+          individualOrTeam={individualOrTeam}
           shortDescription={shortDescription}
           setShortDescription={setShortDescription}
           longDescription={longDescription}
@@ -630,6 +635,7 @@ function App() {
           tileType={tileType}
           featuredActivity={featuredActivity}
           setFeaturedActivity={setFeaturedActivity}
+          individualOrTeam={individualOrTeam}
           targeting={targeting}
           setTargeting={setTargeting}
           specificDemographicText={specificDemographicText}

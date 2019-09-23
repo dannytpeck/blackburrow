@@ -11,6 +11,7 @@ function ChallengeContent({
   setChallengeTitle,
   activityText,
   activityGoalNumber,
+  individualOrTeam,
   setActivityText,
   shortDescription,
   setShortDescription,
@@ -78,7 +79,7 @@ function ChallengeContent({
         </div>
       </div>
       <div className="col-6">
-        <TilePreview tileType={tileType} imageUrl={imageUrl} challengeTitle={challengeTitle} activityText={activityText} activityGoalNumber={activityGoalNumber} shortDescription={shortDescription} longDescription={longDescription} />
+        <TilePreview tileType={tileType} imageUrl={imageUrl} challengeTitle={challengeTitle} activityText={activityText} activityGoalNumber={activityGoalNumber} individualOrTeam={individualOrTeam} shortDescription={shortDescription} longDescription={longDescription} />
       </div>
     </section>
   );
