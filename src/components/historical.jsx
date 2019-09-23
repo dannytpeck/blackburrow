@@ -85,6 +85,7 @@ function Historical({
     if (challenge.ChallengeLogoURL.includes('/cfs-file') === true || challenge.ChallengeLogoURL === '' || challenge.ChallengeLogoURL.includes('/images/') === true) {
       setImageUrl('https://cdn.limeade.com/images/item-image-default-small.jpg');
     }
+    setPointValue(challenge.ActivityReward.Value);
 
     // Parse information if importing a CIE (convert it into a Verified Partner Challenge) if ID is negative (wtf Limeade)
     if (challenge.ChallengeId < 0) {
