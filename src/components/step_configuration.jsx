@@ -75,7 +75,7 @@ function StepConfiguration({
         <div className="row">
           <div className="col">
             <div className="form-group">
-              <input type="number" className="form-control" placeholder="50,000" onChange={handleStepsGoalChange} />
+              <input type="number" className="form-control" value={activityGoalNumber} placeholder="50,000" onChange={handleStepsGoalChange} />
             </div>
           </div>
           <div className="col">
@@ -135,7 +135,7 @@ function StepConfiguration({
 
       </div>
       <div className="col-6">
-        <TilePreview tileType={tileType} imageUrl={imageUrl} challengeTitle={challengeTitle} activityText={activityText} activityGoalNumber={activityGoalNumber} shortDescription={shortDescription} longDescription={longDescription} />
+        <TilePreview tileType={tileType} imageUrl={imageUrl} challengeTitle={challengeTitle} activityText={activityText} activityGoalNumber={activityGoalNumber} individualOrTeam={individualOrTeam} shortDescription={shortDescription} longDescription={longDescription} />
       </div>
     </section>
   );

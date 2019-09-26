@@ -4,6 +4,8 @@ import React, { useEffect } from 'react';
 function NetNew({
   tileType,
   setTileType,
+  activityText,
+  setActivityText,
   startDate,
   setStartDate,
   endDate,
@@ -24,6 +26,10 @@ function NetNew({
 
   function handleTileTypeChange(e) {
     setTileType(e.target.value);
+    // set activityText for Steps Challenges so the text won't be missing on the preview in the StepConfiguration page
+    if (e.target.value === 'Steps Challenge') {
+      setActivityText('exercise');
+    }
   }
 
   function handleStartDateChange(e) {

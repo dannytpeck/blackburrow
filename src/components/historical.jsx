@@ -87,6 +87,7 @@ function Historical({
     if (challenge.ChallengeLogoURL.includes('/cfs-file') === true || challenge.ChallengeLogoURL === '' || challenge.ChallengeLogoURL.includes('/images/') === true) {
       setImageUrl('https://cdn.limeade.com/images/item-image-default-small.jpg');
     }
+    setPointValue(challenge.ActivityReward.Value);
 
     // Parse information if importing a CIE (convert it into a Verified Partner Challenge) if ID is negative (wtf Limeade)
     if (challenge.ChallengeId < 0) {
@@ -244,7 +245,7 @@ function Historical({
       </div>
 
       <div className="col-6">
-        <TilePreview tileType={tileType} imageUrl={imageUrl} challengeTitle={challengeTitle} activityText={activityText} activityGoalNumber={activityGoalNumber} shortDescription={shortDescription} longDescription={longDescription} />
+        <TilePreview tileType={tileType} imageUrl={imageUrl} challengeTitle={challengeTitle} activityText={activityText} activityGoalNumber={activityGoalNumber} individualOrTeam={individualOrTeam} shortDescription={shortDescription} longDescription={longDescription} />
       </div>
     </section>
   );

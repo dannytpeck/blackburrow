@@ -11,6 +11,7 @@ function ChallengeContent({
   setChallengeTitle,
   activityText,
   activityGoalNumber,
+  individualOrTeam,
   setActivityText,
   shortDescription,
   setShortDescription,
@@ -37,6 +38,8 @@ function ChallengeContent({
   }
   if (tileType === 'Steps Challenge') {
     setActivityText('exercise');
+  } else if (tileType === 'Verified Challenge') {
+    setActivityText('do the activity in the description');
   }
 
   function handleShortDescriptionChange(e) {
@@ -57,7 +60,7 @@ function ChallengeContent({
 
         <div className="form-group">
           <label htmlFor="activityText">Call to Action</label>
-          <input type="text" className="form-control" id="activityText" placeholder="To complete this activity..." value={activityText} onChange={handleActivityTextChange} readOnly={tileType === 'Steps Challenge' ? true : false} />
+          <input type="text" className="form-control" id="activityText" placeholder="To complete this..." value={activityText} onChange={handleActivityTextChange} readOnly={tileType === 'Steps Challenge' || tileType === 'Verified Challenge' ? true : false} />
           <small className="form-text text-muted">{activityText.length}/50 Characters</small>
         </div>
 
@@ -76,7 +79,7 @@ function ChallengeContent({
         </div>
       </div>
       <div className="col-6">
-        <TilePreview tileType={tileType} imageUrl={imageUrl} challengeTitle={challengeTitle} activityText={activityText} activityGoalNumber={activityGoalNumber} shortDescription={shortDescription} longDescription={longDescription} />
+        <TilePreview tileType={tileType} imageUrl={imageUrl} challengeTitle={challengeTitle} activityText={activityText} activityGoalNumber={activityGoalNumber} individualOrTeam={individualOrTeam} shortDescription={shortDescription} longDescription={longDescription} />
       </div>
     </section>
   );
