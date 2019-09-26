@@ -36,6 +36,11 @@ function AdditionalDetails({
 
   function handleTargetingChange(e) {
     setTargeting(e.target.value);
+
+    // clear out specific demographic text if Entire Population is selected
+    if (e.target.value === 'Entire Population') {
+      setSpecificDemographicText('');
+    }
   }
 
   function handleSpecificDemographicText(e) {
