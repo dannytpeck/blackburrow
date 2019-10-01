@@ -76,6 +76,7 @@ function EditorView({
       switch (record.fields['Verified']) {
         case 'Points Upload':
         case 'System Awarded':
+        case 'Verified':
           if (record.fields['Points'] > 0) {
             setTileType('Verified Challenge');
           } else if (record.fields['Points'] === 0) {
