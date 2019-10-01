@@ -3,6 +3,7 @@ import React from 'react';
 /* global $ */
 function TilePreview({
   tileType,
+  weekly,
   imageUrl,
   challengeTitle,
   activityText,
@@ -14,7 +15,11 @@ function TilePreview({
 
   let previewActivityText = activityText;
   if (tileType === 'Steps Challenge') {
-    previewActivityText = `${individualOrTeam === 'Team' ? 'collectively ' : ''}${activityText} at least ${activityGoalNumber} steps`;
+    if (weekly === true) {
+      previewActivityText = `${individualOrTeam === 'Team' ? 'collectively ' : ''}${activityText} at least ${activityGoalNumber} steps each week`;
+    } else if (weekly === false) {
+      previewActivityText = `${individualOrTeam === 'Team' ? 'collectively ' : ''}${activityText} at least ${activityGoalNumber} steps`;
+    }
   } else if (tileType === 'Weekly Days') {
     previewActivityText = `${activityText} on at least ${activityGoalNumber} separate days each week`;
   } else if (tileType === 'Weekly Units') {

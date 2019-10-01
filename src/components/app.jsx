@@ -37,6 +37,7 @@ function App() {
   const [limeadeChallenges, setLimeadeChallenges] = React.useState([]);
   const [historicalEdits, setHistoricalEdits] = React.useState('No');
   const [weekly, setWeekly] = React.useState(false);
+  console.log(weekly);
 
   // ChallengeContent
   const [imageUrl, setImageUrl] = React.useState('http://via.placeholder.com/2000x1000');
@@ -183,7 +184,7 @@ function App() {
 
   function submitToAirtable() {
     const acknowledgementChecked = $('#acknowledgement').prop('checked');
-    const rewardOccurrence = tileType === 'Weekly Days' || tileType === 'Weekly Units' ? 'Weekly' : 'Once';
+    const rewardOccurrence = weekly === true ? 'Weekly' : 'Once';
     const isFeatured = featuredActivity ? 'yes' : 'no';
     const isTargeted = (targeting === 'Specific Demographic') ? 'yes' : 'no';
     const activityGoal = activityGoalNumber ? activityGoalNumber.toString() : '';
@@ -308,7 +309,7 @@ function App() {
     const recordId = window.location.hash.slice(22);
 
     // create translation variables
-    const rewardOccurrence = tileType === 'Weekly Days' || tileType === 'Weekly Units' ? 'Weekly' : 'Once';
+    const rewardOccurrence = weekly === true ? 'Weekly' : 'Once';
     const isFeatured = featuredActivity ? 'yes' : 'no';
     const isTargeted = (targeting === 'Specific Demographic') ? 'yes' : 'no';
     const activityGoal = activityGoalNumber ? activityGoalNumber.toString() : '';
@@ -617,6 +618,8 @@ function App() {
           setStartDate={setStartDate}
           endDate={endDate}
           setEndDate={setEndDate}
+          weekly={weekly}
+          setWeekly={setWeekly}
           pointValue={pointValue}
           setPointValue={setPointValue}
           historicalEdits={historicalEdits}
@@ -644,6 +647,8 @@ function App() {
       case 'ChallengeContent':
         return <ChallengeContent
           tileType={tileType}
+          weekly={weekly}
+          setWeekly={setWeekly}
           imageUrl={imageUrl}
           challengeTitle={challengeTitle}
           setChallengeTitle={setChallengeTitle}
@@ -660,6 +665,8 @@ function App() {
       case 'AdditionalDetails':
         return <AdditionalDetails
           tileType={tileType}
+          weekly={weekly}
+          setWeekly={setWeekly}
           featuredActivity={featuredActivity}
           setFeaturedActivity={setFeaturedActivity}
           individualOrTeam={individualOrTeam}
@@ -680,6 +687,8 @@ function App() {
         return <ConfirmChallengeDetails
           accountManager={accountManager}
           tileType={tileType}
+          weekly={weekly}
+          setWeekly={setWeekly}
           individualOrTeam={individualOrTeam}
           teamMin={teamMin}
           teamMax={teamMax}
@@ -700,6 +709,8 @@ function App() {
       case 'StepConfiguration':
         return <StepConfiguration
           tileType={tileType}
+          weekly={weekly}
+          setWeekly={setWeekly}
           imageUrl={imageUrl}
           challengeTitle={challengeTitle}
           activityText={activityText}

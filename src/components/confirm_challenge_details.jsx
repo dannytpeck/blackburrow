@@ -7,6 +7,7 @@ import TilePreview from './tile_preview';
 function ConfirmChallengeDetails({
   accountManager,
   tileType,
+  weekly,
   individualOrTeam,
   teamMin,
   teamMax,
@@ -110,7 +111,7 @@ function ConfirmChallengeDetails({
 
       </div>
       <div className="col-6">
-        <TilePreview tileType={tileType} imageUrl={imageUrl} challengeTitle={challengeTitle} activityText={activityText} activityGoalNumber={activityGoalNumber} individualOrTeam={individualOrTeam} shortDescription={shortDescription} longDescription={longDescription} />
+        <TilePreview tileType={tileType} weekly={weekly} imageUrl={imageUrl} challengeTitle={challengeTitle} activityText={activityText} activityGoalNumber={activityGoalNumber} individualOrTeam={individualOrTeam} shortDescription={shortDescription} longDescription={longDescription} />
       </div>
     </section>
   );

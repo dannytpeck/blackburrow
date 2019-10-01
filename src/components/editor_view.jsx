@@ -92,7 +92,15 @@ function EditorView({
             case 'No':
             case 'no':
               if (record.fields['Reward Occurrence'] === 'Weekly' || record.fields['Reward Occurrence'] === 'weekly') {
-                setTileType('Weekly Days');
+                if (record.fields['Activity Tracking Type'] === 'Days' || record.fields['Activity Tracking Type'] === 'days') {
+                  setTileType('Weekly Days');
+                } else if (record.fields['Activity Tracking Type'] === 'Units' || record.fields['Activity Tracking Type'] === 'units') {
+                  if (record.fields['Device Enabled']) {
+                    setTileType('Steps Challenge');
+                  } else {
+                    setTileType('Weekly Units');
+                  }
+                }
               } else if (record.fields['Reward Occurrence'] === 'Once' || record.fields['Reward Occurrence'] === 'One Time') {
                 setTileType('One-Time Self-Report Challenge');
               }
@@ -106,7 +114,7 @@ function EditorView({
       setImageUrl(record.fields['Limeade Image Url'] ? record.fields['Limeade Image Url'] : record.fields['Header Image']);
       validateLimeadeImage();
       setChallengeTitle(record.fields['Title'] ? record.fields['Title'] : '');
-      setWeekly(record.fields['Reward Occurrence'] === 'Weekly' || record.fields['Reward Occurrence'] === 'weekly' ? 'Weekly Days' : 'Once');
+      setWeekly(record.fields['Reward Occurrence'] === 'Weekly' || record.fields['Reward Occurrence'] === 'weekly' ? true : false);
       setIndividualOrTeam(record.fields['Team Activity'] === 'yes' ? 'Team' : 'Individual');
       setTeamMin(record.fields['Team Size Minimum'] ? record.fields['Team Size Minimum'] : '');
       setTeamMax(record.fields['Team Size Maximum'] ? record.fields['Team Size Maximum'] : '');
@@ -534,7 +542,7 @@ function EditorView({
 
       </div>
       <div className="col-6">
-        <TilePreview tileType={tileType} imageUrl={imageUrl} challengeTitle={challengeTitle} activityText={activityText} activityGoalNumber={activityGoalNumber} individualOrTeam={individualOrTeam} shortDescription={shortDescription} longDescription={longDescription} />
+        <TilePreview tileType={tileType} weekly={weekly} imageUrl={imageUrl} challengeTitle={challengeTitle} activityText={activityText} activityGoalNumber={activityGoalNumber} individualOrTeam={individualOrTeam} shortDescription={shortDescription} longDescription={longDescription} />
       </div>
     </section>
   );

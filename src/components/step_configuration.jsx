@@ -6,6 +6,8 @@ import TilePreview from './tile_preview';
 /* globals $ */
 function StepConfiguration({
   tileType,
+  weekly,
+  setWeekly,
   imageUrl,
   challengeTitle,
   activityText,
@@ -53,6 +55,15 @@ function StepConfiguration({
     setActivityGoalNumber(e.target.value);
   }
 
+  function handleOnceOrWeeklyChange(e) {
+    if (e.target.value === 'Each Week') {
+      setWeekly(true);
+    } else {
+      setWeekly(false);
+    }
+    
+  }
+
   return (
     <section id="stepConfiguration" className="row">
       <div className="col-6">
@@ -80,7 +91,8 @@ function StepConfiguration({
           </div>
           <div className="col">
             <div className="form-group">
-              <select className="form-control">
+              <select className="form-control" id="once-or-weekly-steps" onChange={handleOnceOrWeeklyChange}>
+                {/* TODO: setWeekly based on which option is selected */}
                 <option>Select</option>
                 <option>By End Date ({moment(endDate).format('L')})</option>
                 { individualOrTeam === 'Individual' ? <option>Each Week</option> : '' }
@@ -135,7 +147,7 @@ function StepConfiguration({
 
       </div>
       <div className="col-6">
-        <TilePreview tileType={tileType} imageUrl={imageUrl} challengeTitle={challengeTitle} activityText={activityText} activityGoalNumber={activityGoalNumber} individualOrTeam={individualOrTeam} shortDescription={shortDescription} longDescription={longDescription} />
+        <TilePreview tileType={tileType} weekly={weekly} imageUrl={imageUrl} challengeTitle={challengeTitle} activityText={activityText} activityGoalNumber={activityGoalNumber} individualOrTeam={individualOrTeam} shortDescription={shortDescription} longDescription={longDescription} />
       </div>
     </section>
   );
