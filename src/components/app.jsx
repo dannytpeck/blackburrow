@@ -37,7 +37,6 @@ function App() {
   const [limeadeChallenges, setLimeadeChallenges] = React.useState([]);
   const [historicalEdits, setHistoricalEdits] = React.useState('No');
   const [weekly, setWeekly] = React.useState(false);
-  console.log(weekly);
 
   // ChallengeContent
   const [imageUrl, setImageUrl] = React.useState('http://via.placeholder.com/2000x1000');

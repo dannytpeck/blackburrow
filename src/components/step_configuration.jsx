@@ -92,7 +92,6 @@ function StepConfiguration({
           <div className="col">
             <div className="form-group">
               <select className="form-control" id="once-or-weekly-steps" onChange={handleOnceOrWeeklyChange}>
-                {/* TODO: setWeekly based on which option is selected */}
                 <option>Select</option>
                 <option>By End Date ({moment(endDate).format('L')})</option>
                 { individualOrTeam === 'Individual' ? <option>Each Week</option> : '' }
