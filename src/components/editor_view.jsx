@@ -79,7 +79,7 @@ function EditorView({
         case 'Verified':
           if (record.fields['Points'] > 0) {
             setTileType('Verified Challenge');
-          } else if (record.fields['Points'] === 0) {
+          } else {
             setTileType('Informational Tile');
           }
           break;

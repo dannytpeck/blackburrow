@@ -220,7 +220,20 @@ function App() {
         }
         break;
     }
-    console.log('customTileType = ' + customTileType);
+    
+    let verified = '';
+    switch (tileType) {
+      case 'One-Time Self-Report Challenge':
+      case 'Weekly Days':
+      case 'Weekly Units':
+      case 'Steps Challenge':
+        verified = 'Self-Report';
+        break;
+      case 'Verified Challenge':
+      case 'Informational Tile':
+        verified = 'Points Upload';
+        break;
+    }
 
     $('#confirmSubmitModal').modal();
     if (acknowledgementChecked) {
@@ -233,7 +246,7 @@ function App() {
         'Phase': phase,
         'Start date': startDate,
         'End date': endDate,
-        'Verified': tileType === 'Verified Challenge' ? 'Points Upload' : 'Self-Report',
+        'Verified': verified,
         'Points': pointValue,
         'Total Points': pointValue,
         'Team Activity': individualOrTeam === 'Team' ? 'yes' : 'no',
@@ -316,13 +329,27 @@ function App() {
         break;
     }
 
+    let verified = '';
+    switch (tileType) {
+      case 'One-Time Self-Report Challenge':
+      case 'Weekly Days':
+      case 'Weekly Units':
+      case 'Steps Challenge':
+        verified = 'Self-Report';
+        break;
+      case 'Verified Challenge':
+      case 'Informational Tile':
+        verified = 'Points Upload';
+        break;
+    }
+
     // update airtable record
     base('Challenges').update(recordId, 
       {
         'Title': challengeTitle,
         'Start date': startDate,
         'End date': endDate,
-        'Verified': tileType === 'Verified Challenge' || tileType === 'Informational Tile' ? 'Points Upload' : 'Self-Report',
+        'Verified': verified,
         'Team Activity': individualOrTeam === 'Team' ? 'yes' : 'no',
         'Team Size Minimum': teamMin,
         'Team Size Maximum': teamMax,
