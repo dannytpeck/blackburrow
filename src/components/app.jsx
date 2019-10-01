@@ -233,7 +233,7 @@ function App() {
         'Phase': phase,
         'Start date': startDate,
         'End date': endDate,
-        'Verified': tileType === 'Verified Challenge' ? 'Verified' : 'Self-Report',
+        'Verified': tileType === 'Verified Challenge' ? 'Points Upload' : 'Self-Report',
         'Points': pointValue,
         'Total Points': pointValue,
         'Team Activity': individualOrTeam === 'Team' ? 'yes' : 'no',
