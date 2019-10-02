@@ -59,7 +59,8 @@ function ChallengeContent({
           <small className="form-text text-muted">{challengeTitle.length}/100 Characters</small>
         </div>
 
-        <div className="form-group">
+        {/* hide the call to action/activity text if the tile is a Verified Challenge or Informational Tile */}
+        <div className="form-group" style={{ display: tileType === 'Verified Challenge' || tileType === 'Informational Tile' ? 'none' : 'block' }}>
           <label htmlFor="activityText">Call to Action</label>
           <input type="text" className="form-control" id="activityText" placeholder="To complete this..." value={activityText} onChange={handleActivityTextChange} readOnly={tileType === 'Steps Challenge' || tileType === 'Verified Challenge' ? true : false} />
           <small className="form-text text-muted">{activityText.length}/50 Characters</small>
