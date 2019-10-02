@@ -49,7 +49,17 @@ function AdditionalDetails({
     setSpecificDemographicText(e.target.value);
   }
 
+  function handleAduroChooseImageChange(e) {
+    if ($('#aduroChooseImage').prop('checked')) {
+      setImageUrl('https://i.imgur.com/YuzgPrF.jpg');
+    } else {
+      setImageUrl('http://via.placeholder.com/2000x1000');
+    }
+  }
+
   function handleImageChange(e) {
+    // uncheck the Aduro to Choose Image checkbox to avoid confusion
+    $('#aduroChooseImage').prop('checked', false);
 
     console.log(e.target.files);
     const imageFile = e.target.files[0];
@@ -84,6 +94,12 @@ function AdditionalDetails({
             <div className="form-group">
               <input type="file" className="form-control-file" id="uploadImage" onChange={handleImageChange} />
               <small className="form-text text-muted text-left">Image dimensions must be 2000x1000 pixels. Accepted file formats jpg or png.</small>
+            </div>
+          </div>
+          <div className="aduro-choose-image">
+            <div className="form-check">
+              <input className="form-check-input" type="checkbox" id="aduroChooseImage" onChange={handleAduroChooseImageChange} />
+              <label className="form-check-label" htmlFor="aduroChooseImage">I don't have an image. Please select one for me.</label>
             </div>
           </div>
         </div>

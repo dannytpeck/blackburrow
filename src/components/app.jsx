@@ -577,6 +577,8 @@ function App() {
         }
         break;
     }
+    // force the user to the top of the page at each step
+    window.scrollTo(0, 0);
   }
 
   function renderStep() {
