@@ -6,6 +6,7 @@ import TilePreview from './tile_preview';
 /* globals $ */
 function ChallengeContent({
   tileType,
+  weekly,
   imageUrl,
   challengeTitle,
   setChallengeTitle,
@@ -79,7 +80,7 @@ function ChallengeContent({
         </div>
       </div>
       <div className="col-6">
-        <TilePreview tileType={tileType} imageUrl={imageUrl} challengeTitle={challengeTitle} activityText={activityText} activityGoalNumber={activityGoalNumber} individualOrTeam={individualOrTeam} shortDescription={shortDescription} longDescription={longDescription} />
+        <TilePreview tileType={tileType} weekly={weekly} imageUrl={imageUrl} challengeTitle={challengeTitle} activityText={activityText} activityGoalNumber={activityGoalNumber} individualOrTeam={individualOrTeam} shortDescription={shortDescription} longDescription={longDescription} />
       </div>
     </section>
   );

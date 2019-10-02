@@ -15,6 +15,8 @@ function Historical({
   setStartDate,
   endDate,
   setEndDate,
+  weekly,
+  setWeekly,
   pointValue,
   setPointValue,
   historicalEdits,
@@ -165,7 +167,17 @@ function Historical({
 
       // setting tile type to secret values if the historical challenge is Weekly Days or Weekly Units
       if (challenge.Frequency === 'Weekly' || challenge.Frequency === 'weekly') {
-        setTileType('Weekly Days');
+        // set the value of Weekly so we can use it later
+        setWeekly(true);
+        // also set the tileType based on the various Limeade possibilities
+        if (challenge.ChallengeType === 'YesNoDaily') {
+          setTileType('Weekly Days');
+        } else if (challenge.ActivityType === 'exercise') {
+          setTileType('Steps Challenge');
+        } else {
+          setTileType('Weekly Units');
+        }
+        
       }
 
     } else {
@@ -245,7 +257,7 @@ function Historical({
       </div>
 
       <div className="col-6">
-        <TilePreview tileType={tileType} imageUrl={imageUrl} challengeTitle={challengeTitle} activityText={activityText} activityGoalNumber={activityGoalNumber} individualOrTeam={individualOrTeam} shortDescription={shortDescription} longDescription={longDescription} />
+        <TilePreview tileType={tileType} weekly={weekly} imageUrl={imageUrl} challengeTitle={challengeTitle} activityText={activityText} activityGoalNumber={activityGoalNumber} individualOrTeam={individualOrTeam} shortDescription={shortDescription} longDescription={longDescription} />
       </div>
     </section>
   );

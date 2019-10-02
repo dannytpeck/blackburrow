@@ -183,7 +183,7 @@ function App() {
 
   function submitToAirtable() {
     const acknowledgementChecked = $('#acknowledgement').prop('checked');
-    const rewardOccurrence = tileType === 'Weekly Days' || tileType === 'Weekly Units' ? 'Weekly' : 'Once';
+    const rewardOccurrence = weekly === true ? 'Weekly' : 'Once';
     const isFeatured = featuredActivity ? 'yes' : 'no';
     const isTargeted = (targeting === 'Specific Demographic') ? 'yes' : 'no';
     const activityGoal = activityGoalNumber ? activityGoalNumber.toString() : '';
@@ -220,7 +220,20 @@ function App() {
         }
         break;
     }
-    console.log('customTileType = ' + customTileType);
+    
+    let verified = '';
+    switch (tileType) {
+      case 'One-Time Self-Report Challenge':
+      case 'Weekly Days':
+      case 'Weekly Units':
+      case 'Steps Challenge':
+        verified = 'Self-Report';
+        break;
+      case 'Verified Challenge':
+      case 'Informational Tile':
+        verified = 'Points Upload';
+        break;
+    }
 
     $('#confirmSubmitModal').modal();
     if (acknowledgementChecked) {
@@ -233,7 +246,7 @@ function App() {
         'Phase': phase,
         'Start date': startDate,
         'End date': endDate,
-        'Verified': tileType === 'Verified Challenge' ? 'Verified' : 'Self-Report',
+        'Verified': verified,
         'Points': pointValue,
         'Total Points': pointValue,
         'Team Activity': individualOrTeam === 'Team' ? 'yes' : 'no',
@@ -295,7 +308,7 @@ function App() {
     const recordId = window.location.hash.slice(22);
 
     // create translation variables
-    const rewardOccurrence = tileType === 'Weekly Days' || tileType === 'Weekly Units' ? 'Weekly' : 'Once';
+    const rewardOccurrence = weekly === true ? 'Weekly' : 'Once';
     const isFeatured = featuredActivity ? 'yes' : 'no';
     const isTargeted = (targeting === 'Specific Demographic') ? 'yes' : 'no';
     const activityGoal = activityGoalNumber ? activityGoalNumber.toString() : '';
@@ -316,13 +329,27 @@ function App() {
         break;
     }
 
+    let verified = '';
+    switch (tileType) {
+      case 'One-Time Self-Report Challenge':
+      case 'Weekly Days':
+      case 'Weekly Units':
+      case 'Steps Challenge':
+        verified = 'Self-Report';
+        break;
+      case 'Verified Challenge':
+      case 'Informational Tile':
+        verified = 'Points Upload';
+        break;
+    }
+
     // update airtable record
     base('Challenges').update(recordId, 
       {
         'Title': challengeTitle,
         'Start date': startDate,
         'End date': endDate,
-        'Verified': tileType === 'Verified Challenge' || tileType === 'Informational Tile' ? 'Verified' : 'Self-Report',
+        'Verified': verified,
         'Team Activity': individualOrTeam === 'Team' ? 'yes' : 'no',
         'Team Size Minimum': teamMin,
         'Team Size Maximum': teamMax,
@@ -592,6 +619,8 @@ function App() {
           setStartDate={setStartDate}
           endDate={endDate}
           setEndDate={setEndDate}
+          weekly={weekly}
+          setWeekly={setWeekly}
           pointValue={pointValue}
           setPointValue={setPointValue}
           historicalEdits={historicalEdits}
@@ -619,6 +648,8 @@ function App() {
       case 'ChallengeContent':
         return <ChallengeContent
           tileType={tileType}
+          weekly={weekly}
+          setWeekly={setWeekly}
           imageUrl={imageUrl}
           challengeTitle={challengeTitle}
           setChallengeTitle={setChallengeTitle}
@@ -635,6 +666,8 @@ function App() {
       case 'AdditionalDetails':
         return <AdditionalDetails
           tileType={tileType}
+          weekly={weekly}
+          setWeekly={setWeekly}
           featuredActivity={featuredActivity}
           setFeaturedActivity={setFeaturedActivity}
           individualOrTeam={individualOrTeam}
@@ -655,6 +688,8 @@ function App() {
         return <ConfirmChallengeDetails
           accountManager={accountManager}
           tileType={tileType}
+          weekly={weekly}
+          setWeekly={setWeekly}
           individualOrTeam={individualOrTeam}
           teamMin={teamMin}
           teamMax={teamMax}
@@ -675,6 +710,8 @@ function App() {
       case 'StepConfiguration':
         return <StepConfiguration
           tileType={tileType}
+          weekly={weekly}
+          setWeekly={setWeekly}
           imageUrl={imageUrl}
           challengeTitle={challengeTitle}
           activityText={activityText}
