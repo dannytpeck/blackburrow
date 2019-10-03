@@ -36,11 +36,11 @@ function TilePreview({
       </div>
       <div className="content-wrapper">
         <h3>{challengeTitle}</h3>
-        <p>To complete this{individualOrTeam === 'Team' ? ' team challenge' : ''}, <strong>{previewActivityText}</strong>.</p>
+        <p style={{ display: tileType === 'Verified Challenge' || tileType === 'Informational Tile' ? 'none' : 'block' }}>To complete this{individualOrTeam === 'Team' ? ' team challenge' : ''}, <strong>{previewActivityText}</strong>.</p>
         <hr />
-        <h5>About this activity</h5>
+        <h5 style={{ display: tileType === 'Verified Challenge' || tileType === 'Informational Tile' ? 'none' : 'block' }}>About this activity</h5>
         <p>{shortDescription}</p>
-        <h5>More information</h5>
+        <h5 style={{ display: tileType === 'Verified Challenge' || tileType === 'Informational Tile' ? 'none' : 'block' }}>More information</h5>
         <p dangerouslySetInnerHTML={{ __html: longDescription }}></p>
       </div>
     </div>
