@@ -133,6 +133,7 @@ function EditorView({
       setTargetingValue3(record.fields['Targeting Value 3'] ? record.fields['Targeting Value 3'] : '');
       setShortDescription(record.fields['Instructions'] ? record.fields['Instructions'] : '');
       setLongDescription(record.fields['More Information Html'] ? record.fields['More Information Html'] : '');
+      $('.editor').html(record.fields['More Information Html']);
 
     });
 
@@ -526,9 +527,7 @@ function EditorView({
         <div className="form-group">
           <label htmlFor="longDescription">Long Description</label>
           <p>List all important details and information a participant will need.</p>
-          {/* Hiding trumbowyg while it gets debugged to pull in LongDescription */}
-          {/* <TrumbowygBox longDescription={longDescription} setLongDescription={setLongDescription} /> */}
-          <textarea className="col-md-12" rows="8" value={longDescription} onChange={handleLongDescriptionChange}></textarea>
+          <TrumbowygBox longDescription={longDescription} setLongDescription={setLongDescription} />
           <small className="form-text text-muted">{longDescription.length}/2000 Characters</small>
         </div>
 
