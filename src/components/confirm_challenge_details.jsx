@@ -17,6 +17,8 @@ function ConfirmChallengeDetails({
   featuredActivity,
   targeting,
   specificDemographicText,
+  notes,
+  setNotes,
   imageUrl,
   challengeTitle,
   activityText,
@@ -34,6 +36,10 @@ function ConfirmChallengeDetails({
     });
 
   }, []); // Pass empty array to only run once on mount
+
+  function handleNotesChange(e) {
+    setNotes(e.target.value);
+  }
 
   return (
     <section id="confirmChallengeDetails" className="row">
@@ -100,6 +106,11 @@ function ConfirmChallengeDetails({
           <li>https://example.com/eat-weight-veggies.pdf</li>
         </ul>
         */}
+
+        <div className="form-group mt-5">
+          <label>Any additional notes to add?</label>
+          <textarea className="form-control" id="notes" rows="2" placeholder="" value={notes} onChange={handleNotesChange}></textarea>
+        </div>
 
         <div className="form-group mt-5">
           <label>Acknowledgement</label>

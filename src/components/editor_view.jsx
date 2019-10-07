@@ -30,6 +30,8 @@ function EditorView({
   setTargeting,
   specificDemographicText,
   setSpecificDemographicText,
+  notes,
+  setNotes,
   imageUrl,
   setImageUrl,
   targetingType,
@@ -123,6 +125,7 @@ function EditorView({
       setFeaturedActivity(record.fields['Featured Activity'] === 'yes' ? record.fields['Featured Activity'] : '');
       setTargeting(record.fields['Targeted Activity'] === 'yes' ? 'Specific Demographic' : 'Entire Population');
       setSpecificDemographicText(record.fields['Targeting Notes'] ? record.fields['Targeting Notes'] : '');
+      setNotes(record.fields['Comment']);
       setTargetingType(record.fields['Subgroup'] ? 'Subgroups' : 'Tags');
       setSubgroup(record.fields['Subgroup'] ? record.fields['Subgroup'] : '');
       setTargetingColumn1(record.fields['Targeting Column 1']);
@@ -249,6 +252,10 @@ function EditorView({
   // adding for textarea Long Description changing while debugging Trumbowyg
   function handleLongDescriptionChange(e) {
     setLongDescription(e.target.value);
+  }
+
+  function handleNotesChange(e) {
+    setNotes(e.target.value);
   }
 
   function handleLimeadeImageChange(e) {
@@ -457,7 +464,7 @@ function EditorView({
 
             <div className="row">
               <div className="col-md-6">
-                <label htmlFor="targetingColumn2">Targeting Column 3</label>
+                <label htmlFor="targetingColumn3">Targeting Column 3</label>
                 <select className="form-control" id="targetingColumn3" value={targetingColumn3} onChange={handleTargetingColumn3Change}>
                   <option></option>
                   <option>AgeRange</option>
@@ -488,7 +495,12 @@ function EditorView({
           </div>
         </div>
 
-        <h3 className="mb-3">Challenge Content</h3>
+        <div className="form-group">
+          <label htmlFor="notes">Client Notes</label>
+          <textarea className="form-control" id="notes" rows="2" placeholder="" value={notes} onChange={handleNotesChange} readOnly="readonly"></textarea>
+        </div>
+
+        <h3 className="mt-5 mb-3">Challenge Content</h3>
 
         <div className="form-group">
           <label>Limeade Image URL</label>

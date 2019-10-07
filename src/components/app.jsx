@@ -55,6 +55,9 @@ function App() {
   const [featuredActivity, setFeaturedActivity] = React.useState(false);
   const [targeting, setTargeting] = React.useState('Entire Population');
   const [specificDemographicText, setSpecificDemographicText] = React.useState('');
+  
+  // ConfirmChallengeDetails
+  const [notes, setNotes] = React.useState('');
 
   // EditorView
   const [targetingType, setTargetingType] = React.useState('');
@@ -255,6 +258,7 @@ function App() {
         'Instructions': shortDescription,
         'More Information Html': longDescription,
         'Featured Activity': isFeatured,
+        'Comment': notes,
         'Targeted Activity': isTargeted,
         'Targeting Notes': specificDemographicText,
         'Subgroup': null,
@@ -699,6 +703,8 @@ function App() {
           featuredActivity={featuredActivity}
           targeting={targeting}
           specificDemographicText={specificDemographicText}
+          notes={notes}
+          setNotes={setNotes}
           imageUrl={imageUrl}
           challengeTitle={challengeTitle}
           activityText={activityText}
@@ -750,6 +756,8 @@ function App() {
           setTargeting={setTargeting}
           specificDemographicText={specificDemographicText}
           setSpecificDemographicText={setSpecificDemographicText}
+          notes={notes}
+          setNotes={setNotes}
           targetingType={targetingType}
           setTargetingType={setTargetingType}
           subgroup={subgroup}
