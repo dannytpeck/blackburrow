@@ -31,8 +31,8 @@ function TilePreview({
       <header className="preview-header">
         <h3>Preview</h3>
       </header>
-      <div className="image-wrapper">
-        <img src={imageUrl} />
+      <div className="image-wrapper img-preview-aspect-ratio-container">
+        <img src={imageUrl} className="img-preview-aspect-ratio" />
       </div>
       <div className="content-wrapper">
         <h3>{challengeTitle}</h3>
