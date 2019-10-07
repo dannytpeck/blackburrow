@@ -153,7 +153,7 @@ function App() {
     `;
 
     const data = {
-      title: `${calendar.fields['client']} - ${customTileType} - ${tileType} - ${challengeTitle} - ${startDate}`,
+      title: `${calendar.fields['client']} - ${customTileType} - ${tileType} - ${challengeTitle} - ${moment(startDate).format('L')}`,
       description: description,
       dates: {
         start: wrikeStartDate,
@@ -251,7 +251,7 @@ function App() {
         'Total Points': pointValue,
         'Team Activity': individualOrTeam === 'Team' ? 'yes' : 'no',
         'Reward Occurrence': rewardOccurrence,
-        'Category': 'Health and Fitness',
+        'Category': 'NA',
         'Instructions': shortDescription,
         'More Information Html': longDescription,
         'Featured Activity': isFeatured,
