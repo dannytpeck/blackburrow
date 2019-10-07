@@ -133,17 +133,17 @@ function App() {
     const editorUrl = `https://calendarbuilder.dev.adurolife.com/ctrt/#/${calendarHash}/edit/${record.id}`;
 
     const description = `
-      <p>Client Name: ${calendar.fields['client']}</p>
-      <p>Client Contact Name: ${contactName}</p>
-      <p>Client Contact Email: <a href="mailto:${contactEmail}">${contactEmail}</a></p>
-      <p>Tile Type: ${tileType}</p>
-      <p>Net-New or Historical: ${customTileType}</p>
-      <p>Tile Name: ${challengeTitle}</p>
-      <p>Start Date: ${moment(startDate).format('L')}</p>
+      <p><strong>Client Name:</strong> ${calendar.fields['client']}</p>
+      <p><strong>Client Contact Name:</strong> ${contactName}</p>
+      <p><strong>Client Contact Email:</strong> <a href="mailto:${contactEmail}"> ${contactEmail}</a></p>
+      <p><strong>Tile Type:</strong> ${tileType}</p>
+      <p><strong>Net-New or Historical:</strong> ${customTileType}</p>
+      <p><strong>Tile Name:</strong> ${challengeTitle}</p>
+      <p><strong>Start Date:</strong> ${moment(startDate).format('L')}</p>
       <br/>
-      <p>Editor View: <a href="${editorUrl}">${editorUrl}</a></p>
-      <p>Client Challenge Calendar: <a href="${calendarUrl}">${calendarUrl}</a></p>
-      <p>Tile Image: <a href="${imageUrl}">${imageUrl}</p>
+      <p><strong>Editor View:</strong> <a href="${editorUrl}">${editorUrl}</a></p>
+      <p><strong>Client Challenge Calendar:</strong> <a href="${calendarUrl}">${calendarUrl}</a></p>
+      <p><strong>Tile Image:</strong> <a href="${imageUrl}">${imageUrl}</p>
       <br/>
       <p><strong>1) WAIT! STOP! Before moving on...</strong></p>
       <p>If tile type is: "Verified Challenge" AND "Revised" or "Rerun", &#64; the AM with the below message:</p><br/>
