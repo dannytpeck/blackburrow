@@ -8,6 +8,8 @@ function AdditionalDetails({
   weekly,
   featuredActivity,
   setFeaturedActivity,
+  maxOccurrence,
+  setMaxOccurrence,
   individualOrTeam,
   targeting,
   setTargeting,
@@ -34,6 +36,10 @@ function AdditionalDetails({
 
   function handleFeaturedActivityChange(e) {
     setFeaturedActivity(e.target.checked);
+  }
+
+  function handleMaxOccurrenceChange(e) {
+    setMaxOccurrence(e.target.value);
   }
 
   function handleTargetingChange(e) {
@@ -114,6 +120,12 @@ function AdditionalDetails({
               <span className="align-middle">Yes</span>
             </label>
           </div>
+        </div>
+          
+        <div className="form-group mt-5 mb-5 max-occurrence" style={{ display: tileType === 'Verified Challenge' ? 'block' : 'none' }}>
+          <label htmlFor="maxOccurrence">How many times can participants earn points for this activity?</label>
+          <small className="form-text text-muted text-left">For example, if participants can earn points more than once.</small>
+          <input type="number" className="form-control" id="maxOccurrence" min="1" value={maxOccurrence} onChange={handleMaxOccurrenceChange} />
         </div>
 
         <div className="form-group mt-3">

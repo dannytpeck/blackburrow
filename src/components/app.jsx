@@ -53,6 +53,7 @@ function App() {
 
   // AdditionalDetails
   const [featuredActivity, setFeaturedActivity] = React.useState(false);
+  const [maxOccurrence, setMaxOccurrence] = React.useState('');
   const [targeting, setTargeting] = React.useState('Entire Population');
   const [specificDemographicText, setSpecificDemographicText] = React.useState('');
   
@@ -150,6 +151,7 @@ function App() {
         <li><em>ID 10: Well-being Assessment</em></li>
         <li><em>RAS Programs (i.e. Breathe Easy, My Health Matters, etc.)</em></li>
         <li><em>Any CIE tied to an integration or workflow (i.e. Naturally Slim)</em></li>
+        <li><em>Any tile with a maximum award greater than 1. This tile has a maximum award of ${maxOccurrence}</em></li>
       </ol>
       <p><em>Thank you for clarifying!""</em></p><br/>
       <p>If Partner Challenge, continue with process as normal. <br/>If CIE, review the content and add this task to the WebConfig folder.</p>
@@ -674,6 +676,8 @@ function App() {
           setWeekly={setWeekly}
           featuredActivity={featuredActivity}
           setFeaturedActivity={setFeaturedActivity}
+          maxOccurrence={maxOccurrence}
+          setMaxOccurrence={setMaxOccurrence}
           individualOrTeam={individualOrTeam}
           targeting={targeting}
           setTargeting={setTargeting}
@@ -701,6 +705,7 @@ function App() {
           endDate={endDate}
           pointValue={pointValue}
           featuredActivity={featuredActivity}
+          maxOccurrence={maxOccurrence}
           targeting={targeting}
           specificDemographicText={specificDemographicText}
           notes={notes}

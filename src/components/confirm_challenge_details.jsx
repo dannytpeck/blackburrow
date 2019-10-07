@@ -8,6 +8,7 @@ function ConfirmChallengeDetails({
   accountManager,
   tileType,
   weekly,
+  maxOccurrence,
   individualOrTeam,
   teamMin,
   teamMax,
@@ -90,8 +91,13 @@ function ConfirmChallengeDetails({
         <label>Featured Activity:</label>
         <p>{featuredActivity ? 'Yes' : 'No'}</p>
 
-        <label>Targeting:</label>
-        <p>{targeting}</p>
+        <label>How many times participants can earn points:</label>
+        <p>{maxOccurrence} time(s)</p>
+
+        <div className="max-occurrence" style={{ display: tileType === 'Verified Challenge' ? 'block' : 'none' }}>
+          <label>Targeting:</label>
+          <p>{targeting}</p>
+        </div>
 
         <div style={{ display: targeting === 'Specific Demographic' ? 'block' : 'none' }}>
           <label>Targeting Notes:</label>
