@@ -53,12 +53,14 @@ function App() {
 
   // AdditionalDetails
   const [featuredActivity, setFeaturedActivity] = React.useState(false);
-  const [maxOccurrence, setMaxOccurrence] = React.useState('');
+  const [maxOccurrence, setMaxOccurrence] = React.useState('1');
   const [targeting, setTargeting] = React.useState('Entire Population');
   const [specificDemographicText, setSpecificDemographicText] = React.useState('');
   
   // ConfirmChallengeDetails
   const [notes, setNotes] = React.useState('');
+  const [contactName, setContactName] = React.useState('');
+  const [contactEmail, setContactEmail] = React.useState('');
 
   // EditorView
   const [targetingType, setTargetingType] = React.useState('');
@@ -132,6 +134,8 @@ function App() {
 
     const description = `
       <p>Client Name: ${calendar.fields['client']}</p>
+      <p>Client Contact Name: ${contactName}</p>
+      <p>Client Contact Email: <a href="mailto:${contactEmail}">${contactEmail}</a></p>
       <p>Tile Type: ${tileType}</p>
       <p>Net-New or Historical: ${customTileType}</p>
       <p>Tile Name: ${challengeTitle}</p>
@@ -151,7 +155,7 @@ function App() {
         <li><em>ID 10: Well-being Assessment</em></li>
         <li><em>RAS Programs (i.e. Breathe Easy, My Health Matters, etc.)</em></li>
         <li><em>Any CIE tied to an integration or workflow (i.e. Naturally Slim)</em></li>
-        <li><em>Any tile with a maximum award greater than 1. This tile has a maximum award of ${maxOccurrence}</em></li>
+        <li><em>Any CIE/Partner Challenge tile with a maximum award greater than 1. This tile has a maximum award of ${maxOccurrence}</em></li>
       </ol>
       <p><em>Thank you for clarifying!""</em></p><br/>
       <p>If Partner Challenge, continue with process as normal. <br/>If CIE, review the content and add this task to the WebConfig folder.</p>
@@ -708,6 +712,10 @@ function App() {
           maxOccurrence={maxOccurrence}
           targeting={targeting}
           specificDemographicText={specificDemographicText}
+          contactName={contactName}
+          setContactName={setContactName}
+          contactEmail={contactEmail}
+          setContactEmail={setContactEmail}
           notes={notes}
           setNotes={setNotes}
           imageUrl={imageUrl}

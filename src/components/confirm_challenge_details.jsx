@@ -18,6 +18,10 @@ function ConfirmChallengeDetails({
   featuredActivity,
   targeting,
   specificDemographicText,
+  contactName,
+  setContactName,
+  contactEmail,
+  setContactEmail,
   notes,
   setNotes,
   imageUrl,
@@ -37,6 +41,14 @@ function ConfirmChallengeDetails({
     });
 
   }, []); // Pass empty array to only run once on mount
+
+  function handleContactNameChange(e) {
+    setContactName(e.target.value);
+  }
+
+  function handleContactEmailChange(e) {
+    setContactEmail(e.target.value);
+  }
 
   function handleNotesChange(e) {
     setNotes(e.target.value);
@@ -91,10 +103,12 @@ function ConfirmChallengeDetails({
         <label>Featured Activity:</label>
         <p>{featuredActivity ? 'Yes' : 'No'}</p>
 
+        <div className="max-occurrence" style={{ display: tileType === 'Verified Challenge' ? 'block' : 'none' }}>
         <label>How many times participants can earn points:</label>
         <p>{maxOccurrence} time(s)</p>
+        </div>
 
-        <div className="max-occurrence" style={{ display: tileType === 'Verified Challenge' ? 'block' : 'none' }}>
+        <div>
           <label>Targeting:</label>
           <p>{targeting}</p>
         </div>
@@ -114,8 +128,24 @@ function ConfirmChallengeDetails({
         */}
 
         <div className="form-group mt-5">
-          <label>Any additional notes to add?</label>
-          <textarea className="form-control" id="notes" rows="2" placeholder="" value={notes} onChange={handleNotesChange}></textarea>
+          <label>Contact</label>
+          <p>In case we need to confirm anything with you, please enter your contact information.</p>
+          
+          <div className="row">
+            <div className="col">
+              <label htmlFor="contactName">Name</label>
+              <input type="text" className="form-control" id="contactName" value={contactName} onChange={handleContactNameChange} />
+            </div>
+            <div className="col">
+              <label htmlFor="contactEmail">Email</label>
+              <input type="text" className="form-control" id="contactEmail" value={contactEmail} onChange={handleContactEmailChange} />
+            </div>
+          </div>
+
+          <div className="mt-3">
+            <label>Any additional notes to add?</label>
+            <textarea className="form-control" id="notes" rows="2" placeholder="" value={notes} onChange={handleNotesChange}></textarea>
+          </div>
         </div>
 
         <div className="form-group mt-5">
