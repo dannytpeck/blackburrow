@@ -76,6 +76,22 @@ label {
   width: 100%;
 }
 
+.img-preview-aspect-ratio-container{
+  height: 0;
+  padding-top: calc( 1 / 2 * 100%);
+  background-color: white;
+  position: relative;
+}
+
+.img-preview-aspect-ratio{
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
 .size-dropdown{
   width: 50%;
 }
