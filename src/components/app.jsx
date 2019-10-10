@@ -53,8 +53,14 @@ function App() {
 
   // AdditionalDetails
   const [featuredActivity, setFeaturedActivity] = React.useState(false);
+  const [maxOccurrence, setMaxOccurrence] = React.useState('1');
   const [targeting, setTargeting] = React.useState('Entire Population');
   const [specificDemographicText, setSpecificDemographicText] = React.useState('');
+  
+  // ConfirmChallengeDetails
+  const [notes, setNotes] = React.useState('');
+  const [contactName, setContactName] = React.useState('');
+  const [contactEmail, setContactEmail] = React.useState('');
 
   // EditorView
   const [targetingType, setTargetingType] = React.useState('');
@@ -127,15 +133,17 @@ function App() {
     const editorUrl = `https://calendarbuilder.dev.adurolife.com/ctrt/#/${calendarHash}/edit/${record.id}`;
 
     const description = `
-      <p>Client Name: ${calendar.fields['client']}</p>
-      <p>Tile Type: ${tileType}</p>
-      <p>Net-New or Historical: ${customTileType}</p>
-      <p>Tile Name: ${challengeTitle}</p>
-      <p>Start Date: ${moment(startDate).format('L')}</p>
+      <p><strong>Client Name:</strong> ${calendar.fields['client']}</p>
+      <p><strong>Client Contact Name:</strong> ${contactName}</p>
+      <p><strong>Client Contact Email:</strong> <a href="mailto:${contactEmail}"> ${contactEmail}</a></p>
+      <p><strong>Tile Type:</strong> ${tileType}</p>
+      <p><strong>Net-New or Historical:</strong> ${customTileType}</p>
+      <p><strong>Tile Name:</strong> ${challengeTitle}</p>
+      <p><strong>Start Date:</strong> ${moment(startDate).format('L')}</p>
       <br/>
-      <p>Editor View: <a href="${editorUrl}">${editorUrl}</a></p>
-      <p>Client Challenge Calendar: <a href="${calendarUrl}">${calendarUrl}</a></p>
-      <p>Tile Image: <a href="${imageUrl}">${imageUrl}</p>
+      <p><strong>Editor View:</strong> <a href="${editorUrl}">${editorUrl}</a></p>
+      <p><strong>Client Challenge Calendar:</strong> <a href="${calendarUrl}">${calendarUrl}</a></p>
+      <p><strong>Tile Image:</strong> <a href="${imageUrl}">${imageUrl}</p>
       <br/>
       <p><strong>1) WAIT! STOP! Before moving on...</strong></p>
       <p>If tile type is: "Verified Challenge" AND "Revised" or "Rerun", &#64; the AM with the below message:</p><br/>
@@ -147,13 +155,14 @@ function App() {
         <li><em>ID 10: Well-being Assessment</em></li>
         <li><em>RAS Programs (i.e. Breathe Easy, My Health Matters, etc.)</em></li>
         <li><em>Any CIE tied to an integration or workflow (i.e. Naturally Slim)</em></li>
+        <li><em>Any CIE/Partner Challenge tile with a maximum award greater than 1. This tile has a maximum award of ${maxOccurrence}</em></li>
       </ol>
       <p><em>Thank you for clarifying!""</em></p><br/>
       <p>If Partner Challenge, continue with process as normal. <br/>If CIE, review the content and add this task to the WebConfig folder.</p>
     `;
 
     const data = {
-      title: `${calendar.fields['client']} - ${customTileType} - ${tileType} - ${challengeTitle} - ${startDate}`,
+      title: `${calendar.fields['client']} - ${customTileType} - ${tileType} - ${challengeTitle} - ${moment(startDate).format('L')}`,
       description: description,
       dates: {
         start: wrikeStartDate,
@@ -251,10 +260,11 @@ function App() {
         'Total Points': pointValue,
         'Team Activity': individualOrTeam === 'Team' ? 'yes' : 'no',
         'Reward Occurrence': rewardOccurrence,
-        'Category': 'Health and Fitness',
+        'Category': 'NA',
         'Instructions': shortDescription,
         'More Information Html': longDescription,
         'Featured Activity': isFeatured,
+        'Comment': notes,
         'Targeted Activity': isTargeted,
         'Targeting Notes': specificDemographicText,
         'Subgroup': null,
@@ -670,6 +680,8 @@ function App() {
           setWeekly={setWeekly}
           featuredActivity={featuredActivity}
           setFeaturedActivity={setFeaturedActivity}
+          maxOccurrence={maxOccurrence}
+          setMaxOccurrence={setMaxOccurrence}
           individualOrTeam={individualOrTeam}
           targeting={targeting}
           setTargeting={setTargeting}
@@ -697,8 +709,15 @@ function App() {
           endDate={endDate}
           pointValue={pointValue}
           featuredActivity={featuredActivity}
+          maxOccurrence={maxOccurrence}
           targeting={targeting}
           specificDemographicText={specificDemographicText}
+          contactName={contactName}
+          setContactName={setContactName}
+          contactEmail={contactEmail}
+          setContactEmail={setContactEmail}
+          notes={notes}
+          setNotes={setNotes}
           imageUrl={imageUrl}
           challengeTitle={challengeTitle}
           activityText={activityText}
@@ -750,6 +769,8 @@ function App() {
           setTargeting={setTargeting}
           specificDemographicText={specificDemographicText}
           setSpecificDemographicText={setSpecificDemographicText}
+          notes={notes}
+          setNotes={setNotes}
           targetingType={targetingType}
           setTargetingType={setTargetingType}
           subgroup={subgroup}
