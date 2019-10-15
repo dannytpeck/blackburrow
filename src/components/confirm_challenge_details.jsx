@@ -138,7 +138,7 @@ function ConfirmChallengeDetails({
             </div>
             <div className="col">
               <label htmlFor="contactEmail">Email</label>
-              <input type="text" className="form-control" id="contactEmail" value={contactEmail} onChange={handleContactEmailChange} />
+              <input type="email" className="form-control" id="contactEmail" value={contactEmail} onChange={handleContactEmailChange} />
             </div>
           </div>
 

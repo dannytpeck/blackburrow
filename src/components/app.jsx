@@ -246,7 +246,7 @@ function App() {
     }
 
     $('#confirmSubmitModal').modal();
-    if (acknowledgementChecked) {
+    if (acknowledgementChecked && contactName && contactEmail) {
 
       const phase = 'Yearlong';
       base('Challenges').create({
@@ -308,8 +308,10 @@ function App() {
 
       });
 
-    } else {
+    } else if (acknowledgementChecked === false) {
       $('#confirmSubmitModal .modal-body').html('<p>You must check the acknowledgement to submit your request.</p>');
+    } else {
+      $('#confirmSubmitModal .modal-body').html('<p>Please enter your name and email.</p>');
     }
   }
 
