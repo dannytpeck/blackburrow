@@ -136,6 +136,7 @@ function App() {
       <p><strong>Client Name:</strong> ${calendar.fields['client']}</p>
       <p><strong>Client Contact Name:</strong> ${contactName}</p>
       <p><strong>Client Contact Email:</strong> <a href="mailto:${contactEmail}"> ${contactEmail}</a></p>
+      <br/>
       <p><strong>Tile Type:</strong> ${tileType}</p>
       <p><strong>Max Occurrence:</strong> ${maxOccurrence}</p>
       <p><strong>Net-New or Historical:</strong> ${customTileType}</p>
