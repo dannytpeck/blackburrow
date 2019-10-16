@@ -142,6 +142,7 @@ function App() {
       <p><strong>Net-New or Historical:</strong> ${customTileType}</p>
       <p><strong>Tile Name:</strong> ${challengeTitle}</p>
       <p><strong>Start Date:</strong> ${moment(startDate).format('L')}</p>
+      <p><strong>End Date:</strong> ${moment(endDate).format('L')}</p>
       <p><strong>Notes:</strong> ${notes}</p>
       <br/>
       <p><strong>Editor View:</strong> <a href="${editorUrl}">${editorUrl}</a></p>
