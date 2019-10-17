@@ -136,10 +136,14 @@ function App() {
       <p><strong>Client Name:</strong> ${calendar.fields['client']}</p>
       <p><strong>Client Contact Name:</strong> ${contactName}</p>
       <p><strong>Client Contact Email:</strong> <a href="mailto:${contactEmail}"> ${contactEmail}</a></p>
+      <br/>
       <p><strong>Tile Type:</strong> ${tileType}</p>
+      <p><strong>Max Occurrence:</strong> ${maxOccurrence}</p>
       <p><strong>Net-New or Historical:</strong> ${customTileType}</p>
       <p><strong>Tile Name:</strong> ${challengeTitle}</p>
       <p><strong>Start Date:</strong> ${moment(startDate).format('L')}</p>
+      <p><strong>End Date:</strong> ${moment(endDate).format('L')}</p>
+      <p><strong>Notes:</strong> ${notes}</p>
       <br/>
       <p><strong>Editor View:</strong> <a href="${editorUrl}">${editorUrl}</a></p>
       <p><strong>Client Challenge Calendar:</strong> <a href="${calendarUrl}">${calendarUrl}</a></p>
@@ -155,7 +159,6 @@ function App() {
         <li><em>ID 10: Well-being Assessment</em></li>
         <li><em>RAS Programs (i.e. Breathe Easy, My Health Matters, etc.)</em></li>
         <li><em>Any CIE tied to an integration or workflow (i.e. Naturally Slim)</em></li>
-        <li><em>Any CIE/Partner Challenge tile with a maximum award greater than 1. This tile has a maximum award of ${maxOccurrence}</em></li>
       </ol>
       <p><em>Thank you for clarifying!""</em></p><br/>
       <p>If Partner Challenge, continue with process as normal. <br/>If CIE, review the content and add this task to the WebConfig folder.</p>
@@ -245,7 +248,7 @@ function App() {
     }
 
     $('#confirmSubmitModal').modal();
-    if (acknowledgementChecked) {
+    if (acknowledgementChecked && contactName && contactEmail) {
 
       const phase = 'Yearlong';
       base('Challenges').create({
@@ -307,8 +310,10 @@ function App() {
 
       });
 
-    } else {
+    } else if (acknowledgementChecked === false) {
       $('#confirmSubmitModal .modal-body').html('<p>You must check the acknowledgement to submit your request.</p>');
+    } else {
+      $('#confirmSubmitModal .modal-body').html('<p>Please enter your name and email.</p>');
     }
   }
 

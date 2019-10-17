@@ -109,6 +109,10 @@ label {
   width: 2em;
 }
 
+#maxOccurrence {
+  width: 15%;
+}
+
 #featuredActivityCheck {
   padding-left: 0;
 }
