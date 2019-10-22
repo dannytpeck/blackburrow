@@ -170,7 +170,8 @@ function App() {
       },
       followers: [accountManagerWrikeId],
       responsibles: [],
-      status: 'Received',
+      status: 'Active',
+      customStatus: 'IEAAX5JZJMBBLNMS', // Custom Status ID for Received
     };
 
     $.ajax({
