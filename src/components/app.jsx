@@ -125,8 +125,6 @@ function App() {
     }
 
     const responsibleAm = accountManagerWrikeId;
-    const responsibleEditor = 'KUAEFOGT'; // Meredith
-    const responsibleAmy = 'KUAFS43Q'; // Amy
 
     const calendarUrl = `https://calendarbuilder.dev.adurolife.com/calendar-builder/#/${calendarHash}`;
     const ctrtUrl = `https://calendarbuilder.dev.adurolife.com/ctrt/#/${calendarHash}`;
@@ -136,6 +134,7 @@ function App() {
       <p><strong>Client Name:</strong> ${calendar.fields['client']}</p>
       <p><strong>Client Contact Name:</strong> ${contactName}</p>
       <p><strong>Client Contact Email:</strong> <a href="mailto:${contactEmail}"> ${contactEmail}</a></p>
+      <p><strong>Account Manager:</strong> ${accountManager}</p>
       <br/>
       <p><strong>Tile Type:</strong> ${tileType}</p>
       <p><strong>Max Occurrence:</strong> ${maxOccurrence}</p>
@@ -171,7 +170,7 @@ function App() {
         start: wrikeStartDate,
         due: wrikeDueDate
       },
-      responsibles: [responsibleAm, responsibleEditor]
+      responsibles: []
     };
 
     $.ajax({
