@@ -169,6 +169,7 @@ function App() {
         due: wrikeDueDate
       },
       followers: [accountManagerWrikeId],
+      parents: 'IEAAX5JZI4CCJNWS', // add task to Web Config folder, which apparently is called a Parent
       responsibles: [],
       status: 'Active',
       customStatus: 'IEAAX5JZJMBBLNMS', // Custom Status ID for Received
