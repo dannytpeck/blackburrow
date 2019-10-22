@@ -124,8 +124,6 @@ function App() {
         break;
     }
 
-    const responsibleAm = accountManagerWrikeId;
-
     const calendarUrl = `https://calendarbuilder.dev.adurolife.com/calendar-builder/#/${calendarHash}`;
     const ctrtUrl = `https://calendarbuilder.dev.adurolife.com/ctrt/#/${calendarHash}`;
     const editorUrl = `https://calendarbuilder.dev.adurolife.com/ctrt/#/${calendarHash}/edit/${record.id}`;
@@ -170,7 +168,9 @@ function App() {
         start: wrikeStartDate,
         due: wrikeDueDate
       },
-      responsibles: []
+      followers: [accountManagerWrikeId],
+      responsibles: [],
+      status: 'Received',
     };
 
     $.ajax({
