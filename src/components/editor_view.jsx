@@ -384,7 +384,7 @@ function EditorView({
 
         <div className="form-group" style={{ display: targeting === 'Specific Demographic' ? 'block' : 'none' }}>
           <label htmlFor="notes">Targeting Notes</label>
-          <textarea className="form-control" id="notes" rows="2" placeholder="" value={specificDemographicText} readOnly="readonly"></textarea>
+          <textarea className="form-control" id="notes" rows="2" placeholder="" value={specificDemographicText} ></textarea>
 
           <div className="form-check">
             <input className="form-check-input" type="radio" name="subgroupsOrTagsRadios" id="subgroups" value="Subgroups" onChange={handleTargetingTypeChange} checked={targetingType === 'Subgroups'} />
