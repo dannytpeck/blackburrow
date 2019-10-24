@@ -135,8 +135,10 @@ function Historical({
         setTeamMax(challenge.TeamSize.MaxTeamSize);
       }
 
-      // TODO: add if statement for if the challenge is Partner and now needs to be a Verified Challenge
-      
+      // if historical challenge was a Partner Challenge, set tile as Verified
+      if (challenge.PartnerId === 1) {
+        setTileType('Verified Challenge');
+      }
 
       // setting tile type to secret values if the historical challenge is Weekly Days or Weekly Units
       if (challenge.Frequency === 'Weekly' || challenge.Frequency === 'weekly') {
