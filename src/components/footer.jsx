@@ -1,7 +1,16 @@
 import React from 'react';
 
-function Footer({ step, previousStep, nextStep, submitToAirtable, submitEditsToAirtable }) {
+function Footer({ step, previousStep, nextStep, openDeleteConfirmModal, submitToAirtable, submitEditsToAirtable }) {
   const calendarHash = window.location.hash.slice(2);
+
+  let backOrDeleteButton = '';
+  if (step ==='Home') {
+    backOrDeleteButton = <a href={`https://calendarbuilder.dev.adurolife.com/calendar-builder/#/${calendarHash}`}>Back to Calendar</a>;
+  } else if (step === 'EditorView') {
+    backOrDeleteButton = <button type="button" className="btn btn-outline-danger ml-5" onClick={openDeleteConfirmModal}>Delete Challenge</button>;
+  } else {
+    backOrDeleteButton = <button type="button" className="btn btn-outline-primary" onClick={previousStep}>Back</button>;
+  }
 
   let submitButton = '';
   switch (step) {
@@ -16,9 +25,7 @@ function Footer({ step, previousStep, nextStep, submitToAirtable, submitEditsToA
   return (
     <footer id="footer">
       {
-        step === 'Home' ?
-        <a href={`https://calendarbuilder.dev.adurolife.com/calendar-builder/#/${calendarHash}`}>Back to Calendar</a> :
-        <button type="button" className="btn btn-outline-primary" onClick={previousStep}>Back</button>
+        backOrDeleteButton
       }
       {
         step === 'ConfirmChallengeDetails' || step === 'EditorView' ?
