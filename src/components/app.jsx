@@ -53,7 +53,6 @@ function App() {
 
   // AdditionalDetails
   const [featuredActivity, setFeaturedActivity] = React.useState(false);
-  const [maxOccurrence, setMaxOccurrence] = React.useState('1');
   const [targeting, setTargeting] = React.useState('Entire Population');
   const [specificDemographicText, setSpecificDemographicText] = React.useState('');
   
@@ -135,7 +134,6 @@ function App() {
       <p><strong>Account Manager:</strong> ${accountManager}</p>
       <br/>
       <p><strong>Tile Type:</strong> ${tileType}</p>
-      <p><strong>Max Occurrence:</strong> ${maxOccurrence}</p>
       <p><strong>Net-New or Historical:</strong> ${customTileType}</p>
       <p><strong>Tile Name:</strong> ${challengeTitle}</p>
       <p><strong>Start Date:</strong> ${moment(startDate).format('L')}</p>
@@ -685,8 +683,6 @@ function App() {
           setWeekly={setWeekly}
           featuredActivity={featuredActivity}
           setFeaturedActivity={setFeaturedActivity}
-          maxOccurrence={maxOccurrence}
-          setMaxOccurrence={setMaxOccurrence}
           individualOrTeam={individualOrTeam}
           targeting={targeting}
           setTargeting={setTargeting}
@@ -714,7 +710,6 @@ function App() {
           endDate={endDate}
           pointValue={pointValue}
           featuredActivity={featuredActivity}
-          maxOccurrence={maxOccurrence}
           targeting={targeting}
           specificDemographicText={specificDemographicText}
           contactName={contactName}
