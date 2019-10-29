@@ -104,8 +104,8 @@ function App() {
     console.log(record);
     const today = moment().format('YYYY-MM-DD');
 
-    const wrikeStartDate = moment(startDate).subtract(21, 'days').format('YYYY-MM-DD');
-    const wrikeDueDate = moment(wrikeStartDate).add(14, 'days').format('YYYY-MM-DD');
+    const wrikeStartDate = moment(startDate).subtract(28, 'days').format('YYYY-MM-DD');
+    const wrikeDueDate = moment(wrikeStartDate).add(21, 'days').format('YYYY-MM-DD');
     let customTileType = '';
 
     switch (newOrHistorical) {
