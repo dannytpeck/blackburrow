@@ -151,6 +151,7 @@ function Historical({
           setTileType('Steps Challenge');
         } else {
           setTileType('Weekly Units');
+          setActivityText(challenge.AmountUnit);
         }
         
       }
