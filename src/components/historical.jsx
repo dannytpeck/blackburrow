@@ -135,11 +135,6 @@ function Historical({
         setTeamMax(challenge.TeamSize.MaxTeamSize);
       }
 
-      // if historical challenge was a Partner Challenge, set tile as Verified
-      if (challenge.PartnerId === 1) {
-        setTileType('Verified Challenge');
-      }
-
       // setting tile type to secret values if the historical challenge is Weekly Days or Weekly Units
       if (challenge.Frequency === 'Weekly' || challenge.Frequency === 'weekly') {
         // set the value of Weekly so we can use it later
@@ -153,7 +148,11 @@ function Historical({
           setTileType('Weekly Units');
           setActivityText(challenge.AmountUnit);
         }
-        
+      }
+
+      // if historical challenge was a Partner Challenge, set tile as Verified
+      if (challenge.PartnerId === 1) {
+        setTileType('Verified Challenge');
       }
 
     } else {
