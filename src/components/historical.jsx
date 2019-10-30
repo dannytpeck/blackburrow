@@ -103,7 +103,7 @@ function Historical({
 
     } else if (challenge.ChallengeId > 0) { // if ID is positive, therefore Self-Report or Partner challenge
       setChallengeTitle(challenge.Name);
-      setActivityText(challenge.ActivityType);
+      challenge.ActivityType ? setActivityText(challenge.ActivityType) : setActivityText('do the activity in the description');
       setShortDescription(challenge.ShortDescription
         .replace(/<[^>]*>?/ig, '')
         .replace(/\u00A9/g, '') // removing copyright from shortDescription
