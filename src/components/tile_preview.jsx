@@ -23,7 +23,7 @@ function TilePreview({
   } else if (tileType === 'Weekly Days') {
     previewActivityText = `${activityText} on at least ${activityGoalNumber} separate days each week`;
   } else if (tileType === 'Weekly Units') {
-    previewActivityText = `${activityText} ${activityGoalNumber} times each week`;
+    previewActivityText = `complete ${activityGoalNumber} ${activityText} each week`;
   }
 
 	return (

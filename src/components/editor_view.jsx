@@ -96,12 +96,8 @@ function EditorView({
               if (record.fields['Reward Occurrence'] === 'Weekly' || record.fields['Reward Occurrence'] === 'weekly') {
                 if (record.fields['Activity Tracking Type'] === 'Days' || record.fields['Activity Tracking Type'] === 'days') {
                   setTileType('Weekly Days');
-                } else if (record.fields['Activity Tracking Type'] === 'Units' || record.fields['Activity Tracking Type'] === 'units') {
-                  if (record.fields['Device Enabled']) {
-                    setTileType('Steps Challenge');
-                  } else {
+                } else {
                     setTileType('Weekly Units');
-                  }
                 }
               } else if (record.fields['Reward Occurrence'] === 'Once' || record.fields['Reward Occurrence'] === 'One Time') {
                 setTileType('One-Time Self-Report Challenge');

@@ -595,6 +595,7 @@ function App() {
               case 'Verified Challenge':
               case 'Informational Tile':
               case 'Weekly Days':
+              case 'Weekly Units':
                 if (validatedFields()) {
                   setStep('ChallengeContent');
                 }

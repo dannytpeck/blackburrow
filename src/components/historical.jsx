@@ -103,7 +103,7 @@ function Historical({
 
     } else if (challenge.ChallengeId > 0) { // if ID is positive, therefore Self-Report or Partner challenge
       setChallengeTitle(challenge.Name);
-      setActivityText(challenge.ActivityType);
+      challenge.ActivityType ? setActivityText(challenge.ActivityType) : setActivityText('do the activity in the description');
       setShortDescription(challenge.ShortDescription
         .replace(/<[^>]*>?/ig, '')
         .replace(/\u00A9/g, '') // removing copyright from shortDescription
@@ -135,11 +135,6 @@ function Historical({
         setTeamMax(challenge.TeamSize.MaxTeamSize);
       }
 
-      // if historical challenge was a Partner Challenge, set tile as Verified
-      if (challenge.PartnerId === 1) {
-        setTileType('Verified Challenge');
-      }
-
       // setting tile type to secret values if the historical challenge is Weekly Days or Weekly Units
       if (challenge.Frequency === 'Weekly' || challenge.Frequency === 'weekly') {
         // set the value of Weekly so we can use it later
@@ -151,8 +146,13 @@ function Historical({
           setTileType('Steps Challenge');
         } else {
           setTileType('Weekly Units');
+          setActivityText(challenge.AmountUnit);
         }
-        
+      }
+
+      // if historical challenge was a Partner Challenge, set tile as Verified
+      if (challenge.PartnerId === 1) {
+        setTileType('Verified Challenge');
       }
 
     } else {
