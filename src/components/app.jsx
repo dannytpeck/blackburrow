@@ -12,6 +12,7 @@ import ChallengeContent from './challenge_content';
 import AdditionalDetails from './additional_details';
 import ConfirmChallengeDetails from './confirm_challenge_details';
 import StepConfiguration from './step_configuration';
+import ConfirmDeleteModal from './confirm_delete_modal';
 import ConfirmSubmitModal from './confirm_submit_modal';
 import EditorView from './editor_view';
 import SaveNotification from './save_notification';
@@ -104,8 +105,8 @@ function App() {
     console.log(record);
     const today = moment().format('YYYY-MM-DD');
 
-    const wrikeStartDate = moment(startDate).subtract(21, 'days').format('YYYY-MM-DD');
-    const wrikeDueDate = moment(wrikeStartDate).add(14, 'days').format('YYYY-MM-DD');
+    const wrikeStartDate = moment(startDate).subtract(28, 'days').format('YYYY-MM-DD');
+    const wrikeDueDate = moment(wrikeStartDate).add(21, 'days').format('YYYY-MM-DD');
     let customTileType = '';
 
     switch (newOrHistorical) {
@@ -191,6 +192,35 @@ function App() {
       `;
       $('#confirmSubmitModal .modal-body').append(confirmationText);
     });
+  }
+
+  function openDeleteConfirmModal() {
+    // open confirmation modal
+    $('#confirmDeleteModal').modal();
+    $('#confirmDeleteModal .modal-footer .btn-danger').off('click');
+    $('#confirmDeleteModal .modal-footer .btn-danger').click(() => deleteChallengeFromAirtable());
+  }
+
+  function deleteChallengeFromAirtable() {
+    // get recordId to update
+    const recordId = window.location.hash.slice(22);
+
+    // Make update in Airtable
+    $('#saveNotification').show().html('Saving...');
+    base('Challenges').destroy(recordId, (err, deletedRecord) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      $('#saveNotification').html('Deleted ' + challengeTitle).delay(800).fadeOut(2000);
+      console.log(`Deleted ${challengeTitle} - ${recordId}`);
+    });
+
+    // close the delete modal
+    $('#confirmDeleteModal').modal('hide');
+
+    // TODO: clear out the page, record has been deleted
+ 
   }
 
   function submitToAirtable() {
@@ -816,8 +846,9 @@ function App() {
       <SaveNotification />
       <Header />
       {renderStep()}
-      <Footer step={step} previousStep={previousStep} nextStep={nextStep} submitToAirtable={submitToAirtable} submitEditsToAirtable={submitEditsToAirtable} />
-      <ConfirmSubmitModal />
+      <Footer step={step} previousStep={previousStep} nextStep={nextStep} openDeleteConfirmModal={openDeleteConfirmModal} submitToAirtable={submitToAirtable} submitEditsToAirtable={submitEditsToAirtable} />
+      <ConfirmDeleteModal />
+      <ConfirmSubmitModal deleteChallengeFromAirtable={deleteChallengeFromAirtable} />
     </div>
   );
 }
