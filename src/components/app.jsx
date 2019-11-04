@@ -137,7 +137,7 @@ function App() {
       <p><strong>Client Contact Email:</strong> <a href="mailto:${contactEmail}"> ${contactEmail}</a></p>
       <p><strong>Account Manager:</strong> ${accountManager}</p>
       <br/>
-      <p><strong>Tile Type:</strong> ${tileType}</p>
+      <p><strong>Tile Type:</strong> ${tileType} ${cieId ? '(historical CIE) ' : ''} ${maxOccurrence > 1 ? '(max occurrence CIE)' : ''}</p>
       ${cieId ? `<p><strong>CIE ID:</strong> ${cieId}</p>` : ''}
       <p><strong>Max Occurrence:</strong> ${maxOccurrence}</p>
       <p><strong>Net-New or Historical:</strong> ${customTileType}</p>
