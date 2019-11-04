@@ -39,7 +39,6 @@ function App() {
   const [historicalEdits, setHistoricalEdits] = React.useState('No');
   const [weekly, setWeekly] = React.useState(false);
   const [cieId, setCieId] = React.useState('');
-  console.log({ cieId });
 
   // ChallengeContent
   const [imageUrl, setImageUrl] = React.useState('http://via.placeholder.com/2000x1000');
