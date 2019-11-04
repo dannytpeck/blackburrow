@@ -8,6 +8,7 @@ function ConfirmChallengeDetails({
   accountManager,
   tileType,
   weekly,
+  cieId,
   maxOccurrence,
   individualOrTeam,
   teamMin,
@@ -65,6 +66,14 @@ function ConfirmChallengeDetails({
 
         <label>Tile Type:</label>
         <p>{tileType}</p>
+
+        {/* Show CIE ID if there is one */}
+        <div className="row" style={{ display: cieId ? 'block' : 'none' }}>
+          <div className="col">
+            <label>ID:</label>
+            <p>{cieId}</p>
+          </div>
+        </div>
 
         {/* Show team size and steps if tileType=Steps Challenge */}
         <div className="row" style={{ display: tileType === 'Steps Challenge' ? 'block' : 'none' }}>

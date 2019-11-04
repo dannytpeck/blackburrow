@@ -38,6 +38,8 @@ function App() {
   const [limeadeChallenges, setLimeadeChallenges] = React.useState([]);
   const [historicalEdits, setHistoricalEdits] = React.useState('No');
   const [weekly, setWeekly] = React.useState(false);
+  const [cieId, setCieId] = React.useState('');
+  console.log({ cieId });
 
   // ChallengeContent
   const [imageUrl, setImageUrl] = React.useState('http://via.placeholder.com/2000x1000');
@@ -136,6 +138,7 @@ function App() {
       <p><strong>Account Manager:</strong> ${accountManager}</p>
       <br/>
       <p><strong>Tile Type:</strong> ${tileType}</p>
+      ${cieId ? `<p><strong>CIE ID:</strong> ${cieId}</p>` : ''}
       <p><strong>Max Occurrence:</strong> ${maxOccurrence}</p>
       <p><strong>Net-New or Historical:</strong> ${customTileType}</p>
       <p><strong>Tile Name:</strong> ${challengeTitle}</p>
@@ -667,6 +670,8 @@ function App() {
           setEndDate={setEndDate}
           weekly={weekly}
           setWeekly={setWeekly}
+          cieId={cieId}
+          setCieId={setCieId}
           pointValue={pointValue}
           setPointValue={setPointValue}
           historicalEdits={historicalEdits}
@@ -738,6 +743,7 @@ function App() {
           tileType={tileType}
           weekly={weekly}
           setWeekly={setWeekly}
+          cieId={cieId}
           individualOrTeam={individualOrTeam}
           teamMin={teamMin}
           teamMax={teamMax}
@@ -793,6 +799,8 @@ function App() {
           setPointValue={setPointValue}
           weekly={weekly}
           setWeekly={setWeekly}
+          cieId={cieId}
+          setCieId={setCieId}
           individualOrTeam={individualOrTeam}
           setIndividualOrTeam={setIndividualOrTeam}
           teamMin={teamMin}
