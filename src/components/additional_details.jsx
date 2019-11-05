@@ -105,7 +105,7 @@ function AdditionalDetails({
           <div className="aduro-choose-image">
             <div className="form-check">
               <input className="form-check-input" type="checkbox" id="aduroChooseImage" onChange={handleAduroChooseImageChange} />
-              <label className="form-check-label" htmlFor="aduroChooseImage">I don't have an image. Please select one for me.</label>
+              <label className="form-check-label" htmlFor="aduroChooseImage">I don't have an image. Please select one from Aduro's image gallery.</label>
             </div>
           </div>
         </div>
