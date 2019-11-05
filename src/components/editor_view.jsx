@@ -268,6 +268,83 @@ function EditorView({
     }
   }
 
+  // BEGIN upload function
+  function uploadChallenge(client) {
+    // TODO: pull in the client for later getting the LimeadeAccessToken
+
+    // TODO: make the upload modal
+    // Open the modal
+    $('#uploadModal').modal();
+    $('#uploadModal .modal-body').html('');
+
+    // create some variables for ease of use when uploading
+    let isPartner = false;
+    if (tileType === 'Verified Challenge' || tileType === 'Informational Tile') {
+      isPartner = true;
+    } else {
+      isPartner = false;
+    }
+    // TODO: use record.fields['Activity Tracking Type'] to determine challengeType
+
+
+    // TODO: update data to be accurate and dynamic
+    const data = {
+      'AboutChallenge': longDescription,
+      'ActivityReward': {
+        'Type': 'IncentivePoints',
+        'Value': pointValue
+      },
+      'ActivityType': activityText,
+      'AmountUnit': '', // HERE
+      'ButtonText': isPartner ? 'CLOSE' : '',
+      'ChallengeLogoThumbURL': imageUrl,
+      'ChallengeLogoURL': imageUrl,
+      'ChallengeTarget': 1,  // HERE
+      'ChallengeType': 'OneTimeEvent',  // HERE
+      'Dimensions': [],
+      'DisplayInProgram': true,  // HERE
+      'DisplayPriority': null,
+      'EndDate': endDate,
+      'EventCode': '',
+      'Frequency': 'None',  // HERE
+      'IsDeviceEnabled': tileType === 'Steps Challenge' ? true : false,
+      'IsFeatured': null,  // HERE
+      'IsSelfReportEnabled': isPartner ? false : true,
+      'IsTeamChallenge': individualOrTeam === 'Team' ? true : false,
+      'Name': challengeTitle,
+      'PartnerId': isPartner ? 1 : 0, 
+      'ShortDescription': shortDescription,
+      'ShowExtendedDescription': isPartner ? true : false,
+      'ShowWeeklyCalendar': false,
+      'StartDate': startDate,
+      'TargetUrl': isPartner ? '/Home?sametab=true' : '',
+      'Targeting': [],  // HERE
+      'TeamSize': individualOrTeam === 'Team' ? { MaxTeamSize: teamMax, MinTeamSize: teamMin } : null
+    };
+
+    $.ajax({
+      url: 'https://api.limeade.com/api/admin/activity',
+      type: 'POST',
+      dataType: 'json',
+      data: JSON.stringify(data),
+      headers: {
+        Authorization: 'Bearer ' + client.fields['LimeadeAccessToken']
+      },
+      contentType: 'application/json; charset=utf-8'
+    }).done((result) => {
+        $('#uploadModal .modal-body').html(`
+          <div class="alert alert-success" role="alert">
+            <p>Uploaded ${challengeTitle} for <strong>${client.fields['Account Name']}</strong></p>
+            <p class="mb-0"><strong>Challenge Id</strong></p>
+            <p>${result.Data.ChallengeId}</p>
+          </div>
+        `);
+    }).fail((xhr, textStatus, error) => {
+      console.error(xhr.responseText);
+    });
+  }
+  // END upload function
+
   return (
     <section id="editorView" className="row">
       <div className="col-6">
