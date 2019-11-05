@@ -17,6 +17,8 @@ function Historical({
   setEndDate,
   weekly,
   setWeekly,
+  cieId,
+  setCieId,
   pointValue,
   setPointValue,
   historicalEdits,
@@ -96,6 +98,7 @@ function Historical({
       // set tile as Verified Challenge
       setTileType('Verified Challenge');
       // set other relevant fields
+      setCieId(-(challenge.ChallengeId));
       setChallengeTitle(challenge.Name);
       setActivityText('do the activity in the description');
       setShortDescription('');

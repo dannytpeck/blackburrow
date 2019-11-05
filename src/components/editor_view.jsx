@@ -18,6 +18,8 @@ function EditorView({
   setPointValue,
   weekly,
   setWeekly,
+  cieId,
+  setCieId,
   individualOrTeam,
   setIndividualOrTeam,
   teamMin,
