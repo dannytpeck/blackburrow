@@ -179,7 +179,6 @@ function EditorView({
     setTargeting(e.target.value);
     if (e.target.value === 'Entire Population') {
       // clearing out the other targeting values so they won't interfere on upload
-      setSpecificDemographicText('');
       setSubgroup('');
       setTargetingColumn1('');
       setTargetingValue1('');
