@@ -105,6 +105,8 @@ function Historical({
       setLongDescription(challenge.AboutChallenge);
 
     } else if (challenge.ChallengeId > 0) { // if ID is positive, therefore Self-Report or Partner challenge
+      setTileType('One-Time Self-Report Challenge');
+      setCieId('');
       setChallengeTitle(challenge.Name);
       challenge.ActivityType ? setActivityText(challenge.ActivityType) : setActivityText('do the activity in the description');
       setShortDescription(challenge.ShortDescription

@@ -404,7 +404,7 @@ function App() {
         'Points': pointValue,
         'Total Points': pointValue,
         'Device Enabled': tileType === 'Steps Challenge' ? 'yes' : 'no',
-        'Category': 'Health and Fitness',
+        'Category': 'NA',
         'Activity Tracking Type': activityTrackingType,
         'Activity Goal': activityGoal,
         'Activity Goal Text': activityText,
