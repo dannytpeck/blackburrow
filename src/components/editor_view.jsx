@@ -285,7 +285,9 @@ function EditorView({
 
   // BEGIN upload function
   function uploadChallenge() {
-    // TODO: pull in the client for later getting the LimeadeAccessToken
+    // TODO: pull in the client for later getting the LimeadeAccessToken, for now:
+    let client = 'Limeadedemorb';
+    let limeadeAccessToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ik02MkhTLUJHY3J2WEhmamdSRFB2bHZOem5GbyIsImtpZCI6Ik02MkhTLUJHY3J2WEhmamdSRFB2bHZOem5GbyJ9.eyJjbGllbnRfaWQiOiJpbnRlcm5hbGNsaWVudCIsInNjb3BlIjpbImFwaWFjY2VzcyIsIm9wZW5pZCIsInBpaWlkZW50aXR5Il0sInN1YiI6IjU3NDU4NDAiLCJhbXIiOiJwYXNzd29yZCIsImF1dGhfdGltZSI6MTU2MzM4ODI4NSwiaWRwIjoiaWRzcnYiLCJuYW1lIjoiTGltZWFkZWRlbW9yYkFkbWluIiwibGltZWFkZV9hY2NvdW50X2lkIjoiNTc0NTg0MCIsImVtcGxveWVyaWQiOiIxMDY2ODciLCJlbXBsb3llcl9pZCI6IjEwNjY4NyIsInJvbGUiOlsiQWRtaW4iLCJQcm9ncmFtQWRtaW4iXSwiZW1wbG95ZXJuYW1lIjoiTGltZWFkZWRlbW9yYiIsImdpdmVuX25hbWUiOiJMaW1lYWRlZGVtb3JiIiwiZmFtaWx5X25hbWUiOiJBZG1pbiIsImVtYWlsIjoiTGltZWFkZWRlbW9yYkFkbWluQGFkdXJvbGlmZS5jb20iLCJpc3MiOiJ3d3cubGltZWFkZS5jb20iLCJhdWQiOiJ3d3cubGltZWFkZS5jb20vcmVzb3VyY2VzIiwiZXhwIjoxNTk0OTI0Mjg1LCJuYmYiOjE1NjMzODgyODV9.f5OGrtwsk1x9zJLJZtNvT5AWZHoLoxgQKyhLLFiLx7ZMaxXL9UPA90nJdpZZH0lYaUSyBB9jjujoYLtZvE8KQN-fknw4xy6aLExwv8tZDRKWOZXDT1mqRI2VNtyhntksKrxaKcp7LTpVWFlzJ8RxuTpCp3hSVSTOo6FipW6EDnpC9lwrHWE5tPn05rDpIcgUxvZ7UPgZ4LEolUmw8U7plfI1_e6Ry69lBHoWZC9YMHUxEM1RqE03mrboHOE_8oLC6tWdY8CfaDgHCU4D4Qa9DPSjNEoy0ieFPyTrHQXW5A74fLoWoF_bvu3wpSIe5IFWvKtH9DzJZYrru1L34lhiCw';
 
     // TODO: make the upload modal
     // Open the modal
@@ -309,6 +311,29 @@ function EditorView({
       frequency = 'None';
     }
 
+    // most of the time, Activity Type is the activityText, unless it's a weekly units non-device challenge
+    let activityType = '';
+    if (tileType === 'Weekly Units') {
+      activityType = '';
+    } else {
+      activityType = activityText;
+    }
+    
+    let amountUnit = 'times';
+    switch (tileType) {
+      case 'Steps Challenge':
+        amountUnit = 'steps';
+        break;
+      case 'Weekly Units':
+        amountUnit = activityText;
+        break;
+      case 'One-Time Self-Report Challenge':
+      case 'Verified Challenge':
+      case 'Informational Tile':
+      case 'Weekly Days':
+        amountUnit = 'times';
+    }
+
 
     // TODO: update data to be accurate and dynamic
     const data = {
@@ -317,8 +342,8 @@ function EditorView({
         'Type': 'IncentivePoints',
         'Value': pointValue
       },
-      'ActivityType': activityText,
-      'AmountUnit': tileType === 'Steps Challenge' ? 'steps' : 'times',
+      'ActivityType': activityType,
+      'AmountUnit': amountUnit,
       'ButtonText': isPartner ? 'CLOSE' : '',
       'ChallengeLogoThumbURL': imageUrl,
       'ChallengeLogoURL': imageUrl,
@@ -346,35 +371,36 @@ function EditorView({
       'StartDate': startDate,
       'TargetUrl': isPartner ? '/Home?sametab=true' : '',
       'Targeting': [
-        {
-          'SubgroupId': subgroup ? subgroup : 0, // if no subgroup, use 0 aka none
-          'Name': '', // let's hope this is optional since How would we know the Subgroup Name?
-          'IsImplicit': true, // I don't know what this does. I see it as true for tags and false for subgroups
-          'IsPHI': false,
-          'Tags': [
-            {
-              'TagName': targetingColumn1 ? targetingColumn1 : '',
-              'TagValues': [
-                targetingValue1 ? targetingValue1.split('|').trim() : '' // splitting tags on the | like Limeade, also trimming out whitespace just in case
-              ]
-            },
-            {
-              'TagName': targetingColumn2 ? targetingColumn2 : '',
-              'TagValues': [
-                targetingValue2 ? targetingValue2.split('|').trim() : ''
-              ]
-            },
-            {
-              'TagName': targetingColumn3 ? targetingColumn3 : '',
-              'TagValues': [
-                targetingValue3 ? targetingValue3.split('|').trim() : ''
-              ]
-            }
-          ]
-        }
+        // {
+        //   'SubgroupId': subgroup ? subgroup : 0, // if no subgroup, use 0 aka none
+        //   'Name': '', // let's hope this is optional since How would we know the Subgroup Name?
+        //   'IsImplicit': targetingType ? true : null, // I don't know what this does. I see it as true for tags and false for subgroups
+        //   'IsPHI': false,
+        //   'Tags': [
+        //     {
+        //       'TagName': targetingColumn1 ? targetingColumn1 : '',
+        //       'TagValues': [
+        //         targetingValue1 ? targetingValue1.split('|').trim() : '' // splitting tags on the | like Limeade, also trimming out whitespace just in case
+        //       ]
+        //     },
+        //     {
+        //       'TagName': targetingColumn2 ? targetingColumn2 : '',
+        //       'TagValues': [
+        //         targetingValue2 ? targetingValue2.split('|').trim() : ''
+        //       ]
+        //     },
+        //     {
+        //       'TagName': targetingColumn3 ? targetingColumn3 : '',
+        //       'TagValues': [
+        //         targetingValue3 ? targetingValue3.split('|').trim() : ''
+        //       ]
+        //     }
+        //   ]
+        // }
       ],
       'TeamSize': individualOrTeam === 'Team' ? { MaxTeamSize: teamMax, MinTeamSize: teamMin } : null
     };
+    console.log({ data });
 
     $.ajax({
       url: 'https://api.limeade.com/api/admin/activity',
@@ -382,17 +408,18 @@ function EditorView({
       dataType: 'json',
       data: JSON.stringify(data),
       headers: {
-        Authorization: 'Bearer ' + client.fields['LimeadeAccessToken']
+        Authorization: 'Bearer ' + limeadeAccessToken
       },
       contentType: 'application/json; charset=utf-8'
     }).done((result) => {
         $('#uploadModal .modal-body').html(`
           <div class="alert alert-success" role="alert">
-            <p>Uploaded ${challengeTitle} for <strong>${client.fields['Account Name']}</strong></p>
+            <p>Uploaded ${challengeTitle} for <strong>${client}</strong></p>
             <p class="mb-0"><strong>Challenge Id</strong></p>
             <p>${result.Data.ChallengeId}</p>
           </div>
         `);
+        console.log(result.Data);
     }).fail((xhr, textStatus, error) => {
       console.error(xhr.responseText);
     });
