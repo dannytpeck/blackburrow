@@ -64,6 +64,7 @@ function App() {
   const [contactEmail, setContactEmail] = React.useState('');
 
   // EditorView
+  const [challengeType, setChallengeType] = React.useState('');
   const [targetingType, setTargetingType] = React.useState('');
   const [subgroup, setSubgroup] = React.useState('');
   const [targetingColumn1, setTargetingColumn1] = React.useState('');
@@ -807,6 +808,8 @@ function App() {
           setSpecificDemographicText={setSpecificDemographicText}
           notes={notes}
           setNotes={setNotes}
+          challengeType={challengeType}
+          setChallengeType={setChallengeType}
           targetingType={targetingType}
           setTargetingType={setTargetingType}
           subgroup={subgroup}

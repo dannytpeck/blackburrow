@@ -34,6 +34,8 @@ function EditorView({
   setNotes,
   imageUrl,
   setImageUrl,
+  challengeType,
+  setChallengeType,
   targetingType,
   setTargetingType,
   subgroup,
@@ -133,6 +135,19 @@ function EditorView({
       setShortDescription(record.fields['Instructions'] ? record.fields['Instructions'] : '');
       setLongDescription(record.fields['More Information Html'] ? record.fields['More Information Html'] : '');
       $('.editor').html(record.fields['More Information Html']);
+
+      // use record.fields['Activity Tracking Type'] to determine challengeType for later upload
+      switch (record.fields['Activity Tracking Type']) {
+        case 'Event':
+          setChallengeType('OneTimeEvent');
+          break;
+        case 'Days':
+          setChallengeType('YesNoDaily');
+          break;
+        case 'Units':
+          setChallengeType('AddAllNumbers');
+          break;
+      }
 
     });
 
@@ -284,7 +299,15 @@ function EditorView({
     } else {
       isPartner = false;
     }
-    // TODO: use record.fields['Activity Tracking Type'] to determine challengeType
+
+    let frequency = '';
+    if (tileType === 'Steps Challenge') {
+      frequency = 'Daily';
+    } else if (weekly === true) {
+      frequency = 'Weekly'; // this order is intentional, since Weekly Steps have Frequency of Weekly
+    } else {
+      frequency = 'None';
+    }
 
 
     // TODO: update data to be accurate and dynamic
@@ -295,20 +318,24 @@ function EditorView({
         'Value': pointValue
       },
       'ActivityType': activityText,
-      'AmountUnit': '', // HERE
+      'AmountUnit': tileType === 'Steps Challenge' ? 'steps' : 'times',
       'ButtonText': isPartner ? 'CLOSE' : '',
       'ChallengeLogoThumbURL': imageUrl,
       'ChallengeLogoURL': imageUrl,
-      'ChallengeTarget': 1,  // HERE
-      'ChallengeType': 'OneTimeEvent',  // HERE
+      'ChallengeTarget': activityGoalNumber,
+      'ChallengeType': challengeType,
       'Dimensions': [],
-      'DisplayInProgram': true,  // HERE
+      'DisplayInProgram': startDate === moment(Date) ? true : false,  // sets true if the challenge starts today
       'DisplayPriority': null,
       'EndDate': endDate,
       'EventCode': '',
-      'Frequency': 'None',  // HERE
+      'Frequency': frequency,
       'IsDeviceEnabled': tileType === 'Steps Challenge' ? true : false,
-      'IsFeatured': null,  // HERE
+      'IsFeatured': featuredActivity === 'yes' ? true : null,
+      'FeaturedData': {
+        'Description': featuredActivity === 'yes' ? shortDescription : null,
+        'ImageUrl': featuredActivity === 'yes' ? imageUrl : null
+      },
       'IsSelfReportEnabled': isPartner ? false : true,
       'IsTeamChallenge': individualOrTeam === 'Team' ? true : false,
       'Name': challengeTitle,
