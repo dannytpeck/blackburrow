@@ -29,8 +29,12 @@ function Footer({ step, previousStep, nextStep, openDeleteConfirmModal, submitTo
       }
       {
         step === 'ConfirmChallengeDetails' || step === 'EditorView' ?
-        submitButton :
-        <button type="button" className="btn btn-primary ml-5" onClick={nextStep}>Next</button>
+          submitButton :
+          <button type="button" className="btn btn-primary ml-5" onClick={nextStep}>Next</button>
+      }
+      {
+        // // editor view upload button
+        // step === 'EditorView' ? <button type="button" className="btn btn-primary ml-5" onClick={uploadChallenge}>Upload</button> : ''
       }
     </footer>
   );

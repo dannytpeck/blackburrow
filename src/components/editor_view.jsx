@@ -284,7 +284,7 @@ function EditorView({
   }
 
   // BEGIN upload function
-  function uploadChallenge(client) {
+  function uploadChallenge() {
     // TODO: pull in the client for later getting the LimeadeAccessToken
 
     // TODO: make the upload modal
@@ -345,7 +345,34 @@ function EditorView({
       'ShowWeeklyCalendar': false,
       'StartDate': startDate,
       'TargetUrl': isPartner ? '/Home?sametab=true' : '',
-      'Targeting': [],  // HERE
+      'Targeting': [
+        {
+          'SubgroupId': subgroup ? subgroup : 0, // if no subgroup, use 0 aka none
+          'Name': '', // let's hope this is optional since How would we know the Subgroup Name?
+          'IsImplicit': true, // I don't know what this does. I see it as true for tags and false for subgroups
+          'IsPHI': false,
+          'Tags': [
+            {
+              'TagName': targetingColumn1 ? targetingColumn1 : '',
+              'TagValues': [
+                targetingValue1 ? targetingValue1.split('|').trim() : '' // splitting tags on the | like Limeade, also trimming out whitespace just in case
+              ]
+            },
+            {
+              'TagName': targetingColumn2 ? targetingColumn2 : '',
+              'TagValues': [
+                targetingValue2 ? targetingValue2.split('|').trim() : ''
+              ]
+            },
+            {
+              'TagName': targetingColumn3 ? targetingColumn3 : '',
+              'TagValues': [
+                targetingValue3 ? targetingValue3.split('|').trim() : ''
+              ]
+            }
+          ]
+        }
+      ],
       'TeamSize': individualOrTeam === 'Team' ? { MaxTeamSize: teamMax, MinTeamSize: teamMin } : null
     };
 
@@ -650,6 +677,9 @@ function EditorView({
           <li>Lower Your Carbon Footprint.pdf</li>
         </ul>
         */}
+
+        {/* editor view upload button, temporary location */}
+        <button type="button" className="btn btn-primary ml-5" onClick={uploadChallenge}>Upload Challenge</button>
 
       </div>
       <div className="col-6">
