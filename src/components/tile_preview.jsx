@@ -16,7 +16,7 @@ function TilePreview({
   let previewActivityText = activityText;
   if (tileType === 'Steps Challenge') {
     if (weekly === true) {
-      previewActivityText = `${individualOrTeam === 'Team' ? 'collectively ' : ''}${activityText} at least ${activityGoalNumber} steps each week`;
+      previewActivityText = `${activityText} at least ${activityGoalNumber} steps each week`;
     } else if (weekly === false) {
       previewActivityText = `${individualOrTeam === 'Team' ? 'collectively ' : ''}${activityText} at least ${activityGoalNumber} steps`;
     }

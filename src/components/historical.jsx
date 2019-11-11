@@ -148,6 +148,8 @@ function Historical({
           setTileType('Weekly Units');
           setActivityText(challenge.AmountUnit);
         }
+      } else {
+        setWeekly(false);
       }
 
       // if historical challenge was a Partner Challenge, set tile as Verified
