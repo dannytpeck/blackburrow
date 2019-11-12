@@ -5,6 +5,7 @@ const base = new Airtable({ apiKey: 'keyCxnlep0bgotSrX' }).base('appN1J6yscNwlzb
 
 import TrumbowygBox from './trumbowyg_box';
 import TilePreview from './tile_preview';
+import UploadModal from './upload_modal';
 
 /* globals $ */
 function EditorView({
@@ -286,8 +287,9 @@ function EditorView({
   // BEGIN upload function
   function uploadChallenge() {
     // TODO: pull in the client for later getting the LimeadeAccessToken, for now:
-    let client = 'Limeadedemorb';
-    let limeadeAccessToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ik02MkhTLUJHY3J2WEhmamdSRFB2bHZOem5GbyIsImtpZCI6Ik02MkhTLUJHY3J2WEhmamdSRFB2bHZOem5GbyJ9.eyJjbGllbnRfaWQiOiJpbnRlcm5hbGNsaWVudCIsInNjb3BlIjpbImFwaWFjY2VzcyIsIm9wZW5pZCIsInBpaWlkZW50aXR5Il0sInN1YiI6IjU3NDU4NDAiLCJhbXIiOiJwYXNzd29yZCIsImF1dGhfdGltZSI6MTU2MzM4ODI4NSwiaWRwIjoiaWRzcnYiLCJuYW1lIjoiTGltZWFkZWRlbW9yYkFkbWluIiwibGltZWFkZV9hY2NvdW50X2lkIjoiNTc0NTg0MCIsImVtcGxveWVyaWQiOiIxMDY2ODciLCJlbXBsb3llcl9pZCI6IjEwNjY4NyIsInJvbGUiOlsiQWRtaW4iLCJQcm9ncmFtQWRtaW4iXSwiZW1wbG95ZXJuYW1lIjoiTGltZWFkZWRlbW9yYiIsImdpdmVuX25hbWUiOiJMaW1lYWRlZGVtb3JiIiwiZmFtaWx5X25hbWUiOiJBZG1pbiIsImVtYWlsIjoiTGltZWFkZWRlbW9yYkFkbWluQGFkdXJvbGlmZS5jb20iLCJpc3MiOiJ3d3cubGltZWFkZS5jb20iLCJhdWQiOiJ3d3cubGltZWFkZS5jb20vcmVzb3VyY2VzIiwiZXhwIjoxNTk0OTI0Mjg1LCJuYmYiOjE1NjMzODgyODV9.f5OGrtwsk1x9zJLJZtNvT5AWZHoLoxgQKyhLLFiLx7ZMaxXL9UPA90nJdpZZH0lYaUSyBB9jjujoYLtZvE8KQN-fknw4xy6aLExwv8tZDRKWOZXDT1mqRI2VNtyhntksKrxaKcp7LTpVWFlzJ8RxuTpCp3hSVSTOo6FipW6EDnpC9lwrHWE5tPn05rDpIcgUxvZ7UPgZ4LEolUmw8U7plfI1_e6Ry69lBHoWZC9YMHUxEM1RqE03mrboHOE_8oLC6tWdY8CfaDgHCU4D4Qa9DPSjNEoy0ieFPyTrHQXW5A74fLoWoF_bvu3wpSIe5IFWvKtH9DzJZYrru1L34lhiCw';
+    const client = 'Limeadedemorb';
+    const limeadeAccessToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ik02MkhTLUJHY3J2WEhmamdSRFB2bHZOem5GbyIsImtpZCI6Ik02MkhTLUJHY3J2WEhmamdSRFB2bHZOem5GbyJ9.eyJjbGllbnRfaWQiOiJpbnRlcm5hbGNsaWVudCIsInNjb3BlIjpbImFwaWFjY2VzcyIsIm9wZW5pZCIsInBpaWlkZW50aXR5Il0sInN1YiI6IjU3NDU4NDAiLCJhbXIiOiJwYXNzd29yZCIsImF1dGhfdGltZSI6MTU2MzM4ODI4NSwiaWRwIjoiaWRzcnYiLCJuYW1lIjoiTGltZWFkZWRlbW9yYkFkbWluIiwibGltZWFkZV9hY2NvdW50X2lkIjoiNTc0NTg0MCIsImVtcGxveWVyaWQiOiIxMDY2ODciLCJlbXBsb3llcl9pZCI6IjEwNjY4NyIsInJvbGUiOlsiQWRtaW4iLCJQcm9ncmFtQWRtaW4iXSwiZW1wbG95ZXJuYW1lIjoiTGltZWFkZWRlbW9yYiIsImdpdmVuX25hbWUiOiJMaW1lYWRlZGVtb3JiIiwiZmFtaWx5X25hbWUiOiJBZG1pbiIsImVtYWlsIjoiTGltZWFkZWRlbW9yYkFkbWluQGFkdXJvbGlmZS5jb20iLCJpc3MiOiJ3d3cubGltZWFkZS5jb20iLCJhdWQiOiJ3d3cubGltZWFkZS5jb20vcmVzb3VyY2VzIiwiZXhwIjoxNTk0OTI0Mjg1LCJuYmYiOjE1NjMzODgyODV9.f5OGrtwsk1x9zJLJZtNvT5AWZHoLoxgQKyhLLFiLx7ZMaxXL9UPA90nJdpZZH0lYaUSyBB9jjujoYLtZvE8KQN-fknw4xy6aLExwv8tZDRKWOZXDT1mqRI2VNtyhntksKrxaKcp7LTpVWFlzJ8RxuTpCp3hSVSTOo6FipW6EDnpC9lwrHWE5tPn05rDpIcgUxvZ7UPgZ4LEolUmw8U7plfI1_e6Ry69lBHoWZC9YMHUxEM1RqE03mrboHOE_8oLC6tWdY8CfaDgHCU4D4Qa9DPSjNEoy0ieFPyTrHQXW5A74fLoWoF_bvu3wpSIe5IFWvKtH9DzJZYrru1L34lhiCw';
+    const clientDomain = 'https://limeadedemorb.mywellmetrics.com/admin/program-designer/activities/activity/';
 
     // TODO: make the upload modal
     // Open the modal
@@ -416,7 +418,7 @@ function EditorView({
           <div class="alert alert-success" role="alert">
             <p>Uploaded ${challengeTitle} for <strong>${client}</strong></p>
             <p class="mb-0"><strong>Challenge Id</strong></p>
-            <p>${result.Data.ChallengeId}</p>
+            <p><a href=${clientDomain + result.Data.ChallengeId} target="_blank">${result.Data.ChallengeId}</a></p>
           </div>
         `);
         console.log(result.Data);
@@ -712,7 +714,11 @@ function EditorView({
       <div className="col-6">
         <TilePreview tileType={tileType} weekly={weekly} imageUrl={imageUrl} challengeTitle={challengeTitle} activityText={activityText} activityGoalNumber={activityGoalNumber} individualOrTeam={individualOrTeam} shortDescription={shortDescription} longDescription={longDescription} />
       </div>
+
+      <UploadModal />
+
     </section>
+
   );
 
 }
