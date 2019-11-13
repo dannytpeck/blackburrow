@@ -7,7 +7,7 @@ function Footer({ step, previousStep, nextStep, openDeleteConfirmModal, submitTo
   if (step ==='Home') {
     backOrDeleteButton = <a href={`https://calendarbuilder.dev.adurolife.com/calendar-builder/#/${calendarHash}`}>Back to Calendar</a>;
   } else if (step === 'EditorView') {
-    backOrDeleteButton = <button type="button" className="btn btn-outline-danger ml-5" onClick={openDeleteConfirmModal}>Delete Challenge</button>;
+    backOrDeleteButton = <button type="button" className="btn btn-outline-danger ml-5" onClick={openDeleteConfirmModal}>Delete</button>;
   } else {
     backOrDeleteButton = <button type="button" className="btn btn-outline-primary" onClick={previousStep}>Back</button>;
   }
@@ -34,7 +34,7 @@ function Footer({ step, previousStep, nextStep, openDeleteConfirmModal, submitTo
       }
       {
         // editor view upload button
-        step === 'EditorView' ? <button type="button" className="btn btn-outline-primary ml-5" onClick={uploadChallenge}>Upload Challenge</button> : ''
+        step === 'EditorView' ? <button type="button" className="btn btn-outline-primary ml-5" onClick={uploadChallenge}>Upload to Limeade</button> : ''
       }
     </footer>
   );

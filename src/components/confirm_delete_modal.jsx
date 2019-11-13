@@ -12,7 +12,8 @@ function ConfirmDeleteModal() {
             </button>
           </div>
           <div className="modal-body">
-            <p>WARNING: Deleted challenges cannot be recovered.</p>
+            <p>This will delete the challenge from the client's Calendar.</p>
+            <p className="text-danger">WARNING: Deleted challenges cannot be recovered.</p>
             <p>Are you sure you want to delete this challenge?</p>
           </div>
           <div className="modal-footer">
