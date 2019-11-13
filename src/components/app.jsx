@@ -15,6 +15,7 @@ import StepConfiguration from './step_configuration';
 import ConfirmDeleteModal from './confirm_delete_modal';
 import ConfirmSubmitModal from './confirm_submit_modal';
 import EditorView from './editor_view';
+import UploadModal from './upload_modal';
 import SaveNotification from './save_notification';
 
 /* globals $ */
@@ -431,6 +432,149 @@ function App() {
       $('#saveNotification').html('Saved ' + challengeTitle).delay(800).fadeOut(2000);
     });
   }
+
+  // BEGIN upload function
+  function uploadChallenge() {
+    // TODO: pull in the client for later getting the LimeadeAccessToken, for now:
+    const client = 'Limeadedemorb';
+    const limeadeAccessToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ik02MkhTLUJHY3J2WEhmamdSRFB2bHZOem5GbyIsImtpZCI6Ik02MkhTLUJHY3J2WEhmamdSRFB2bHZOem5GbyJ9.eyJjbGllbnRfaWQiOiJpbnRlcm5hbGNsaWVudCIsInNjb3BlIjpbImFwaWFjY2VzcyIsIm9wZW5pZCIsInBpaWlkZW50aXR5Il0sInN1YiI6IjU3NDU4NDAiLCJhbXIiOiJwYXNzd29yZCIsImF1dGhfdGltZSI6MTU2MzM4ODI4NSwiaWRwIjoiaWRzcnYiLCJuYW1lIjoiTGltZWFkZWRlbW9yYkFkbWluIiwibGltZWFkZV9hY2NvdW50X2lkIjoiNTc0NTg0MCIsImVtcGxveWVyaWQiOiIxMDY2ODciLCJlbXBsb3llcl9pZCI6IjEwNjY4NyIsInJvbGUiOlsiQWRtaW4iLCJQcm9ncmFtQWRtaW4iXSwiZW1wbG95ZXJuYW1lIjoiTGltZWFkZWRlbW9yYiIsImdpdmVuX25hbWUiOiJMaW1lYWRlZGVtb3JiIiwiZmFtaWx5X25hbWUiOiJBZG1pbiIsImVtYWlsIjoiTGltZWFkZWRlbW9yYkFkbWluQGFkdXJvbGlmZS5jb20iLCJpc3MiOiJ3d3cubGltZWFkZS5jb20iLCJhdWQiOiJ3d3cubGltZWFkZS5jb20vcmVzb3VyY2VzIiwiZXhwIjoxNTk0OTI0Mjg1LCJuYmYiOjE1NjMzODgyODV9.f5OGrtwsk1x9zJLJZtNvT5AWZHoLoxgQKyhLLFiLx7ZMaxXL9UPA90nJdpZZH0lYaUSyBB9jjujoYLtZvE8KQN-fknw4xy6aLExwv8tZDRKWOZXDT1mqRI2VNtyhntksKrxaKcp7LTpVWFlzJ8RxuTpCp3hSVSTOo6FipW6EDnpC9lwrHWE5tPn05rDpIcgUxvZ7UPgZ4LEolUmw8U7plfI1_e6Ry69lBHoWZC9YMHUxEM1RqE03mrboHOE_8oLC6tWdY8CfaDgHCU4D4Qa9DPSjNEoy0ieFPyTrHQXW5A74fLoWoF_bvu3wpSIe5IFWvKtH9DzJZYrru1L34lhiCw';
+    const clientDomain = 'https://limeadedemorb.mywellmetrics.com/admin/program-designer/activities/activity/';
+
+    // Open the modal
+    $('#uploadModal').modal();
+    $('#uploadModal .modal-body').html('');
+
+    // create some variables for ease of use when uploading
+    let isPartner = false;
+    if (tileType === 'Verified Challenge' || tileType === 'Informational Tile') {
+      isPartner = true;
+    } else {
+      isPartner = false;
+    }
+
+    let frequency = '';
+    if (tileType === 'Steps Challenge') {
+      frequency = 'Daily';
+    } else if (weekly === true) {
+      frequency = 'Weekly'; // this order is intentional, since Weekly Steps have Frequency of Weekly
+    } else {
+      frequency = 'None';
+    }
+
+    // most of the time, Activity Type is the activityText, unless it's a weekly units non-device challenge
+    let activityType = '';
+    if (tileType === 'Weekly Units') {
+      activityType = '';
+    } else {
+      activityType = activityText;
+    }
+    
+    let amountUnit = 'times';
+    switch (tileType) {
+      case 'Steps Challenge':
+        amountUnit = 'steps';
+        break;
+      case 'Weekly Units':
+        amountUnit = activityText;
+        break;
+      case 'One-Time Self-Report Challenge':
+      case 'Verified Challenge':
+      case 'Informational Tile':
+      case 'Weekly Days':
+        amountUnit = 'times';
+    }
+
+
+    // TODO: update data to be accurate and dynamic
+    const data = {
+      'AboutChallenge': longDescription,
+      'ActivityReward': {
+        'Type': 'IncentivePoints',
+        'Value': pointValue
+      },
+      'ActivityType': activityType,
+      'AmountUnit': amountUnit,
+      'ButtonText': isPartner ? 'CLOSE' : '',
+      'ChallengeLogoThumbURL': imageUrl,
+      'ChallengeLogoURL': imageUrl,
+      'ChallengeTarget': activityGoalNumber,
+      'ChallengeType': challengeType,
+      'Dimensions': [],
+      'DisplayInProgram': startDate === moment(Date) ? true : false,  // sets true if the challenge starts today
+      'DisplayPriority': null,
+      'EndDate': endDate,
+      'EventCode': '',
+      'Frequency': frequency,
+      'IsDeviceEnabled': tileType === 'Steps Challenge' ? true : false,
+      'IsFeatured': featuredActivity === 'yes' ? true : null,
+      'FeaturedData': {
+        'Description': featuredActivity === 'yes' ? shortDescription : null,
+        'ImageUrl': featuredActivity === 'yes' ? imageUrl : null
+      },
+      'IsSelfReportEnabled': isPartner ? false : true,
+      'IsTeamChallenge': individualOrTeam === 'Team' ? true : false,
+      'Name': challengeTitle,
+      'PartnerId': isPartner ? 1 : 0, 
+      'ShortDescription': shortDescription,
+      'ShowExtendedDescription': isPartner ? true : false,
+      'ShowWeeklyCalendar': false,
+      'StartDate': startDate,
+      'TargetUrl': isPartner ? '/Home?sametab=true' : '',
+      'Targeting': [
+        // {
+        //   'SubgroupId': subgroup ? subgroup : 0, // if no subgroup, use 0 aka none
+        //   'Name': '', // let's hope this is optional since How would we know the Subgroup Name?
+        //   'IsImplicit': targetingType ? true : null, // I don't know what this does. I see it as true for tags and false for subgroups
+        //   'IsPHI': false,
+        //   'Tags': [
+        //     {
+        //       'TagName': targetingColumn1 ? targetingColumn1 : '',
+        //       'TagValues': [
+        //         targetingValue1 ? targetingValue1.split('|').trim() : '' // splitting tags on the | like Limeade, also trimming out whitespace just in case
+        //       ]
+        //     },
+        //     {
+        //       'TagName': targetingColumn2 ? targetingColumn2 : '',
+        //       'TagValues': [
+        //         targetingValue2 ? targetingValue2.split('|').trim() : ''
+        //       ]
+        //     },
+        //     {
+        //       'TagName': targetingColumn3 ? targetingColumn3 : '',
+        //       'TagValues': [
+        //         targetingValue3 ? targetingValue3.split('|').trim() : ''
+        //       ]
+        //     }
+        //   ]
+        // }
+      ],
+      'TeamSize': individualOrTeam === 'Team' ? { MaxTeamSize: teamMax, MinTeamSize: teamMin } : null
+    };
+    console.log({ data });
+
+    $.ajax({
+      url: 'https://api.limeade.com/api/admin/activity',
+      type: 'POST',
+      dataType: 'json',
+      data: JSON.stringify(data),
+      headers: {
+        Authorization: 'Bearer ' + limeadeAccessToken
+      },
+      contentType: 'application/json; charset=utf-8'
+    }).done((result) => {
+        $('#uploadModal .modal-body').html(`
+          <div class="alert alert-success" role="alert">
+            <p>Uploaded ${challengeTitle} for <strong>${client}</strong></p>
+            <p class="mb-0"><strong>Challenge Id</strong></p>
+            <p><a href=${clientDomain + result.Data.ChallengeId} target="_blank">${result.Data.ChallengeId}</a></p>
+          </div>
+        `);
+        console.log(result.Data);
+    }).fail((xhr, textStatus, error) => {
+      console.error(xhr.responseText);
+    });
+  }
+  // END upload function
 
   // Basic validation (is a value present?)
   function validatedFields() {
@@ -850,9 +994,10 @@ function App() {
       <SaveNotification />
       <Header />
       {renderStep()}
-      <Footer step={step} previousStep={previousStep} nextStep={nextStep} openDeleteConfirmModal={openDeleteConfirmModal} submitToAirtable={submitToAirtable} submitEditsToAirtable={submitEditsToAirtable} />
+      <Footer step={step} previousStep={previousStep} nextStep={nextStep} openDeleteConfirmModal={openDeleteConfirmModal} submitToAirtable={submitToAirtable} submitEditsToAirtable={submitEditsToAirtable} uploadChallenge={uploadChallenge} />
       <ConfirmDeleteModal />
       <ConfirmSubmitModal deleteChallengeFromAirtable={deleteChallengeFromAirtable} />
+      <UploadModal />
     </div>
   );
 }

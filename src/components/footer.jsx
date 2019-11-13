@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Footer({ step, previousStep, nextStep, openDeleteConfirmModal, submitToAirtable, submitEditsToAirtable }) {
+function Footer({ step, previousStep, nextStep, openDeleteConfirmModal, submitToAirtable, submitEditsToAirtable, uploadChallenge }) {
   const calendarHash = window.location.hash.slice(2);
 
   let backOrDeleteButton = '';
@@ -33,8 +33,8 @@ function Footer({ step, previousStep, nextStep, openDeleteConfirmModal, submitTo
           <button type="button" className="btn btn-primary ml-5" onClick={nextStep}>Next</button>
       }
       {
-        // // editor view upload button
-        // step === 'EditorView' ? <button type="button" className="btn btn-primary ml-5" onClick={uploadChallenge}>Upload</button> : ''
+        // editor view upload button
+        step === 'EditorView' ? <button type="button" className="btn btn-outline-primary ml-5" onClick={uploadChallenge}>Upload Challenge</button> : ''
       }
     </footer>
   );
