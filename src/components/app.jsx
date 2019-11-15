@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import Airtable from 'airtable';
 const base = new Airtable({ apiKey: 'keyCxnlep0bgotSrX' }).base('appN1J6yscNwlzbzq');
+const baseClients = new Airtable({ apiKey: 'keylwZtbvFbcT3sgw' }).base('appHXXoVD1tn9QATh');
 
 import Header from './header';
 import Footer from './footer';
@@ -21,6 +22,10 @@ import SaveNotification from './save_notification';
 /* globals $ */
 function App() {
   const [calendar, setCalendar] = React.useState(null);
+  const [client, setClient] = React.useState(null);
+  const [clientName, setClientName] = React.useState('');
+  const [clientDomain, setClientDomain] = React.useState('');
+  const [clientLimeadeAccessToken, setClientLimeadeAccessToken] = React.useState('');
   const [step, setStep] = React.useState('Home');
 
   // Home
@@ -86,6 +91,7 @@ function App() {
       setStep('EditorView');
     }
 
+    // get calendar
     base('Calendars').select({
       filterByFormula: `{hash}='${calendarHash}'`
     }).eachPage((records, fetchNextPage) => {
@@ -94,12 +100,29 @@ function App() {
       setCalendar(calendar);
 
       fetchNextPage();
+
+      // get client
+      // TODO: do this a better way if possible
+      baseClients('Clients').select({
+        filterByFormula: `{Limeade e=}='${calendar.fields['client']}'`
+      }).eachPage((records, fetchNextPage) => {
+        const client = records[0];
+
+        setClient(client);
+
+        setClientName(client.fields['Account Name']);
+        setClientDomain(client.fields['Domain']);
+        setClientLimeadeAccessToken(client.fields['LimeadeAccessToken']);
+
+      });
     }, (err) => {
       if (err) {
         console.error(err);
         return;
       }
     });
+
+
 
   }, []); // Pass empty array to only run once on mount
 
@@ -435,10 +458,8 @@ function App() {
 
   // BEGIN upload function
   function uploadChallenge() {
-    // TODO: pull in the client for later getting the LimeadeAccessToken, for now:
-    const client = 'Limeadedemorb';
-    const limeadeAccessToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ik02MkhTLUJHY3J2WEhmamdSRFB2bHZOem5GbyIsImtpZCI6Ik02MkhTLUJHY3J2WEhmamdSRFB2bHZOem5GbyJ9.eyJjbGllbnRfaWQiOiJpbnRlcm5hbGNsaWVudCIsInNjb3BlIjpbImFwaWFjY2VzcyIsIm9wZW5pZCIsInBpaWlkZW50aXR5Il0sInN1YiI6IjU3NDU4NDAiLCJhbXIiOiJwYXNzd29yZCIsImF1dGhfdGltZSI6MTU2MzM4ODI4NSwiaWRwIjoiaWRzcnYiLCJuYW1lIjoiTGltZWFkZWRlbW9yYkFkbWluIiwibGltZWFkZV9hY2NvdW50X2lkIjoiNTc0NTg0MCIsImVtcGxveWVyaWQiOiIxMDY2ODciLCJlbXBsb3llcl9pZCI6IjEwNjY4NyIsInJvbGUiOlsiQWRtaW4iLCJQcm9ncmFtQWRtaW4iXSwiZW1wbG95ZXJuYW1lIjoiTGltZWFkZWRlbW9yYiIsImdpdmVuX25hbWUiOiJMaW1lYWRlZGVtb3JiIiwiZmFtaWx5X25hbWUiOiJBZG1pbiIsImVtYWlsIjoiTGltZWFkZWRlbW9yYkFkbWluQGFkdXJvbGlmZS5jb20iLCJpc3MiOiJ3d3cubGltZWFkZS5jb20iLCJhdWQiOiJ3d3cubGltZWFkZS5jb20vcmVzb3VyY2VzIiwiZXhwIjoxNTk0OTI0Mjg1LCJuYmYiOjE1NjMzODgyODV9.f5OGrtwsk1x9zJLJZtNvT5AWZHoLoxgQKyhLLFiLx7ZMaxXL9UPA90nJdpZZH0lYaUSyBB9jjujoYLtZvE8KQN-fknw4xy6aLExwv8tZDRKWOZXDT1mqRI2VNtyhntksKrxaKcp7LTpVWFlzJ8RxuTpCp3hSVSTOo6FipW6EDnpC9lwrHWE5tPn05rDpIcgUxvZ7UPgZ4LEolUmw8U7plfI1_e6Ry69lBHoWZC9YMHUxEM1RqE03mrboHOE_8oLC6tWdY8CfaDgHCU4D4Qa9DPSjNEoy0ieFPyTrHQXW5A74fLoWoF_bvu3wpSIe5IFWvKtH9DzJZYrru1L34lhiCw';
-    const clientDomain = 'https://limeadedemorb.mywellmetrics.com/admin/program-designer/activities/activity/';
+    const clientDomain = 'https://limeadedemorb.mywellmetrics.com';
+    const editUrl = '/admin/program-designer/activities/activity/';
 
     // Open the modal
     $('#uploadModal').modal();
@@ -558,15 +579,15 @@ function App() {
       dataType: 'json',
       data: JSON.stringify(data),
       headers: {
-        Authorization: 'Bearer ' + limeadeAccessToken
+        Authorization: 'Bearer ' + clientLimeadeAccessToken
       },
       contentType: 'application/json; charset=utf-8'
     }).done((result) => {
         $('#uploadModal .modal-body').html(`
           <div class="alert alert-success" role="alert">
-            <p>Uploaded ${challengeTitle} for <strong>${client}</strong></p>
+            <p>Uploaded ${challengeTitle} for <strong>${clientName}</strong></p>
             <p class="mb-0"><strong>Challenge Id</strong></p>
-            <p><a href=${clientDomain + result.Data.ChallengeId} target="_blank">${result.Data.ChallengeId}</a></p>
+            <p><a href=${clientDomain + editUrl + result.Data.ChallengeId} target="_blank">${result.Data.ChallengeId}</a></p>
           </div>
         `);
         console.log(result.Data);
