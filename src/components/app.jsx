@@ -456,14 +456,13 @@ function App() {
     });
   }
 
-  // BEGIN upload function
+  // upload to Limeade function
   function uploadChallenge() {
-    const clientDomain = 'https://limeadedemorb.mywellmetrics.com';
     const editUrl = '/admin/program-designer/activities/activity/';
 
     // Open the modal
     $('#uploadModal').modal();
-    $('#uploadModal .modal-body').html('');
+    $('#uploadModal .modal-body').html('Loading...');
 
     // create some variables for ease of use when uploading
     let isPartner = false;
@@ -505,8 +504,31 @@ function App() {
         amountUnit = 'times';
     }
 
+    let tagValues1 = [];
+    let tagValues2 = [];
+    let tagValues3 = [];
 
-    // TODO: update data to be accurate and dynamic
+    // conditionally setting the tags in case there are fewer than 3 targeting columns
+    let tags = [];
+    function makeTags() {
+      targetingColumn1 ? tags.push({
+        'TagName': targetingColumn1 ? targetingColumn1 : '',
+        'TagValues':
+          targetingValue1 ? tagValues1.concat(targetingValue1.split('|').map(tag => tag.trim())) : '' // splitting tags on the | like Limeade, also trimming out whitespace just in case
+      }) : null;
+      targetingColumn2 ? tags.push({
+        'TagName': targetingColumn2 ? targetingColumn2 : '',
+        'TagValues':
+          targetingValue2 ? tagValues2.concat(targetingValue2.split('|').map(tag => tag.trim())) : ''
+      }) : null;
+      targetingColumn3 ? tags.push({
+        'TagName': targetingColumn3 ? targetingColumn3 : '',
+        'TagValues':
+          targetingValue3 ? tagValues3.concat(targetingValue3.split('|').map(tag => tag.trim())) : ''
+      }) : null;
+      return tags;
+    }
+
     const data = {
       'AboutChallenge': longDescription,
       'ActivityReward': {
@@ -527,7 +549,7 @@ function App() {
       'EventCode': '',
       'Frequency': frequency,
       'IsDeviceEnabled': tileType === 'Steps Challenge' ? true : false,
-      'IsFeatured': featuredActivity === 'yes' ? true : null,
+      'IsFeatured': featuredActivity === 'yes' ? true : false,
       'FeaturedData': {
         'Description': featuredActivity === 'yes' ? shortDescription : null,
         'ImageUrl': featuredActivity === 'yes' ? imageUrl : null
@@ -541,34 +563,16 @@ function App() {
       'ShowWeeklyCalendar': false,
       'StartDate': startDate,
       'TargetUrl': isPartner ? '/Home?sametab=true' : '',
-      'Targeting': [
-        // {
-        //   'SubgroupId': subgroup ? subgroup : 0, // if no subgroup, use 0 aka none
-        //   'Name': '', // let's hope this is optional since How would we know the Subgroup Name?
-        //   'IsImplicit': targetingType ? true : null, // I don't know what this does. I see it as true for tags and false for subgroups
-        //   'IsPHI': false,
-        //   'Tags': [
-        //     {
-        //       'TagName': targetingColumn1 ? targetingColumn1 : '',
-        //       'TagValues': [
-        //         targetingValue1 ? targetingValue1.split('|').trim() : '' // splitting tags on the | like Limeade, also trimming out whitespace just in case
-        //       ]
-        //     },
-        //     {
-        //       'TagName': targetingColumn2 ? targetingColumn2 : '',
-        //       'TagValues': [
-        //         targetingValue2 ? targetingValue2.split('|').trim() : ''
-        //       ]
-        //     },
-        //     {
-        //       'TagName': targetingColumn3 ? targetingColumn3 : '',
-        //       'TagValues': [
-        //         targetingValue3 ? targetingValue3.split('|').trim() : ''
-        //       ]
-        //     }
-        //   ]
-        // }
-      ],
+      'Targeting': targeting === 'Specific Demographic' ? [
+        {
+          'SubgroupId': subgroup ? subgroup : '0', // if no subgroup, use 0 aka none
+          'Name': '', // let's hope this is optional since How would we know the Subgroup Name?
+          'IsImplicit': targetingType === 'Tags' ? true : false, // not sure what this does. Seems to be true for tags and false for subgroups.
+          'IsPHI': false,
+          'Tags': 
+            targetingType === 'Tags' ? makeTags() : null
+        }
+      ] : [], // if no targeting, use an empty array
       'TeamSize': individualOrTeam === 'Team' ? { MaxTeamSize: teamMax, MinTeamSize: teamMin } : null
     };
     console.log({ data });
@@ -593,9 +597,15 @@ function App() {
         console.log(result.Data);
     }).fail((xhr, textStatus, error) => {
       console.error(xhr.responseText);
+      $('#uploadModal .modal-body').html(`
+          <div class="alert alert-danger" role="alert">
+            <p>Error uploading ${challengeTitle} for <strong>${clientName}</strong></p>
+            <p>${xhr.responseText}</p>
+          </div>
+        `);
     });
   }
-  // END upload function
+
 
   // Basic validation (is a value present?)
   function validatedFields() {
