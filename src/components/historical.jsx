@@ -17,6 +17,8 @@ function Historical({
   setEndDate,
   weekly,
   setWeekly,
+  cieId,
+  setCieId,
   pointValue,
   setPointValue,
   historicalEdits,
@@ -96,12 +98,15 @@ function Historical({
       // set tile as Verified Challenge
       setTileType('Verified Challenge');
       // set other relevant fields
+      setCieId(-(challenge.ChallengeId));
       setChallengeTitle(challenge.Name);
       setActivityText('do the activity in the description');
       setShortDescription('');
       setLongDescription(challenge.AboutChallenge);
 
     } else if (challenge.ChallengeId > 0) { // if ID is positive, therefore Self-Report or Partner challenge
+      setTileType('One-Time Self-Report Challenge');
+      setCieId('');
       setChallengeTitle(challenge.Name);
       challenge.ActivityType ? setActivityText(challenge.ActivityType) : setActivityText('do the activity in the description');
       setShortDescription(challenge.ShortDescription
