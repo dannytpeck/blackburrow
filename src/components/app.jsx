@@ -549,10 +549,10 @@ function App() {
       'EventCode': '',
       'Frequency': frequency,
       'IsDeviceEnabled': tileType === 'Steps Challenge' ? true : false,
-      'IsFeatured': featuredActivity === 'yes' ? true : false,
+      'IsFeatured': featuredActivity === 'yes' || featuredActivity === 'Yes' ? true : false,
       'FeaturedData': {
-        'Description': featuredActivity === 'yes' ? shortDescription : null,
-        'ImageUrl': featuredActivity === 'yes' ? imageUrl : null
+        'Description': featuredActivity === 'yes' || featuredActivity === 'Yes' ? shortDescription : false,
+        'ImageUrl': featuredActivity === 'yes' || featuredActivity === 'Yes' ? imageUrl : false
       },
       'IsSelfReportEnabled': isPartner ? false : true,
       'IsTeamChallenge': individualOrTeam === 'Team' ? true : false,
