@@ -36,6 +36,8 @@ function EditorView({
   setNotes,
   imageUrl,
   setImageUrl,
+  challengeType,
+  setChallengeType,
   targetingType,
   setTargetingType,
   subgroup,
@@ -135,6 +137,19 @@ function EditorView({
       setShortDescription(record.fields['Instructions'] ? record.fields['Instructions'] : '');
       setLongDescription(record.fields['More Information Html'] ? record.fields['More Information Html'] : '');
       $('.editor').html(record.fields['More Information Html']);
+
+      // use record.fields['Activity Tracking Type'] to determine challengeType for later upload
+      switch (record.fields['Activity Tracking Type']) {
+        case 'Event':
+          setChallengeType('OneTimeEvent');
+          break;
+        case 'Days':
+          setChallengeType('YesNoDaily');
+          break;
+        case 'Units':
+          setChallengeType('AddAllNumbers');
+          break;
+      }
 
     });
 
@@ -557,7 +572,9 @@ function EditorView({
       <div className="col-6">
         <TilePreview tileType={tileType} weekly={weekly} imageUrl={imageUrl} challengeTitle={challengeTitle} activityText={activityText} activityGoalNumber={activityGoalNumber} individualOrTeam={individualOrTeam} shortDescription={shortDescription} longDescription={longDescription} />
       </div>
+
     </section>
+
   );
 
 }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import Airtable from 'airtable';
 const base = new Airtable({ apiKey: 'keyCxnlep0bgotSrX' }).base('appN1J6yscNwlzbzq');
+const baseClients = new Airtable({ apiKey: 'keylwZtbvFbcT3sgw' }).base('appHXXoVD1tn9QATh');
 
 import Header from './header';
 import Footer from './footer';
@@ -15,11 +16,16 @@ import StepConfiguration from './step_configuration';
 import ConfirmDeleteModal from './confirm_delete_modal';
 import ConfirmSubmitModal from './confirm_submit_modal';
 import EditorView from './editor_view';
+import UploadModal from './upload_modal';
 import SaveNotification from './save_notification';
 
 /* globals $ */
 function App() {
   const [calendar, setCalendar] = React.useState(null);
+  const [client, setClient] = React.useState(null);
+  const [clientName, setClientName] = React.useState('');
+  const [clientDomain, setClientDomain] = React.useState('');
+  const [clientLimeadeAccessToken, setClientLimeadeAccessToken] = React.useState('');
   const [step, setStep] = React.useState('Home');
 
   // Home
@@ -65,6 +71,7 @@ function App() {
   const [contactEmail, setContactEmail] = React.useState('');
 
   // EditorView
+  const [challengeType, setChallengeType] = React.useState('');
   const [targetingType, setTargetingType] = React.useState('');
   const [subgroup, setSubgroup] = React.useState('');
   const [targetingColumn1, setTargetingColumn1] = React.useState('');
@@ -85,6 +92,7 @@ function App() {
       setStep('EditorView');
     }
 
+    // get calendar
     base('Calendars').select({
       filterByFormula: `{hash}='${calendarHash}'`
     }).eachPage((records, fetchNextPage) => {
@@ -93,12 +101,28 @@ function App() {
       setCalendar(calendar);
 
       fetchNextPage();
+
+      // get client
+      baseClients('Clients').select({
+        filterByFormula: `{Limeade e=}='${calendar.fields['client']}'`
+      }).eachPage((records, fetchNextPage) => {
+        const client = records[0];
+
+        setClient(client);
+
+        setClientName(client.fields['Account Name']);
+        setClientDomain(client.fields['Domain']);
+        setClientLimeadeAccessToken(client.fields['LimeadeAccessToken']);
+
+      });
     }, (err) => {
       if (err) {
         console.error(err);
         return;
       }
     });
+
+
 
   }, []); // Pass empty array to only run once on mount
 
@@ -432,6 +456,157 @@ function App() {
       $('#saveNotification').html('Saved ' + challengeTitle).delay(800).fadeOut(2000);
     });
   }
+
+  // upload to Limeade function
+  function uploadChallenge() {
+    const editUrl = '/admin/program-designer/activities/activity/';
+
+    // Open the modal
+    $('#uploadModal').modal();
+    $('#uploadModal .modal-body').html('Loading...');
+
+    // create some variables for ease of use when uploading
+    let isPartner = false;
+    if (tileType === 'Verified Challenge' || tileType === 'Informational Tile') {
+      isPartner = true;
+    } else {
+      isPartner = false;
+    }
+
+    let frequency = '';
+    if (tileType === 'Steps Challenge') {
+      frequency = 'Daily';
+    } else if (weekly === true) {
+      frequency = 'Weekly'; // this order is intentional, since Weekly Steps have Frequency of Weekly
+    } else {
+      frequency = 'None';
+    }
+
+    // most of the time, Activity Type is the activityText, unless it's a weekly units non-device challenge
+    let activityType = '';
+    if (tileType === 'Weekly Units') {
+      activityType = '';
+    } else {
+      activityType = activityText;
+    }
+    
+    let amountUnit = 'times';
+    switch (tileType) {
+      case 'Steps Challenge':
+        amountUnit = 'steps';
+        break;
+      case 'Weekly Units':
+        amountUnit = activityText;
+        break;
+      case 'One-Time Self-Report Challenge':
+      case 'Verified Challenge':
+      case 'Informational Tile':
+      case 'Weekly Days':
+        amountUnit = 'times';
+    }
+
+    let tagValues1 = [];
+    let tagValues2 = [];
+    let tagValues3 = [];
+
+    // conditionally setting the tags in case there are fewer than 3 targeting columns
+    let tags = [];
+    function makeTags() {
+      targetingColumn1 ? tags.push({
+        'TagName': targetingColumn1 ? targetingColumn1 : '',
+        'TagValues':
+          targetingValue1 ? tagValues1.concat(targetingValue1.split('|').map(tag => tag.trim())) : '' // splitting tags on the | like Limeade, also trimming out whitespace just in case
+      }) : null;
+      targetingColumn2 ? tags.push({
+        'TagName': targetingColumn2 ? targetingColumn2 : '',
+        'TagValues':
+          targetingValue2 ? tagValues2.concat(targetingValue2.split('|').map(tag => tag.trim())) : ''
+      }) : null;
+      targetingColumn3 ? tags.push({
+        'TagName': targetingColumn3 ? targetingColumn3 : '',
+        'TagValues':
+          targetingValue3 ? tagValues3.concat(targetingValue3.split('|').map(tag => tag.trim())) : ''
+      }) : null;
+      return tags;
+    }
+
+    const data = {
+      'AboutChallenge': longDescription,
+      'ActivityReward': {
+        'Type': 'IncentivePoints',
+        'Value': pointValue
+      },
+      'ActivityType': activityType,
+      'AmountUnit': amountUnit,
+      'ButtonText': isPartner ? 'CLOSE' : '',
+      'ChallengeLogoThumbURL': imageUrl,
+      'ChallengeLogoURL': imageUrl,
+      'ChallengeTarget': activityGoalNumber,
+      'ChallengeType': challengeType,
+      'Dimensions': [],
+      'DisplayInProgram': startDate === moment(Date) ? true : false,  // sets true if the challenge starts today
+      'DisplayPriority': null,
+      'EndDate': endDate,
+      'EventCode': '',
+      'Frequency': frequency,
+      'IsDeviceEnabled': tileType === 'Steps Challenge' ? true : false,
+      'IsFeatured': featuredActivity === 'yes' || featuredActivity === 'Yes' ? true : false,
+      'FeaturedData': {
+        'Description': featuredActivity === 'yes' || featuredActivity === 'Yes' ? shortDescription : false,
+        'ImageUrl': featuredActivity === 'yes' || featuredActivity === 'Yes' ? imageUrl : false
+      },
+      'IsSelfReportEnabled': isPartner ? false : true,
+      'IsTeamChallenge': individualOrTeam === 'Team' ? true : false,
+      'Name': challengeTitle,
+      'PartnerId': isPartner ? 1 : 0, 
+      'ShortDescription': shortDescription,
+      'ShowExtendedDescription': isPartner ? true : false,
+      'ShowWeeklyCalendar': false,
+      'StartDate': startDate,
+      'TargetUrl': isPartner ? '/Home?sametab=true' : '',
+      'Targeting': targeting === 'Specific Demographic' ? [
+        {
+          'SubgroupId': subgroup ? subgroup : '0', // if no subgroup, use 0 aka none
+          'Name': '', // let's hope this is optional since How would we know the Subgroup Name?
+          'IsImplicit': targetingType === 'Tags' ? true : false, // not sure what this does. Seems to be true for tags and false for subgroups.
+          'IsPHI': false,
+          'Tags': 
+            targetingType === 'Tags' ? makeTags() : null
+        }
+      ] : [], // if no targeting, use an empty array
+      'TeamSize': individualOrTeam === 'Team' ? { MaxTeamSize: teamMax, MinTeamSize: teamMin } : null
+    };
+    console.log({ data });
+
+    $.ajax({
+      url: 'https://api.limeade.com/api/admin/activity',
+      type: 'POST',
+      dataType: 'json',
+      data: JSON.stringify(data),
+      headers: {
+        Authorization: 'Bearer ' + clientLimeadeAccessToken
+      },
+      contentType: 'application/json; charset=utf-8'
+    }).done((result) => {
+        $('#uploadModal .modal-body').html(`
+          <div class="alert alert-success" role="alert">
+            <p>Uploaded ${challengeTitle} for <strong>${clientName}</strong></p>
+            <p class="mb-0"><strong>Challenge Id</strong></p>
+            <p><a href=${clientDomain + editUrl + result.Data.ChallengeId} target="_blank">${result.Data.ChallengeId}</a></p>
+          </div>
+        `);
+        console.log(result.Data);
+    }).fail((xhr, textStatus, error) => {
+      console.error(xhr.responseText);
+      $('#uploadModal .modal-body').html(`
+          <div class="alert alert-danger" role="alert">
+            <p>Error uploading ${challengeTitle} for <strong>${clientName}</strong></p>
+            <p>${xhr.responseText}</p>
+          </div>
+        `);
+    });
+  }
+
 
   // Basic validation (is a value present?)
   function validatedFields() {
@@ -814,6 +989,8 @@ function App() {
           setSpecificDemographicText={setSpecificDemographicText}
           notes={notes}
           setNotes={setNotes}
+          challengeType={challengeType}
+          setChallengeType={setChallengeType}
           targetingType={targetingType}
           setTargetingType={setTargetingType}
           subgroup={subgroup}
@@ -852,11 +1029,12 @@ function App() {
   return (
     <div className="app">
       <SaveNotification />
-      <Header />
+      <Header clientName={clientName} />
       {renderStep()}
-      <Footer step={step} previousStep={previousStep} nextStep={nextStep} openDeleteConfirmModal={openDeleteConfirmModal} submitToAirtable={submitToAirtable} submitEditsToAirtable={submitEditsToAirtable} />
+      <Footer step={step} previousStep={previousStep} nextStep={nextStep} openDeleteConfirmModal={openDeleteConfirmModal} submitToAirtable={submitToAirtable} submitEditsToAirtable={submitEditsToAirtable} uploadChallenge={uploadChallenge} />
       <ConfirmDeleteModal />
       <ConfirmSubmitModal deleteChallengeFromAirtable={deleteChallengeFromAirtable} />
+      <UploadModal />
     </div>
   );
 }
