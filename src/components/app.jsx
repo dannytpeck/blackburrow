@@ -102,7 +102,6 @@ function App() {
       fetchNextPage();
 
       // get client
-      // TODO: do this a better way if possible
       baseClients('Clients').select({
         filterByFormula: `{Limeade e=}='${calendar.fields['client']}'`
       }).eachPage((records, fetchNextPage) => {
@@ -1023,7 +1022,7 @@ function App() {
   return (
     <div className="app">
       <SaveNotification />
-      <Header />
+      <Header clientName={clientName} />
       {renderStep()}
       <Footer step={step} previousStep={previousStep} nextStep={nextStep} openDeleteConfirmModal={openDeleteConfirmModal} submitToAirtable={submitToAirtable} submitEditsToAirtable={submitEditsToAirtable} uploadChallenge={uploadChallenge} />
       <ConfirmDeleteModal />

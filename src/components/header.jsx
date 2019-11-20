@@ -1,17 +1,8 @@
 import React from 'react';
-import Airtable from 'airtable';
-const base = new Airtable({ apiKey: 'keyCxnlep0bgotSrX' }).base('appN1J6yscNwlzbzq');
 
 const calendarHash = window.location.hash.slice(2, 16);
-let clientName = '';
 
-function Header() {
-
-  base('Calendars').select({
-    filterByFormula: `{hash}='${calendarHash}'`
-  }).eachPage((records) => {
-    clientName = records[0].fields['client'];
-  });
+function Header({ clientName }) {
 
   return (
     <header id="header">
