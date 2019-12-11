@@ -419,6 +419,8 @@ function EditorView({
 
           <div className="form-group mt-3 mb-5 tags-targeting" style={{ display: targetingType === 'Tags' ? 'block' : 'none' }}>
             <div className="row">
+              <small className="ml-3 text-muted">To create AND targeting, use separate columns (e.g., CurrentWalking and Location)</small>
+              <small className="ml-3 text-muted">To create OR targeting, use | for separating values (e.g., Seattle | Portland)</small>
               <div className="col-md-6">
                 <label htmlFor="targetingColumn1">Targeting Column 1</label>
                 <select className="form-control" id="targetingColumn1" value={targetingColumn1} onChange={handleTargetingColumn1Change}>
