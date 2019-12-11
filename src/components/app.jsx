@@ -126,6 +126,21 @@ function App() {
 
   }, []); // Pass empty array to only run once on mount
 
+  // sanitization
+  const sanitize = (code) => {
+    let sanitized = code
+      .replace(/\r?\n|\r/g, ' ')     // Strip out carriage returns and newlines
+      .replace(/\u2018/g, '\'')      // Left single quote
+      .replace(/\u2019/g, '\'')      // Right single quote
+      .replace(/\u201C/g, '"')       // Left double quote
+      .replace(/\u201D/g, '"')       // Right double quote
+      .replace(/\u2026/g, '...')     // Ellipsis
+      .replace(/\u2013/g, '&ndash;') // Long dash
+      .replace(/\u2014/g, '&mdash;') // Longer dash
+      .replace(/\u00A9/g, '&copy;');  // Copyright symbol
+    return sanitized;
+  };
+
   function submitToWrike(record) {
     console.log(record);
     const today = moment().format('YYYY-MM-DD');
@@ -326,8 +341,8 @@ function App() {
         'Team Activity': individualOrTeam === 'Team' ? 'yes' : 'no',
         'Reward Occurrence': rewardOccurrence,
         'Category': 'NA',
-        'Instructions': shortDescription,
-        'More Information Html': longDescription,
+        'Instructions': sanitize(shortDescription),
+        'More Information Html': sanitize(longDescription),
         'Featured Activity': isFeatured,
         'Comment': notes,
         'Targeted Activity': isTargeted,
@@ -441,8 +456,8 @@ function App() {
         'Device Units': tileType === 'Steps Challenge' ? 'steps' : '',
         'Header Image': imageUrl,
         'Limeade Image Url': imageUrl,
-        'Instructions':shortDescription,
-        'More Information Html': longDescription,
+        'Instructions': sanitize(shortDescription),
+        'More Information Html': sanitize(longDescription),
         'Featured Activity': isFeatured,
         'Targeted Activity': isTargeted,
         'Targeting Notes': specificDemographicText,
@@ -537,7 +552,7 @@ function App() {
     }
 
     const data = {
-      'AboutChallenge': longDescription,
+      'AboutChallenge': sanitize(longDescription),
       'ActivityReward': {
         'Type': 'IncentivePoints',
         'Value': pointValue
@@ -565,7 +580,7 @@ function App() {
       'IsTeamChallenge': individualOrTeam === 'Team' ? true : false,
       'Name': challengeTitle,
       'PartnerId': isPartner ? 1 : 0, 
-      'ShortDescription': shortDescription,
+      'ShortDescription': sanitize(shortDescription),
       'ShowExtendedDescription': isPartner ? true : false,
       'ShowWeeklyCalendar': false,
       'StartDate': startDate,
