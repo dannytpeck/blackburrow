@@ -155,41 +155,47 @@ function App() {
     const editorUrl = `https://calendarbuilder.dev.adurolife.com/ctrt/#/${calendarHash}/edit/${record.id}`;
 
     const description = `
-      <p><strong>Client Name:</strong> ${calendar.fields['client']}</p>
-      <p><strong>Client Contact Name:</strong> ${contactName}</p>
-      <p><strong>Client Contact Email:</strong> <a href="mailto:${contactEmail}"> ${contactEmail}</a></p>
-      <p><strong>Account Manager:</strong> ${accountManager}</p>
+      <p><strong>Please Note:</strong></p>
+      <p>The following tiles will remain as CIEs (and keep the same ID if available):</p>
+      <ul>
+        <li>Any historical CIEs</li>
+        <li>Any Verified Challenge with Max Occurrence of more than 1</li>
+        <li>ID 3: Track Your Progress</li>
+        <li>ID 7: Complete a Health Screening</li>
+        <li>ID 10: Well-being Assessment</li>
+        <li>ID 22: Know Your Numbers</li>
+        <li>RAS Programs (i.e. Breathe Easy, My Health Matters, etc.)</li>
+        <li>Any CIE tied to an integration or workflow (i.e. Naturally Slim)</li>
+      </ul>
+
+      <p><strong>Client Details</strong></p>
+      <p>Account Manager: ${accountManager}</p>
+      <p>Client Name: ${calendar.fields['client']}</p>
+      <p>Client Contact Name: ${contactName}</p>
+      <p>Client Contact Email: <a href="mailto:${contactEmail}"> ${contactEmail}</a></p>
       <br/>
-      <p><strong>Tile Type:</strong> ${tileType} ${cieId ? '(historical CIE) ' : ''} ${maxOccurrence > 1 ? '(max occurrence CIE)' : ''}</p>
-      ${cieId ? `<p><strong>CIE ID:</strong> ${cieId}</p>` : ''}
-      <p><strong>Max Occurrence:</strong> ${maxOccurrence}</p>
-      <p><strong>Net-New or Historical:</strong> ${customTileType}</p>
-      <p><strong>Tile Name:</strong> ${challengeTitle}</p>
-      <p><strong>Start Date:</strong> ${moment(startDate).format('L')}</p>
-      <p><strong>End Date:</strong> ${moment(endDate).format('L')}</p>
-      <p><strong>Notes:</strong> ${notes}</p>
+
+      <p><strong>Tile Details</strong></p>
+      <p>Title: ${challengeTitle}</p>
+      <p>Start Date: ${moment(startDate).format('L')}</p>
+      <p>End Date: ${moment(endDate).format('L')}</p>
+      <p>Notes: ${notes}</p>
       <br/>
-      <p><strong>Editor View:</strong> <a href="${editorUrl}">${editorUrl}</a></p>
-      <p><strong>Client Challenge Calendar:</strong> <a href="${calendarUrl}">${calendarUrl}</a></p>
-      <p><strong>Tile Image:</strong> <a href="${imageUrl}">${imageUrl}</p>
+
+      <p>Net-New or Historical: ${customTileType}</p>
+      <p>Tile Type: ${tileType} ${cieId ? '(historical CIE) ' : ''} ${maxOccurrence > 1 ? '(max occurrence CIE)' : ''}</p>
+      ${cieId ? `<p>CIE ID: ${cieId}</p>` : ''}
+      <p>Max Occurrence: ${maxOccurrence}</p>
       <br/>
-      <p><strong>1) WAIT! STOP! Before moving on...</strong></p>
-      <p>If tile type is: "Verified Challenge" AND "Revised" or "Rerun", &#64; the AM with the below message:</p><br/>
-      <p><em>"A request was received to rerun or revise a historical tile for your client. Please answer this question:</em></p><br/>
-      <p><em>Can this tile be made into a Partner Challenge or must it be configured as a classic CIE?</em></p><br/>
-      <p><em>The following examples would require a tile to be configured as a CIE:</em></p>
-      <ol>
-        <li><em>ID 7: Complete a Health Screening</em></li>
-        <li><em>ID 10: Well-being Assessment</em></li>
-        <li><em>RAS Programs (i.e. Breathe Easy, My Health Matters, etc.)</em></li>
-        <li><em>Any CIE tied to an integration or workflow (i.e. Naturally Slim)</em></li>
-      </ol>
-      <p><em>Thank you for clarifying!""</em></p><br/>
-      <p>If Partner Challenge, continue with process as normal. <br/>If CIE, review the content and add this task to the WebConfig folder.</p>
+
+      <p><strong>Editing Details</strong></p>
+      <p>Editor View: <a href="${editorUrl}">${editorUrl}</a></p>
+      <p>Challenge Calendar: <a href="${calendarUrl}">${calendarUrl}</a></p>
+      <p>Tile Image: <a href="${imageUrl}">${imageUrl}</a></p>
     `;
 
     const data = {
-      title: `${calendar.fields['client']} - ${customTileType} - ${tileType} - ${challengeTitle} - ${moment(startDate).format('L')}`,
+      title: `${calendar.fields['client']} - ${challengeTitle} - ${tileType} ${cieId ? '(historical CIE) ' : ''} ${maxOccurrence > 1 ? '(max occurrence CIE)' : ''}`,
       description: description,
       dates: {
         start: wrikeStartDate,
