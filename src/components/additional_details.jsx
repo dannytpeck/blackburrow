@@ -99,7 +99,7 @@ function AdditionalDetails({
           <div className="choose-image">
             <div className="form-group">
               <input type="file" className="form-control-file" id="uploadImage" onChange={handleImageChange} />
-              <small className="form-text text-muted text-left">Image dimensions must be 2000x1000 pixels. Accepted file formats jpg or png.</small>
+              <small className="form-text text-muted text-left">Image dimensions must be 2000x1000 pixels. Accepted file formats: jpg or png.</small>
             </div>
           </div>
           <div className="aduro-choose-image">
