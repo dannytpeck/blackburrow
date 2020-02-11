@@ -73,6 +73,9 @@ function EditorView({
     base('Calendars').find(recordId, function(err, record) {
       if (err) {
         console.error(err);
+        if (err.error === 'NOT_FOUND') {
+          alert('Record not found: Tile has been deleted');
+        }
         return;
       }
 

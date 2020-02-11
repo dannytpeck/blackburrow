@@ -266,7 +266,7 @@ function App() {
     // close the delete modal
     $('#confirmDeleteModal').modal('hide');
 
-    // TODO: clear out the page, record has been deleted
+    alert('Tile has been deleted');
  
   }
 
