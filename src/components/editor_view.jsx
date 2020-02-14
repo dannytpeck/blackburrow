@@ -168,6 +168,10 @@ function EditorView({
 
   }, []); // Pass empty array to only run once on mount
 
+  function handleTileTypeChange(e) {
+    setTileType(e.target.value);
+  }
+
   function handleCustomTileTypeChange(e) {
     setCustomTileType(e.target.value);
   }
@@ -307,12 +311,25 @@ function EditorView({
 
         <h3 className="mb-3">Challenge Details</h3>
 
-        <label>Tile Type:</label>
-        <p>{tileType}</p>
+        <div className="row mb-3 tile-type">
+          <div className="col-6">
+            <label>Tile Type:</label>
+            {/* if One-Time Self Report Challenge or Verified Challenge, show option-select for changing between
+                if other tileType, show as text */}
+            {
+              (tileType === 'One-Time Self-Report Challenge' || tileType === 'Verified Challenge') ?
+                <select className="form-control" id="tileType" value={tileType} onChange={handleTileTypeChange}>
+                  <option>One-Time Self-Report Challenge</option>
+                  <option>Verified Challenge</option>
+                </select>
+                : <p>{tileType}</p>
+            }
+          </div>
+        </div>
 
         <div className="row mb-3 custom-tile-type">
           <div className="col-6">
-            <label>Custom Tile Type:</label>
+            <label>Net New or Historical:</label>
             <select className="form-control" id="customTileType" value={customTileType} onChange={handleCustomTileTypeChange}>
               <option>Net New</option>
               <option>Revised</option>
