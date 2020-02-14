@@ -72,6 +72,7 @@ function App() {
 
   // EditorView
   const [challengeType, setChallengeType] = React.useState('');
+  const [customTileType, setCustomTileType] = React.useState('');
   const [targetingType, setTargetingType] = React.useState('');
   const [subgroup, setSubgroup] = React.useState('');
   const [targetingColumn1, setTargetingColumn1] = React.useState('');
@@ -467,7 +468,8 @@ function App() {
         'Targeting Column 2': targetingType === 'Tags' ? targetingColumn2 : '',
         'Targeting Value 2': targetingType === 'Tags' ? targetingValue2 : '',
         'Targeting Column 3': targetingType === 'Tags' ? targetingColumn3 : '',
-        'Targeting Value 3': targetingType === 'Tags' ? targetingValue3 : ''
+        'Targeting Value 3': targetingType === 'Tags' ? targetingValue3 : '',
+        'Custom Tile Type': customTileType
       }, function(err, record) {
       if (err) {
         console.error(err);
@@ -986,6 +988,8 @@ function App() {
         return <EditorView
           tileType={tileType}
           setTileType={setTileType}
+          customTileType={customTileType}
+          setCustomTileType={setCustomTileType}
           startDate={startDate}
           setStartDate={setStartDate}
           endDate={endDate}

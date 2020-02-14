@@ -10,6 +10,8 @@ import TilePreview from './tile_preview';
 function EditorView({
   tileType,
   setTileType,
+  customTileType,
+  setCustomTileType,
   startDate,
   setStartDate,
   endDate,
@@ -113,6 +115,7 @@ function EditorView({
           }
       }
 
+      setCustomTileType(record.fields['Custom Tile Type']);
       setStartDate(record.fields['Start date']);
       setEndDate(record.fields['End date']);
       setPointValue(record.fields['Points']);
@@ -164,6 +167,10 @@ function EditorView({
     
 
   }, []); // Pass empty array to only run once on mount
+
+  function handleCustomTileTypeChange(e) {
+    setCustomTileType(e.target.value);
+  }
 
   function handleStartDateChange(e) {
     setStartDate(e.target.value);
@@ -302,6 +309,17 @@ function EditorView({
 
         <label>Tile Type:</label>
         <p>{tileType}</p>
+
+        <div className="row mb-3 custom-tile-type">
+          <div className="col-6">
+            <label>Custom Tile Type:</label>
+            <select className="form-control" id="customTileType" value={customTileType} onChange={handleCustomTileTypeChange}>
+              <option>Net New</option>
+              <option>Revised</option>
+              <option>Rerun</option>
+            </select>
+          </div>
+        </div>
 
         <div className="row mb-3">
           <div className="col">
