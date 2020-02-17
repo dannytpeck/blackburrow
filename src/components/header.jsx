@@ -8,7 +8,7 @@ function Header({ clientName }) {
     <header id="header">
       <div className="row">
         <div className="col-6 offset-3">
-            <img className="logo" src="images/ADURO-Logo-Horizontal.png" />
+            <img className="logo" src="images/aduro-logo.png" />
             <h1 className="my-1">Custom Tile Request Tool</h1>
         </div>
         <div className="col-3">
