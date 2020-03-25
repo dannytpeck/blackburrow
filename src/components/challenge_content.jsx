@@ -35,16 +35,22 @@ function ChallengeContent({
   }
 
   function handleActivityTextChange(e) {
-    setActivityText(e.target.value);
-  }
-  if (tileType === 'Steps Challenge') {
-    setActivityText('exercise');
-  } else if (tileType === 'Verified Challenge') {
-    setActivityText('do the activity in the description');
+    let { value } = e.target;
+
+    if (value.length <= 50) {
+      setActivityText(value);
+    }
   }
 
   function handleShortDescriptionChange(e) {
     setShortDescription(e.target.value);
+  }
+
+  // TODO: Improve this at some point, since there's no way to change the tileType at this point, so this could be handled upstream
+  if (tileType === 'Steps Challenge') {
+    setActivityText('exercise');
+  } else if (tileType === 'Verified Challenge') {
+    setActivityText('do the activity in the description');
   }
 
   return (
@@ -63,7 +69,7 @@ function ChallengeContent({
         <div className="form-group" style={{ display: tileType === 'Verified Challenge' || tileType === 'Informational Tile' ? 'none' : 'block' }}>
           <label htmlFor="activityText">Call to Action</label>
           <input type="text" className="form-control" id="activityText" placeholder="To complete this..." value={activityText} onChange={handleActivityTextChange} readOnly={tileType === 'Steps Challenge' || tileType === 'Verified Challenge' ? true : false} />
-          <small className="form-text text-muted">{activityText.length}/50 Characters</small>
+          <small className={'form-text ' + (activityText.length === 50 ? 'text-danger' : 'text-muted') }>{activityText.length}/50 Characters</small>
         </div>
 
         <div className="form-group">
