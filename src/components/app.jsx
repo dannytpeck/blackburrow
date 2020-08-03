@@ -566,6 +566,7 @@ function App() {
       'ChallengeLogoURL': imageUrl,
       'ChallengeTarget': activityGoalNumber,
       'ChallengeType': challengeType,
+      'DefaultPrivacyFlag': tileType === 'Verified Challenge' ? 1 : 'Unspecified',
       'Dimensions': [],
       'DisplayInProgram': startDate === moment(Date) ? true : false,  // sets true if the challenge starts today
       'DisplayPriority': null,
