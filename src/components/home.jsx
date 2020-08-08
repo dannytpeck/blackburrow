@@ -3,7 +3,7 @@ import Airtable from 'airtable';
 const baseAMs = new Airtable({ apiKey: 'keylwZtbvFbcT3sgw' }).base('appvtvj7itXI6NPDT');
 
 /* globals $ */
-function Home({ accountManager, setAccountManager, accountManagerWrikeId, setAccountManagerWrikeId, accountManagers, setAccountManagers, newOrHistorical, setNewOrHistorical }) {
+function Home({ accountManager, setAccountManager, accountManagerId, setAccountManagerId, accountManagers, setAccountManagers, newOrHistorical, setNewOrHistorical }) {
 
   // Make airtable calls when app starts
   useEffect(() => {
@@ -34,7 +34,7 @@ function Home({ accountManager, setAccountManager, accountManagerWrikeId, setAcc
     let obj = document.getElementById('primaryAccountManager');
     let selectedOption = obj.options[obj.selectedIndex];
     setAccountManager(e.target.value);
-    setAccountManagerWrikeId(selectedOption.getAttribute('data-wrikeid'));
+    setAccountManagerId(selectedOption.getAttribute('data-airtableid'));
   }
 
   function handleNewOrHistoricalChange(e) {
@@ -44,7 +44,7 @@ function Home({ accountManager, setAccountManager, accountManagerWrikeId, setAcc
   let accountManagerNames = accountManagers.map((item) => {
     const value= JSON.stringify(item);
     return (
-      <option key={item.id} value={item.fields['Name']} data-wrikeid={item.fields['Wrike ID']}>{item.fields['Name']}</option>
+      <option key={item.id} value={item.fields['Name']} data-airtableid={item.fields['Airtable ID']}>{item.fields['Name']}</option>
     );
   });
 
