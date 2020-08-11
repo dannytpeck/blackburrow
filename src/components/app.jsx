@@ -3,7 +3,7 @@ import moment from 'moment';
 import Airtable from 'airtable';
 const base = new Airtable({ apiKey: 'keyCxnlep0bgotSrX' }).base('appN1J6yscNwlzbzq');
 const baseClients = new Airtable({ apiKey: 'keylwZtbvFbcT3sgw' }).base('appHXXoVD1tn9QATh');
-const baseConfigQueue = new Airtable({ apiKey: 'keylwZtbvFbcT3sgw'}).base('appxbO9j8z9KEnUCH');
+const baseConfigQueue = new Airtable({ apiKey: 'keylwZtbvFbcT3sgw' }).base('appxbO9j8z9KEnUCH');
 
 import Header from './header';
 import Footer from './footer';
@@ -185,7 +185,7 @@ The following tiles will remain as CIEs (and keep the same ID if available):
 
 Client Details
 Account Manager: ${accountManager}
-Client Name: ${calendar.fields['client']}
+Client Name: ${clientName}
 Client Contact Name: ${contactName}
 Client Contact Email: ${contactEmail}
 
@@ -212,13 +212,13 @@ Tile Image: [${imageUrl}](${imageUrl})`;
           }
         ],
         'Challenge Title': challengeTitle,
-        'Client': calendar.fields['client'],
+        'Client': clientName,
         'Requestor': [
           {
             'id': accountManagerId,
           }
         ],
-        'Priority': "Normal",
+        'Priority': 'Normal',
         'Start Date': taskStartDate,
         'Due Date': taskDueDate,
         'Status': 'Todo',
@@ -232,7 +232,7 @@ Tile Image: [${imageUrl}](${imageUrl})`;
         const confirmationText = `
           <p>View it in your <a href="${calendarUrl}" target="_blank">Calendar Builder</a> or submit <a href="${ctrtUrl}" target="_blank">another request</a>.</p>
         `;
-        $('#confirmSubmitModal .modal-body').append(confirmationText)
+        $('#confirmSubmitModal .modal-body').append(confirmationText);
     });
   }
 
