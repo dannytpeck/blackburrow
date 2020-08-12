@@ -3,6 +3,7 @@ import moment from 'moment';
 import Airtable from 'airtable';
 const base = new Airtable({ apiKey: 'keyCxnlep0bgotSrX' }).base('appN1J6yscNwlzbzq');
 const baseClients = new Airtable({ apiKey: 'keylwZtbvFbcT3sgw' }).base('appHXXoVD1tn9QATh');
+const baseConfigQueue = new Airtable({ apiKey: 'keylwZtbvFbcT3sgw' }).base('appxbO9j8z9KEnUCH');
 
 import Header from './header';
 import Footer from './footer';
@@ -30,7 +31,7 @@ function App() {
 
   // Home
   const [accountManager, setAccountManager] = React.useState('');
-  const [accountManagerWrikeId, setAccountManagerWrikeId] = React.useState('');
+  const [accountManagerId, setAccountManagerId] = React.useState('');
   const [accountManagers, setAccountManagers] = React.useState([]);
   const [newOrHistorical, setNewOrHistorical] = React.useState('NetNew');
 
@@ -142,12 +143,10 @@ function App() {
     return sanitized;
   };
 
-  function submitToWrike(record) {
-    console.log(record);
-    const today = moment().format('YYYY-MM-DD');
+  function createTask(record) {
+    const taskStartDate = moment(startDate).subtract(28, 'days').format('L');
+    const taskDueDate = moment(taskStartDate).add(21, 'days').format('L');
 
-    const wrikeStartDate = moment(startDate).subtract(28, 'days').format('YYYY-MM-DD');
-    const wrikeDueDate = moment(wrikeStartDate).add(21, 'days').format('YYYY-MM-DD');
     let customTileType = '';
 
     switch (newOrHistorical) {
@@ -170,75 +169,70 @@ function App() {
     const ctrtUrl = `https://calendarbuilder.dev.adurolife.com/ctrt/#/${calendarHash}`;
     const editorUrl = `https://calendarbuilder.dev.adurolife.com/ctrt/#/${calendarHash}/edit/${record.id}`;
 
-    const description = `
-      <p><strong>Please Note:</strong></p>
-      <p>The following tiles will remain as CIEs (and keep the same ID if available):</p>
-      <ul>
-        <li>Any historical CIEs</li>
-        <li>Any Verified Challenge with Max Occurrence of more than 1</li>
-        <li>ID 3: Track Your Progress</li>
-        <li>ID 7: Complete a Health Screening</li>
-        <li>ID 10: Well-being Assessment</li>
-        <li>ID 22: Know Your Numbers</li>
-        <li>RAS Programs (i.e. Breathe Easy, My Health Matters, etc.)</li>
-        <li>Any CIE tied to an integration or workflow (i.e. Naturally Slim)</li>
-      </ul>
+    // Note: the formatting below is ugly to accommodate airtable's rich text.
+    // I imagine there's a better way to do it, but this works and that's enough for me.
+    const description = `[${editorUrl}](${editorUrl})
+Please Note:
+The following tiles will remain as CIEs (and keep the same ID if available):
+- Any historical CIEs
+- Any Verified Challenge with Max Occurrence of more than 1
+- ID 3: Track Your Progress
+- ID 7: Complete a Health Screening
+- ID 10: Well-being Assessment
+- ID 22: Know Your Numbers
+- RAS Programs (i.e. Breathe Easy, My Health Matters, etc.)
+- Any CIE tied to an integration or workflow (i.e. Naturally Slim)
 
-      <p><strong>Client Details</strong></p>
-      <p>Account Manager: ${accountManager}</p>
-      <p>Client Name: ${calendar.fields['client']}</p>
-      <p>Client Contact Name: ${contactName}</p>
-      <p>Client Contact Email: <a href="mailto:${contactEmail}"> ${contactEmail}</a></p>
-      <br/>
+Client Details
+Account Manager: ${accountManager}
+Client Name: ${clientName}
+Client Contact Name: ${contactName}
+Client Contact Email: ${contactEmail}
 
-      <p><strong>Tile Details</strong></p>
-      <p>Title: ${challengeTitle}</p>
-      <p>Start Date: ${moment(startDate).format('L')}</p>
-      <p>End Date: ${moment(endDate).format('L')}</p>
-      <p>Notes: ${notes}</p>
-      <br/>
+Tile Details
+Title: ${challengeTitle}
+Start Date: ${moment(startDate).format('L')}
+End Date: ${moment(endDate).format('L')}
+Notes: ${notes}
 
-      <p>Net-New or Historical: ${customTileType}</p>
-      <p>Tile Type: ${tileType} ${cieId ? '(historical CIE) ' : ''} ${maxOccurrence > 1 ? '(max occurrence CIE)' : ''}</p>
-      ${cieId ? `<p>CIE ID: ${cieId}</p>` : ''}
-      <p>Max Occurrence: ${maxOccurrence}</p>
-      <br/>
+Net-New or Historical: ${customTileType}
+Tile Type: ${tileType} ${cieId ? '(historical CIE) ' : ''} ${maxOccurrence > 1 ? '(max occurrence CIE)' : ''}
+${cieId ? `CIE ID: ${cieId}` : ''}
+Max Occurrence: ${maxOccurrence}
 
-      <p><strong>Editing Details</strong></p>
-      <p>Editor View: <a href="${editorUrl}">${editorUrl}</a></p>
-      <p>Challenge Calendar: <a href="${calendarUrl}">${calendarUrl}</a></p>
-      <p>Tile Image: <a href="${imageUrl}">${imageUrl}</a></p>
-    `;
+Editing Details
+Editor View: [${editorUrl}](${editorUrl})
+Challenge Calendar: [${editorUrl}](${calendarUrl})
+Tile Image: [${imageUrl}](${imageUrl})`;
 
-    const data = {
-      title: `${calendar.fields['client']} - ${challengeTitle} - ${tileType} ${cieId ? '(historical CIE) ' : ''} ${maxOccurrence > 1 ? '(max occurrence CIE)' : ''}`,
-      description: description,
-      dates: {
-        start: wrikeStartDate,
-        due: wrikeDueDate
-      },
-      followers: [accountManagerWrikeId],
-      parents: ['IEAAX5JZI4LYLGP4', 'IEAAX5JZI4CCJNWS'], // add task to Web Config folder, which apparently is called a Parent
-      responsibles: [],
-      status: 'Active',
-    };
-
-    $.ajax({
-      type: 'POST',
-      url: 'https://www.wrike.com/api/v4/folders/IEAAX5JZI4LYLGP4/tasks',
-      data: JSON.stringify(data),
-      dataType: 'json',
-      contentType: 'application/json',
-      headers: {
-        Authorization: 'Bearer eyJ0dCI6InAiLCJhbGciOiJIUzI1NiIsInR2IjoiMSJ9.eyJkIjoie1wiYVwiOjc4MzY3MyxcImlcIjo2NDQ1NjI3LFwiY1wiOjQ2MTI5ODEsXCJ1XCI6NjM4OTA3MSxcInJcIjpcIlVTXCIsXCJzXCI6W1wiV1wiLFwiRlwiLFwiSVwiLFwiVVwiLFwiS1wiLFwiQ1wiLFwiQVwiLFwiTFwiXSxcInpcIjpbXSxcInRcIjowfSIsImlhdCI6MTU2NTEyMDE5Nn0.ZhznMJNLBBCqq43v4W0T_OFW-OJpBiXCLM6-7aJtiWU'
-      }
-    })
-    .done(data => {
-      const url = data.data[0].permalink;
-      const confirmationText = `
-        <p>View it in your <a href="${calendarUrl}" target="_blank">Calendar Builder</a> or submit <a href="${ctrtUrl}" target="_blank">another request</a>.</p>
-      `;
-      $('#confirmSubmitModal .modal-body').append(confirmationText);
+    baseConfigQueue('Queue').create({
+        'Attachments': [
+          {
+            'url': imageUrl
+          }
+        ],
+        'Challenge Title': challengeTitle,
+        'Client': clientName,
+        'Requestor': [
+          {
+            'id': accountManagerId,
+          }
+        ],
+        'Priority': 'Normal',
+        'Start Date': taskStartDate,
+        'Due Date': taskDueDate,
+        'Status': 'Todo',
+        'Task Type': 'CTRT',
+        'Task Details': description
+      }, (err, record) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        const confirmationText = `
+          <p>View it in your <a href="${calendarUrl}" target="_blank">Calendar Builder</a> or submit <a href="${ctrtUrl}" target="_blank">another request</a>.</p>
+        `;
+        $('#confirmSubmitModal .modal-body').append(confirmationText);
     });
   }
 
@@ -373,8 +367,8 @@ function App() {
 
         $('#confirmSubmitModal .modal-body').html('<p>Your request has been received!</p>');
 
-        // Submit to wrike using record details
-        submitToWrike(record);
+        // create task in Config Queue using record details
+        createTask(record);
 
         // Update "updated" field in calendar with the current date
         base('Calendars').update(calendar.id, {
@@ -566,6 +560,7 @@ function App() {
       'ChallengeLogoURL': imageUrl,
       'ChallengeTarget': activityGoalNumber,
       'ChallengeType': challengeType,
+      'DefaultPrivacyFlag': tileType === 'Verified Challenge' ? 1 : 'Unspecified',
       'Dimensions': [],
       'DisplayInProgram': startDate === moment(Date) ? true : false,  // sets true if the challenge starts today
       'DisplayPriority': null,
@@ -834,8 +829,8 @@ function App() {
         return <Home
           accountManager={accountManager}
           setAccountManager={setAccountManager}
-          accountManagerWrikeId={accountManagerWrikeId}
-          setAccountManagerWrikeId={setAccountManagerWrikeId}
+          accountManagerId={accountManagerId}
+          setAccountManagerId={setAccountManagerId}
           accountManagers={accountManagers}
           setAccountManagers={setAccountManagers}
           newOrHistorical={newOrHistorical}
