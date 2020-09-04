@@ -65,7 +65,7 @@ function App() {
   const [maxOccurrence, setMaxOccurrence] = React.useState('1');
   const [targeting, setTargeting] = React.useState('Entire Population');
   const [specificDemographicText, setSpecificDemographicText] = React.useState('');
-  
+
   // ConfirmChallengeDetails
   const [notes, setNotes] = React.useState('');
   const [contactName, setContactName] = React.useState('');
@@ -213,11 +213,9 @@ Tile Image: [${imageUrl}](${imageUrl})`;
         ],
         'Challenge Title': challengeTitle,
         'Client': clientName,
-        'Requestor': [
-          {
-            'id': accountManagerId,
-          }
-        ],
+        'Requested by': {
+          'id': accountManagerId,
+        },
         'Priority': 'Normal',
         'Start Date': taskStartDate,
         'Due Date': taskDueDate,
@@ -262,7 +260,7 @@ Tile Image: [${imageUrl}](${imageUrl})`;
     $('#confirmDeleteModal').modal('hide');
 
     alert('Tile has been deleted');
- 
+
   }
 
   function submitToAirtable() {
@@ -304,7 +302,7 @@ Tile Image: [${imageUrl}](${imageUrl})`;
         }
         break;
     }
-    
+
     let verified = '';
     switch (tileType) {
       case 'One-Time Self-Report Challenge':
@@ -431,7 +429,7 @@ Tile Image: [${imageUrl}](${imageUrl})`;
     }
 
     // update airtable record
-    base('Challenges').update(recordId, 
+    base('Challenges').update(recordId,
       {
         'Title': challengeTitle,
         'Start date': startDate,
@@ -506,7 +504,7 @@ Tile Image: [${imageUrl}](${imageUrl})`;
     } else {
       activityType = activityText;
     }
-    
+
     let amountUnit = 'times';
     switch (tileType) {
       case 'Steps Challenge':
@@ -576,7 +574,7 @@ Tile Image: [${imageUrl}](${imageUrl})`;
       'IsSelfReportEnabled': isPartner ? false : true,
       'IsTeamChallenge': individualOrTeam === 'Team' ? true : false,
       'Name': challengeTitle,
-      'PartnerId': isPartner ? 1 : 0, 
+      'PartnerId': isPartner ? 1 : 0,
       'ShortDescription': sanitize(shortDescription),
       'ShowExtendedDescription': isPartner ? true : false,
       'ShowWeeklyCalendar': false,
@@ -588,7 +586,7 @@ Tile Image: [${imageUrl}](${imageUrl})`;
           'Name': '', // let's hope this is optional since How would we know the Subgroup Name?
           'IsImplicit': targetingType === 'Tags' ? true : false, // not sure what this does. Seems to be true for tags and false for subgroups.
           'IsPHI': false,
-          'Tags': 
+          'Tags':
             targetingType === 'Tags' ? makeTags() : null
         }
       ] : [], // if no targeting, use an empty array
@@ -744,7 +742,7 @@ Tile Image: [${imageUrl}](${imageUrl})`;
           setStep('AdditionalDetails');
         }
         break;
-      
+
     }
   }
 
@@ -754,14 +752,14 @@ Tile Image: [${imageUrl}](${imageUrl})`;
         if (!calendar || !accountManager) {
           if (!calendar) {
             alert('Check your url, a calendar ID is required');
-          } 
+          }
           if (!accountManager) {
             alert('Select an Account Manager to Continue');
           }
         } else {
             setStep(newOrHistorical);
           }
-        
+
         break;
       case 'NetNew':
         if (validatedFields()) {
