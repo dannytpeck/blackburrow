@@ -15,7 +15,7 @@ function Footer({ step, previousStep, nextStep, openDeleteConfirmModal, submitTo
   let submitButton = '';
   switch (step) {
     case 'ConfirmChallengeDetails':
-      submitButton = <button type="button" className="btn btn-primary ml-5" onClick={submitToAirtable}>Submit</button>;
+      submitButton = <button type="button" id="submitButton" className="btn btn-primary ml-5" onClick={submitToAirtable}>Submit</button>;
       break;
     case 'EditorView':
       submitButton = <button type="button" className="btn btn-primary ml-5" onClick={submitEditsToAirtable}>Save</button>;
@@ -62,9 +62,7 @@ function Footer({ step, previousStep, nextStep, openDeleteConfirmModal, submitTo
         backOrDeleteButton
       }
       {
-        step === 'ConfirmChallengeDetails' || step === 'EditorView' ?
-          submitButton :
-          <button type="button" className="btn btn-primary ml-5" onClick={nextStep}>Next</button>
+        step === 'ConfirmChallengeDetails' || step === 'EditorView' ? submitButton : <button type="button" className="btn btn-primary ml-5" onClick={nextStep}>Next</button>
       }
       {
         // editor view upload button

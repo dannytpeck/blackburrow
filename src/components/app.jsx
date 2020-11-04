@@ -264,6 +264,9 @@ Tile Image: [${imageUrl}](${imageUrl})`;
   }
 
   function submitToAirtable() {
+    // Go ahead and disable to the submission button since people keep clicking it 2-5 times
+    $('#submitButton').prop('disabled', true);
+
     const acknowledgementChecked = $('#acknowledgement').prop('checked');
     const rewardOccurrence = weekly === true ? 'Weekly' : 'Once';
     const isFeatured = featuredActivity ? 'yes' : 'no';
